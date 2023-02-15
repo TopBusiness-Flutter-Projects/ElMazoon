@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 
 import '../../../core/utils/assets_manager.dart';
 
-
 class NavigatorBar extends StatefulWidget {
-  const NavigatorBar({Key? key})
-      : super(key: key);
+  const NavigatorBar({Key? key}) : super(key: key);
+
   // final LoginDataModel loginDataModel;
 
   @override
@@ -24,30 +23,66 @@ class _NavigatorBarState extends State<NavigatorBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      // drawer: DrawerWidget(
-      //   closeDrawer: () => _scaffoldKey.currentState!.closeDrawer(),
-      //   loginDataModel: widget.loginDataModel,
-      // ),
       bottomNavigationBar: CurvedNavigationBar(
         key: _bottomNavigationKey,
         index: 2,
         height: 60.0,
         items: [
           _page != 0
-              ?  MySvgWidget(path: ImageAssets.openBookIcon, size: 15,imageColor: AppColors.white,)
-              :  MySvgWidget(path: ImageAssets.openBookIcon, size: 25,imageColor: AppColors.primary,),
+              ? MySvgWidget(
+                  path: ImageAssets.openBookIcon,
+                  size: 25,
+                  imageColor: AppColors.white,
+                )
+              : MySvgWidget(
+                  path: ImageAssets.openBookIcon,
+                  size: 40,
+                  imageColor: AppColors.primary,
+                ),
           _page != 1
-              ?  SizedBox(width:30,height:30,child: MySvgWidget(path: ImageAssets.booksIcon, size: 15,imageColor: AppColors.white,))
-              :  SizedBox(width:40,height:40,child: MySvgWidget(path: ImageAssets.booksIcon, size: 25,imageColor: AppColors.primary,)),
+              ? MySvgWidget(
+                  path: ImageAssets.booksIcon,
+                  size: 25,
+                  imageColor: AppColors.white,
+                )
+              : MySvgWidget(
+                  path: ImageAssets.booksIcon,
+                  size: 40,
+                  imageColor: AppColors.primary,
+                ),
           _page != 2
-              ?  MySvgWidget(path: ImageAssets.homeIcon, size: 30,imageColor: AppColors.white,)
-              :  MySvgWidget(path: ImageAssets.homeIcon, size: 40,imageColor: AppColors.primary,),
+              ? MySvgWidget(
+                  path: ImageAssets.homeIcon,
+                  size: 25,
+                  imageColor: AppColors.white,
+                )
+              : MySvgWidget(
+                  path: ImageAssets.homeIcon,
+                  size: 40,
+                  imageColor: AppColors.primary,
+                ),
           _page != 3
-              ?  MySvgWidget(path: ImageAssets.notificationIcon, size: 30,imageColor: AppColors.white,)
-              :  MySvgWidget(path: ImageAssets.notificationIcon, size: 40,imageColor: AppColors.primary,),
+              ? MySvgWidget(
+                  path: ImageAssets.notificationIcon,
+                  size: 25,
+                  imageColor: AppColors.white,
+                )
+              : MySvgWidget(
+                  path: ImageAssets.notificationIcon,
+                  size: 40,
+                  imageColor: AppColors.primary,
+                ),
           _page != 4
-              ?  MySvgWidget(path: ImageAssets.moreIcon, size: 30,imageColor: AppColors.white,)
-              :  MySvgWidget(path: ImageAssets.moreIcon, size: 40,imageColor: AppColors.primary,),
+              ? MySvgWidget(
+                  path: ImageAssets.moreIcon,
+                  size: 25,
+                  imageColor: AppColors.white,
+                )
+              : MySvgWidget(
+                  path: ImageAssets.moreIcon,
+                  size: 40,
+                  imageColor: AppColors.primary,
+                ),
         ],
         color: AppColors.secondPrimary,
         buttonBackgroundColor: AppColors.secondPrimary,
@@ -55,15 +90,11 @@ class _NavigatorBarState extends State<NavigatorBar> {
         animationCurve: Curves.linear,
         animationDuration: const Duration(milliseconds: 100),
         onTap: (index) {
-          print(index);
-
-        },
-        letIndexChange: (index) {
           setState(() {
             _page = index;
           });
-          return false;
         },
+        letIndexChange: (index) => true,
       ),
       body: SafeArea(
         child: pages(),
@@ -73,15 +104,25 @@ class _NavigatorBarState extends State<NavigatorBar> {
 
   Widget pages() {
     if (_page == 0) {
-      return Container(color: Colors.orange,);
+      return Container(
+        color: Colors.orange,
+      );
     } else if (_page == 1) {
-      return Container(color: Colors.red,);
+      return Container(
+        color: Colors.red,
+      );
     } else if (_page == 2) {
-      return Container(color: Colors.green,);
+      return Container(
+        color: Colors.green,
+      );
     } else if (_page == 3) {
-      return Container(color: Colors.blue,);
+      return Container(
+        color: Colors.blue,
+      );
     } else {
-      return Container(color: Colors.teal,);
+      return Container(
+        color: Colors.teal,
+      );
     }
   }
 }

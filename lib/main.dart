@@ -12,9 +12,6 @@ import 'app_bloc_observer.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   // options: DefaultFirebaseOptions.currentPlatform,
-  // );
   await injector.setup();
   Bloc.observer = AppBlocObserver();
   runApp(
@@ -24,7 +21,7 @@ Future<void> main() async {
       saveLocale: false,
       startLocale: const Locale('en', ''),
       fallbackLocale: const Locale('en', ''),
-      child: Elmazoon(),
+      child: const Elmazoon(),
     ),
   );
 }

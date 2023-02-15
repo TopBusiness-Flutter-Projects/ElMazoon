@@ -23,13 +23,11 @@ class _ElmazoonState extends State<Elmazoon> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(
-
-      SystemUiOverlayStyle(
-        statusBarColor: AppColors.transparent,
-
-      ),
-    );
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   SystemUiOverlayStyle(
+    //     statusBarColor: AppColors.transparent,
+    //   ),
+    // );
   }
 
   @override
