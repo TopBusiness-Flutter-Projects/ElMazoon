@@ -9,6 +9,8 @@ class ImageAssets {
   static const String facebookImage = '$imagePath/facebook.png';
   static const String youtubeImage = '$imagePath/youtube.png';
   static const String callImage = '$imagePath/call.png';
+  static const String appBarImage = '$imagePath/appbar_background.png';
+  static const String userImage = '$imagePath/user.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';
@@ -16,6 +18,7 @@ class ImageAssets {
   static const String openBookIcon = '$iconsPath/open_book.svg';
   static const String booksIcon = '$iconsPath/books.svg';
   static const String notificationIcon = '$iconsPath/notification.svg';
+  static const String settingIcon = '$iconsPath/setting.svg';
   static const String moreIcon = '$iconsPath/more.svg';
 
 
