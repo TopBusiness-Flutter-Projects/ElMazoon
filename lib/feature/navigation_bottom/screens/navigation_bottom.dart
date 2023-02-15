@@ -23,6 +23,18 @@ class _NavigatorBarState extends State<NavigatorBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+        child: AppBar(
+          title: appbar(),
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(ImageAssets.appBarImage),
+                    fit: BoxFit.fill)),
+          ),
+        ),
+      ),
       key: _scaffoldKey,
       bottomNavigationBar: CurvedNavigationBar(
         key: _bottomNavigationKey,
@@ -122,6 +134,133 @@ class _NavigatorBarState extends State<NavigatorBar> {
       );
     } else {
       return const ProfilePage();
+    }
+  }
+
+  Widget appbar() {
+    if (_page == 0) {
+      return Column(
+        children: [
+          Text(
+            'ذاكر',
+            style: TextStyle(
+              color: AppColors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            'محاضرات وامتحانات',
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      );
+    } else if (_page == 1) {
+      return Column(
+        children: [
+          Text(
+            'استكشاف',
+            style: TextStyle(
+              color: AppColors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            'مصادر ومراجع',
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      );
+    } else if (_page == 2) {
+      return Column(
+        children: [
+          Text(
+            'ذاكر',
+            style: TextStyle(
+              color: AppColors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            'محاضرات وامتحانات',
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      );
+    } else if (_page == 3) {
+      return Column(
+        children: [
+          Text(
+            'ذاكر',
+            style: TextStyle(
+              color: AppColors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            'محاضرات وامتحانات',
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Padding(
+        padding:
+        const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+        child: Row(
+          children: [
+            Image.asset(
+              ImageAssets.userImage,
+              width: 50,
+              height: 50,
+            ),
+            SizedBox(width: 7,),
+            Column(children: [
+              Text('name',style: TextStyle(color: AppColors.white,fontSize: 13,fontWeight: FontWeight.bold),),
+              SizedBox(height: 5,),
+              Text('code',style: TextStyle(color: AppColors.white,fontSize: 13,fontWeight: FontWeight.normal),),
+
+            ],),
+            SizedBox(width: 30,),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Align(alignment: Alignment.bottomCenter,
+                child: Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+                      color: AppColors.primary,
+                      shape: BoxShape.rectangle
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text('name',style: TextStyle(color: AppColors.white,fontSize: 13,fontWeight: FontWeight.bold),),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(child: Container()),
+            Center( child: MySvgWidget(
+              path: ImageAssets.settingIcon,
+              size: 40,
+              imageColor: AppColors.white,
+            ))
+          ],
+        ),
+      );
     }
   }
 }
