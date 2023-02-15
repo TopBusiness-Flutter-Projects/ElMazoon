@@ -20,6 +20,10 @@ class ImageAssets {
   static const String notificationIcon = '$iconsPath/notification.svg';
   static const String settingIcon = '$iconsPath/setting.svg';
   static const String moreIcon = '$iconsPath/more.svg';
+  static const String usereditIcon = '$iconsPath/user_edit.svg';
+  static const String degreeIcon = '$iconsPath/degree.svg';
+  static const String cupIcon = '$iconsPath/cup.svg';
+  static const String calenderIcon = '$iconsPath/calender.svg';
 
 
   //Lottie

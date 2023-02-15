@@ -2,6 +2,13 @@
  "login_account": "Login to the account",
  "please_write_code": "Please write the access code received from the secretariat",
  "login": "Login",
- "contact_us_from": "Contact Us From"
-
+ "contact_us_from": "Contact Us From",
+ "register_paper_exam":"Register for the paper exam",
+ "register_data_enter_exam": "Register your data to be able to enter the exam",
+ "mygards_rate": "My grades and ratings",
+ "grades_performance": "Grades and performance appraisals",
+ "exam_hero": "Examination heroes",
+ "first_exams": "The first partial and comprehensive exams",
+ "month_plan": "monthly plan",
+ "month_course": "This month's course"
 }

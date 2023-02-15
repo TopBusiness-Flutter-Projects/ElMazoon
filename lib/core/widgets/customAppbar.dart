@@ -17,7 +17,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return Padding(
       padding:
       const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
-      child: Row(
+      child:
+      Row(
         children: [
           Image.asset(
             ImageAssets.userImage,
