@@ -24,8 +24,10 @@ class _ElmazoonState extends State<Elmazoon> {
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(
+
       SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
+
       ),
     );
   }

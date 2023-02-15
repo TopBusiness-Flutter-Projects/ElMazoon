@@ -1,3 +1,4 @@
+import 'package:elmazoon/feature/auth/login/presentation/screens/login.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/utils/app_strings.dart';
@@ -20,6 +21,10 @@ class AppRoutes {
       case Routes.initialRoute:
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
+        );
+        case Routes.loginRoute:
+        return MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
         );
       default:
         return undefinedRoute();

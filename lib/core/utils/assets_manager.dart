@@ -6,6 +6,7 @@ class ImageAssets {
   //images
   static const String walaaLogoImage = '$imagePath/walaa_logo.png';
   static const String loginImage = '$imagePath/login_image.png';
+  static const String twoCircleImage = '$imagePath/two_circle.png';
   static const String verificationImage = '$imagePath/verification.png';
   static const String boarding1Image = '$imagePath/onboarding1.png';
   static const String boarding2Image = '$imagePath/onboarding2.png';
@@ -13,6 +14,9 @@ class ImageAssets {
   static const String noUserImage = '$imagePath/no_user.png';
   static const String homeImage = '$imagePath/home.png';
   static const String profileImage = '$imagePath/user.png';
+  static const String facebookImage = '$imagePath/facebook.png';
+  static const String youtubeImage = '$imagePath/youtube.png';
+  static const String callImage = '$imagePath/call.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';

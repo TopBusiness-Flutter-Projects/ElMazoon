@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:elmazoon/core/utils/app_routes.dart';
+import 'package:elmazoon/feature/auth/login/presentation/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,11 +20,17 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   }
 
   _startDelay() async {
-    _timer = Timer(const Duration(milliseconds: 3000), () => _goNext());
+    _timer = Timer( Duration(milliseconds: 3000),() {
+
+    },);
   }
 
   Future<void> _getStoreUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    Navigator.pushNamed(
+        context,
+       Routes.loginRoute,
+    );
     if (prefs.getString('user') != null) {
       // Navigator.pushReplacement(
       //   context,
@@ -58,13 +66,21 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       duration: const Duration(seconds: 1),
       vsync: this,
     );
+    _controller!.addStatusListener((status) {
+      if(status.index==3){
+        _goNext();
+      }
+
+    });
     _animation = Tween<Offset>(
       begin: const Offset(0.0, 0.0),
-      end: const Offset(0.0, -1.5),
+      end: const Offset(0.0, -.9),
     ).animate(CurvedAnimation(
       parent: _controller!,
-      curve: Curves.easeInCubic,
-    ));
+      curve: Curves.easeInOut,
+
+    ),
+    );
     Future.delayed(const Duration(milliseconds: 3000), () {
       _controller!.forward();
     });
@@ -82,10 +98,12 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       body: Center(
         child: SlideTransition(
           position: _animation!,
+
           child: SizedBox(
-              width: 300,
+              width: 350,
               height: 150,
               child: Image.asset('assets/images/logo.png')),
+
         ),
       ),
     );
