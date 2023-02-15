@@ -5,6 +5,7 @@ import 'package:elmazoon/feature/mainscreens/profilePage/presentation/pages/prof
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/assets_manager.dart';
+import '../../../core/widgets/customAppbar.dart';
 
 class NavigatorBar extends StatefulWidget {
   const NavigatorBar({Key? key}) : super(key: key);
@@ -23,15 +24,18 @@ class _NavigatorBarState extends State<NavigatorBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0),
-        child: AppBar(
-          title: appbar(),
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(ImageAssets.appBarImage),
-                    fit: BoxFit.fill)),
+      appBar: AppBar(
+        toolbarHeight: 80,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+          child: appbar(),
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(ImageAssets.appBarImage),
+              fit: BoxFit.fill,
+            ),
           ),
         ),
       ),
@@ -219,48 +223,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
         ],
       );
     } else {
-      return Padding(
-        padding:
-        const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
-        child: Row(
-          children: [
-            Image.asset(
-              ImageAssets.userImage,
-              width: 50,
-              height: 50,
-            ),
-            SizedBox(width: 7,),
-            Column(children: [
-              Text('name',style: TextStyle(color: AppColors.white,fontSize: 13,fontWeight: FontWeight.bold),),
-              SizedBox(height: 5,),
-              Text('code',style: TextStyle(color: AppColors.white,fontSize: 13,fontWeight: FontWeight.normal),),
-
-            ],),
-            SizedBox(width: 30,),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Align(alignment: Alignment.bottomCenter,
-                child: Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                      color: AppColors.primary,
-                      shape: BoxShape.rectangle
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Text('name',style: TextStyle(color: AppColors.white,fontSize: 13,fontWeight: FontWeight.bold),),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(child: Container()),
-            Center( child: MySvgWidget(
-              path: ImageAssets.settingIcon,
-              size: 40,
-              imageColor: AppColors.white,
-            ))
-          ],
-        ),
-      );
+      return const CustomAppBar();
     }
   }
 }
