@@ -1,11 +1,11 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/widgets/my_svg_widget.dart';
-import 'package:elmazoon/feature/mainscreens/profilePage/presentation/pages/profile_page.dart';
+import 'package:elmazoon/feature/mainscreens/profilePage/presentation/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/assets_manager.dart';
-import '../../../core/widgets/customAppbar.dart';
+import '../../mainscreens/profilePage/presentation/widgets/customAppbar.dart';
 import '../../mainscreens/study_page/screens/study_page.dart';
 
 class NavigatorBar extends StatefulWidget {

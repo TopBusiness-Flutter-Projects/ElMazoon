@@ -1,8 +1,8 @@
 import 'package:elmazoon/core/utils/assets_manager.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/app_colors.dart';
-import 'my_svg_widget.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/widgets/my_svg_widget.dart';
 
 class CustomAppBar extends StatefulWidget {
   const CustomAppBar({Key? key}) : super(key: key);

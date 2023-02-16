@@ -12,6 +12,7 @@ class ImageAssets {
   static const String callImage = '$imagePath/call.png';
   static const String appBarImage = '$imagePath/appbar_background.png';
   static const String userImage = '$imagePath/user.png';
+  static const String userexamImage = '$imagePath/user_exam.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';
