@@ -13,6 +13,12 @@ class AppColors {
   static Color containerBackgroundColor = HexColor('#F7DFB1');
   static Color iconBackgroundColor = HexColor('#402D26');
   static Color gray1 = HexColor('#404040');
+  static Color unselectedTab = HexColor('#D9D9D9');
+
+
+  static Color blueColor1 = HexColor('#6A85B6');
+  static Color blueColor2 = HexColor('#BAC8E0');
+
 
   static Color hint = Colors.grey;
   static Color blackLite = Colors.black12;

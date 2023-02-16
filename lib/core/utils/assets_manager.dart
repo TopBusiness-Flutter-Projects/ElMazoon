@@ -4,6 +4,7 @@ const String lottiePath = 'assets/lottie';
 
 class ImageAssets {
   //images
+  static const String logoImage = '$imagePath/logo.png';
   static const String twoCircleImage = '$imagePath/two_circle.png';
   static const String profileImage = '$imagePath/user.png';
   static const String facebookImage = '$imagePath/facebook.png';
@@ -20,6 +21,8 @@ class ImageAssets {
   static const String notificationIcon = '$iconsPath/notification.svg';
   static const String settingIcon = '$iconsPath/setting.svg';
   static const String moreIcon = '$iconsPath/more.svg';
+  static const String studyTap1Icon = '$iconsPath/study_tap1.svg';
+  static const String studyTap2Icon = '$iconsPath/study_tap2.svg';
   static const String usereditIcon = '$iconsPath/user_edit.svg';
   static const String degreeIcon = '$iconsPath/degree.svg';
   static const String cupIcon = '$iconsPath/cup.svg';

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/customAppbar.dart';
+import '../../mainscreens/study_page/screens/study_page.dart';
 
 class NavigatorBar extends StatefulWidget {
   const NavigatorBar({Key? key}) : super(key: key);
@@ -121,9 +122,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
 
   Widget pages() {
     if (_page == 0) {
-      return Container(
-        color: Colors.orange,
-      );
+      return const StudyPage();
     } else if (_page == 1) {
       return Container(
         color: Colors.red,
