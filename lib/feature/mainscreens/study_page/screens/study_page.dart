@@ -1,4 +1,5 @@
 import 'package:elmazoon/core/utils/app_colors.dart';
+import 'package:elmazoon/feature/mainscreens/study_page/screens/class_name_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -110,12 +111,22 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                           ),
                           itemCount: 10,
                           itemBuilder: (BuildContext context, int index) {
-                            return ContainerWithTwoColorWidget(
-                              title: 'First Class',
-                              imagePath: ImageAssets.logoImage,
-                              color1: AppColors.blueColor1,
-                              color2: AppColors.blueColor2,
-                              textColor: AppColors.secondPrimary,
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ClassNameScreen(),
+                                  ),
+                                );
+                              },
+                              child: ContainerWithTwoColorWidget(
+                                title: 'First Class',
+                                imagePath: ImageAssets.logoImage,
+                                color1: AppColors.blueColor1,
+                                color2: AppColors.blueColor2,
+                                textColor: AppColors.secondPrimary,
+                              ),
                             );
                           },
                         ),
@@ -123,8 +134,45 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
-                Container(
-                  color: Colors.green,
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            // childAspectRatio: .9,
+                            mainAxisSpacing: 25,
+                            crossAxisSpacing: 25,
+                            crossAxisCount: 2,
+                          ),
+                          itemCount: 10,
+                          itemBuilder: (BuildContext context, int index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ClassNameScreen(),
+                                  ),
+                                );
+                              },
+                              child: ContainerWithTwoColorWidget(
+                                title: 'First Class',
+                                imagePath: ImageAssets.logoImage,
+                                color1: AppColors.primary,
+                                color2: AppColors.primary,
+                                textColor: AppColors.secondPrimary,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
