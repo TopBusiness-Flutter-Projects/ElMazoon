@@ -19,8 +19,8 @@ Future<void> main() async {
       supportedLocales: const [Locale('ar', ''), Locale('en', '')],
       path: 'lang',
       saveLocale: false,
-      startLocale: const Locale('en', ''),
-      fallbackLocale: const Locale('en', ''),
+      startLocale: const Locale('ar', ''),
+      fallbackLocale: const Locale('ar', ''),
       child: const Elmazoon(),
     ),
   );

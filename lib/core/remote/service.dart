@@ -6,7 +6,6 @@ import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
 import '../models/login_model.dart';
-import '../models/response_message.dart';
 import '../utils/app_strings.dart';
 
 class ServiceApi {
@@ -14,15 +13,15 @@ class ServiceApi {
 
   ServiceApi(this.dio);
 
-  Future<Either<Failure, LoginModel>> postLogin(String phone) async {
+  Future<Either<Failure, LoginModel>> postLogin(String code) async {
     try {
       final response = await dio.post(
         EndPoints.loginUrl,
         body: {
-          'phone': phone,
-          'phone_code': AppStrings.phoneCode,
+          'code': code,
         },
       );
+      print(response);
       return Right(LoginModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());

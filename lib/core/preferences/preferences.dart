@@ -36,7 +36,7 @@ class Preferences {
     LoginModel userModel;
     if (jsonData != null) {
       userModel = LoginModel.fromJson(jsonDecode(jsonData));
-      userModel.data!.user.isLoggedIn = true;
+      userModel.data?.isLoggedIn = true;
     } else {
       userModel = LoginModel();
     }

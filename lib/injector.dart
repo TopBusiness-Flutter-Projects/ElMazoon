@@ -6,6 +6,7 @@ import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
 import 'core/remote/service.dart';
+import 'feature/auth/login/presentation/cubit/login_cubit.dart';
 import 'feature/splash/presentation/cubit/splash_cubit.dart';
 
 final serviceLocator = GetIt.instance;
@@ -17,6 +18,9 @@ Future<void> setup() async {
 
   serviceLocator.registerFactory(
     () => SplashCubit(),
+  );
+  serviceLocator.registerFactory(
+    () => LoginCubit(serviceLocator()),
   );
   ///////////////////////////////////////////////////////////////////////////////
 

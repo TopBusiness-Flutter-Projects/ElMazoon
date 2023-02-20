@@ -10,6 +10,8 @@ import 'core/utils/app_routes.dart';
 import 'core/utils/app_strings.dart';
 import 'package:elmazoon/injector.dart' as injector;
 
+import 'feature/auth/login/presentation/cubit/login_cubit.dart';
+
 
 class Elmazoon extends StatefulWidget {
   const Elmazoon({Key? key}) : super(key: key);
@@ -38,6 +40,10 @@ class _ElmazoonState extends State<Elmazoon> {
         BlocProvider(
           create: (_) =>
               injector.serviceLocator<SplashCubit>(),
+        ),
+        BlocProvider(
+          create: (_) =>
+              injector.serviceLocator<LoginCubit>(),
         ),
       ],
       child: MaterialApp(

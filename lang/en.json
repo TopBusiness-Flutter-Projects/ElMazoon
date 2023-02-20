@@ -15,6 +15,10 @@
  "exam_level": "Your level in exams and exercises",
  "part_exam": "Partial exams",
  "tests": "Tests",
- "comprehensive_exam": "Comprehensive exams"
+ "comprehensive_exam": "Comprehensive exams",
+ "login_success": "Login Successfully",
+ "field_required": "Please enter the code !!!",
+ "code_not_found": "Code is Not Found !!!",
+ "code_not_subscribe": "The student is not active, please contact the secretariat !!!"
 
 }

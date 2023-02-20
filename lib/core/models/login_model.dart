@@ -4,9 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
-import 'package:elmazoon/core/utils/app_strings.dart';
-
 LoginModel loginModelFromJson(String str) =>
     LoginModel.fromJson(json.decode(str));
 
@@ -19,12 +16,12 @@ class LoginModel {
     this.code,
   });
 
-  final Data? data;
-  final String? message;
-  final int? code;
+  User? data;
+  String? message;
+  int? code;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-        data: json["data"] != null ? Data.fromJson(json["data"]) : null,
+        data:json["data"]!=null? User.fromJson(json["data"]):null,
         message: json["message"],
         code: json["code"],
       );
@@ -36,87 +33,73 @@ class LoginModel {
       };
 }
 
-class Data {
-  Data({
-    required this.user,
-    required this.accessToken,
-    required this.tokenType,
+class User {
+  User({
+    required this.id,
+    required this.nameAr,
+    required this.nameEn,
+    this.email,
+    required this.phone,
+    required this.fatherPhone,
+    required this.userType,
+    required this.image,
+    required this.loginStatus,
+    required this.userStatus,
+    required this.code,
+    required this.dateStartCode,
+    required this.dateEndCode,
+    required this.token,
   });
 
-  UserData user;
-  String accessToken;
-  String tokenType;
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        user: UserData.fromJson(json["user"]),
-        accessToken: json["access_token"],
-        tokenType: json["token_type"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "user": user.toJson(),
-        "access_token": accessToken,
-        "token_type": tokenType,
-      };
-}
-
-class UserData {
-  UserData({
-    this.id,
-    this.name,
-    this.phoneCode,
-    this.phone,
-    this.status,
-    this.image,
-    this.userType,
-    this.balance,
-    this.token,
-  });
-
-  final int? id;
-  final String? name;
-  final String? phoneCode;
-  final String? phone;
-  final int? status;
-  final String? image;
-  dynamic userType;
-  final int? balance;
+  int id;
+  String nameAr;
+  String nameEn;
+  dynamic email;
+  String phone;
+  String fatherPhone;
+  String userType;
+  String image;
+  String loginStatus;
+  String userStatus;
+  String code;
+  DateTime dateStartCode;
+  DateTime dateEndCode;
+  String token;
   late bool isLoggedIn = false;
-  final String? token;
 
-  factory UserData.fromJson(Map<String, dynamic> json) => UserData(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
-        name: json["name"],
-        phoneCode: json["phone_code"],
+        nameAr: json["name_ar"],
+        nameEn: json["name_en"],
+        email: json["email"],
         phone: json["phone"],
-        status: json["status"],
-        image: json["image"],
+        fatherPhone: json["father_phone"],
         userType: json["user_type"],
-        balance: json["balance"],
+        image: json["image"],
+        loginStatus: json["login_status"],
+        userStatus: json["user_status"],
+        code: json["code"],
+        dateStartCode: DateTime.parse(json["date_start_code"]),
+        dateEndCode: DateTime.parse(json["date_end_code"]),
+        token: json["token"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "name": name,
-        "phone_code": phoneCode,
+        "name_ar": nameAr,
+        "name_en": nameEn,
+        "email": email,
         "phone": phone,
-        "status": status,
-        "image": image,
+        "father_phone": fatherPhone,
         "user_type": userType,
-        "balance": balance,
-      };
-
-  Future<Map<String, dynamic>> updateToJson() async => {
-        if (name != null) ...{
-          "name": name,
-        },
-        "role_id": 2,
-        "phone_code": AppStrings.phoneCode,
-        if (phone != null) ...{
-          "phone": phone,
-        },
-        if (image != null) ...{
-          "image": await MultipartFile.fromFile(image!),
-        }
+        "image": image,
+        "login_status": loginStatus,
+        "user_status": userStatus,
+        "code": code,
+        "date_start_code":
+            "${dateStartCode.year.toString().padLeft(4, '0')}-${dateStartCode.month.toString().padLeft(2, '0')}-${dateStartCode.day.toString().padLeft(2, '0')}",
+        "date_end_code":
+            "${dateEndCode.year.toString().padLeft(4, '0')}-${dateEndCode.month.toString().padLeft(2, '0')}-${dateEndCode.day.toString().padLeft(2, '0')}",
+        "token": token,
       };
 }
