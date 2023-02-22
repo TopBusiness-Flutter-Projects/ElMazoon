@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../utils/assets_manager.dart';
+import 'network_image.dart';
+
 class ContainerWithTwoColorWidget extends StatelessWidget {
-  const ContainerWithTwoColorWidget({Key? key, required this.imagePath, required this.title, required this.color1, required this.color2, required this.textColor}) : super(key: key);
+  const ContainerWithTwoColorWidget(
+      {Key? key,
+      required this.imagePath,
+      required this.title,
+      required this.color1,
+      required this.color2,
+      required this.textColor})
+      : super(key: key);
 
   final String imagePath;
   final String title;
@@ -25,7 +35,11 @@ class ContainerWithTwoColorWidget extends StatelessWidget {
       child: Column(
         children: [
           const Spacer(),
-          Image.asset(imagePath),
+          imagePath.isEmpty
+              ? Image.asset(ImageAssets.logoImage)
+              : SizedBox(
+              width: MediaQuery.of(context).size.width/3,
+              child: ManageNetworkImage(imageUrl: imagePath)),
           const Spacer(),
           Text(
             title,

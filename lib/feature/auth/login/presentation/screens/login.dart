@@ -138,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             child: TextFormField(
                                               maxLines: 1,
                                               autofocus: false,
+                                              textAlign: TextAlign.center,
                                               controller: context.read<LoginCubit>().codeController,
                                               cursorColor: AppColors.primary,
                                               keyboardType: TextInputType.text,

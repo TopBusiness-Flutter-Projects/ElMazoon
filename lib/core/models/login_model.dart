@@ -36,14 +36,13 @@ class LoginModel {
 class User {
   User({
     required this.id,
-    required this.nameAr,
-    required this.nameEn,
+    required this.name,
     this.email,
     required this.phone,
     required this.fatherPhone,
-    required this.userType,
+    // required this.userType,
     required this.image,
-    required this.loginStatus,
+    // required this.loginStatus,
     required this.userStatus,
     required this.code,
     required this.dateStartCode,
@@ -52,14 +51,13 @@ class User {
   });
 
   int id;
-  String nameAr;
-  String nameEn;
+  String name;
   dynamic email;
   String phone;
   String fatherPhone;
-  String userType;
+  // String userType;
   String image;
-  String loginStatus;
+  // String loginStatus;
   String userStatus;
   String code;
   DateTime dateStartCode;
@@ -69,14 +67,13 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
-        nameAr: json["name_ar"],
-        nameEn: json["name_en"],
+        name: json["name"],
         email: json["email"],
         phone: json["phone"],
         fatherPhone: json["father_phone"],
-        userType: json["user_type"],
+        // userType: json["user_type"],
         image: json["image"],
-        loginStatus: json["login_status"],
+        // loginStatus: json["login_status"],
         userStatus: json["user_status"],
         code: json["code"],
         dateStartCode: DateTime.parse(json["date_start_code"]),
@@ -86,14 +83,13 @@ class User {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "name_ar": nameAr,
-        "name_en": nameEn,
+        "name": name,
         "email": email,
         "phone": phone,
         "father_phone": fatherPhone,
-        "user_type": userType,
+        // "user_type": userType,
         "image": image,
-        "login_status": loginStatus,
+        // "login_status": loginStatus,
         "user_status": userStatus,
         "code": code,
         "date_start_code":

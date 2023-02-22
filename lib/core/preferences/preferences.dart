@@ -26,8 +26,13 @@ class Preferences {
   Future<void> setUser(LoginModel loginModel) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(
-        'user', jsonEncode(LoginModel.fromJson(loginModel.toJson())));
-    print(await getUserModel());
+      'user',
+      jsonEncode(
+        LoginModel.fromJson(
+          loginModel.toJson(),
+        ),
+      ),
+    );
   }
 
   Future<LoginModel> getUserModel() async {
@@ -52,4 +57,10 @@ class Preferences {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.getString(AppStrings.locale) ?? 'en';
   }
+
+  Future<void> savedLang(String local) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(AppStrings.locale, local);
+  }
+
 }

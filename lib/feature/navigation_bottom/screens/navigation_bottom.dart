@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/widgets/my_svg_widget.dart';
 import 'package:elmazoon/feature/mainscreens/profilePage/presentation/screens/profile_page.dart';
@@ -24,6 +25,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
 
   @override
   Widget build(BuildContext context) {
+    String lang = EasyLocalization.of(context)!.locale.languageCode;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
@@ -108,6 +110,11 @@ class _NavigatorBarState extends State<NavigatorBar> {
         animationCurve: Curves.linear,
         animationDuration: const Duration(milliseconds: 100),
         onTap: (index) {
+          if(index==3){
+            lang == 'ar'
+                ? EasyLocalization.of(context)!.setLocale(const Locale('en'))
+                : EasyLocalization.of(context)!.setLocale(const Locale('ar'));
+          }
           setState(() {
             _page = index;
           });

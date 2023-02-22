@@ -445,6 +445,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.0"
+  mac_address:
+    dependency: "direct main"
+    description:
+      name: mac_address
+      sha256: "630aca295b6c525c1f79d38c8669a65aa06a3e9ff870f73780a8d9694ba789ff"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  macadress_gen:
+    dependency: "direct main"
+    description:
+      name: macadress_gen
+      sha256: b02db7785ba834323867185e810d1740ac5f28acc0c905774cb66b72c8bc05ac
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   matcher:
     dependency: transitive
     description:
