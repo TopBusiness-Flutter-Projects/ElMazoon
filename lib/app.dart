@@ -34,10 +34,12 @@ class _ElmazoonState extends State<Elmazoon> {
   @override
   Widget build(BuildContext context) {
     // print(",kkk");
-    // print( EasyLocalization.of(context)!.locale.languageCode);
-    // Preferences.instance.savedLang(
-    //   EasyLocalization.of(context)!.locale.languageCode,
-    // );
+
+    //EasyLocalization.of(context)!.setLocale(const Locale('ar'));
+     print( EasyLocalization.of(context)!.locale.languageCode);
+    Preferences.instance.savedLang(
+      EasyLocalization.of(context)!.locale.languageCode,
+    );
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -51,9 +53,9 @@ class _ElmazoonState extends State<Elmazoon> {
         ),
       ],
       child: MaterialApp(
-        localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
+        localizationsDelegates: context.localizationDelegates,
         debugShowCheckedModeBanner: false,
         title: AppStrings.appName,
         onGenerateRoute: AppRoutes.onGenerateRoute,

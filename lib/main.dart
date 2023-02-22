@@ -14,13 +14,14 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   await injector.setup();
   Bloc.observer = AppBlocObserver();
+
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('ar', ''), Locale('en', '')],
-      path: 'lang',
-      saveLocale: false,
-      startLocale: const Locale('ar', ''),
-      fallbackLocale: const Locale('ar', ''),
+      supportedLocales:  [Locale('ar', ''), Locale('en', '')],
+      path: 'assets/lang',
+      saveLocale: true,
+      startLocale:  Locale('ar', ''),
+      fallbackLocale:  Locale('ar', ''),
       child: const Elmazoon(),
     ),
   );
