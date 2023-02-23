@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'package:elmazoon/core/preferences/preferences.dart';
-import 'package:elmazoon/core/utils/app_routes.dart';
-import 'package:elmazoon/feature/auth/login/presentation/screens/login.dart';
+import 'package:elmazoon/feature/login/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';

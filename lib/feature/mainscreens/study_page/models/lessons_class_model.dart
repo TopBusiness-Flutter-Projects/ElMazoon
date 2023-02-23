@@ -35,24 +35,24 @@ class LessonsClassModel {
 class LessonsClassDatum {
   LessonsClassDatum({
     required this.id,
-    required this.nameAr,
-    required this.nameEn,
+    required this.name,
+    required this.type,
     this.note,
     required this.createdAt,
     required this.updatedAt,
   });
 
   int id;
-  String nameAr;
-  String nameEn;
+  String name;
+  String type;
   dynamic note;
   DateTime createdAt;
   DateTime updatedAt;
 
   factory LessonsClassDatum.fromJson(Map<String, dynamic> json) => LessonsClassDatum(
     id: json["id"],
-    nameAr: json["name_ar"],
-    nameEn: json["name_en"],
+    name: json["name"],
+    type: json["type"],
     note: json["note"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
@@ -60,8 +60,8 @@ class LessonsClassDatum {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name_ar": nameAr,
-    "name_en": nameEn,
+    "name": name,
+    "type": type,
     "note": note,
     "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
     "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",

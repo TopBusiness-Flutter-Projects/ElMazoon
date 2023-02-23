@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/models/all_classes_model.dart';
 
+import '../../feature/login/models/communication_model.dart';
 import '../../feature/mainscreens/study_page/models/lessons_class_model.dart';
 import '../api/base_api_consumer.dart';
 import '../api/end_points.dart';
@@ -34,6 +35,7 @@ class ServiceApi {
   Future<Either<Failure, AllClassesModel>> getAllClasses() async {
     LoginModel loginModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
+    print('lan : $lan');
     try {
       final response = await dio.get(
         EndPoints.allClassesUrl,
@@ -62,6 +64,15 @@ class ServiceApi {
         ),
       );
       return Right(LessonsClassModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, CommunicationModel>> getCommunicationData() async {
+    try {
+      final response = await dio.get(EndPoints.communicationUrl);
+      return Right(CommunicationModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

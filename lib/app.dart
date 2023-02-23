@@ -8,7 +8,7 @@ import 'core/utils/app_routes.dart';
 import 'core/utils/app_strings.dart';
 import 'package:elmazoon/injector.dart' as injector;
 
-import 'feature/auth/login/presentation/cubit/login_cubit.dart';
+import 'feature/login/cubit/login_cubit.dart';
 import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 
 class Elmazoon extends StatefulWidget {
@@ -22,13 +22,6 @@ class _ElmazoonState extends State<Elmazoon> {
   @override
   void initState() {
     super.initState();
-
-
-    // SystemChrome.setSystemUIOverlayStyle(
-    //   SystemUiOverlayStyle(
-    //     statusBarColor: AppColors.transparent,
-    //   ),
-    // );
   }
 
   @override

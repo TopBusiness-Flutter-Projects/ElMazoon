@@ -6,7 +6,7 @@ import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
 import 'core/remote/service.dart';
-import 'feature/auth/login/presentation/cubit/login_cubit.dart';
+import 'feature/login/cubit/login_cubit.dart';
 import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'feature/splash/presentation/cubit/splash_cubit.dart';
 

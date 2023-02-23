@@ -7,6 +7,7 @@ import 'dart:async';
 
 import 'app.dart';
 import 'app_bloc_observer.dart';
+import 'core/utils/restart_app_class.dart';
 // import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -17,12 +18,12 @@ Future<void> main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales:  [Locale('ar', ''), Locale('en', '')],
+      supportedLocales: [Locale('ar', ''), Locale('en', '')],
       path: 'assets/lang',
       saveLocale: true,
-      startLocale:  Locale('ar', ''),
-      fallbackLocale:  Locale('ar', ''),
-      child: const Elmazoon(),
+      startLocale: Locale('ar', ''),
+      fallbackLocale: Locale('ar', ''),
+      child: HotRestartController(child: const Elmazoon()),
     ),
   );
 }

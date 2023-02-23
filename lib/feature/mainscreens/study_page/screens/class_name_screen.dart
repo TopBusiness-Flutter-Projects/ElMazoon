@@ -18,18 +18,18 @@ class ClassNameScreen extends StatefulWidget {
 }
 
 class _ClassNameScreenState extends State<ClassNameScreen> {
-  List<String> title = [
-    'Lecture',
-    'Exam',
-    'Lecture',
-    'Exam',
-    'Exam',
-    'Lecture',
-    'Exam',
-    'Lecture',
-    'Lecture',
-    'Exam'
-  ];
+  // List<String> title = [
+  //   'Lecture',
+  //   'Exam',
+  //   'Lecture',
+  //   'Exam',
+  //   'Exam',
+  //   'Lecture',
+  //   'Exam',
+  //   'Lecture',
+  //   'Lecture',
+  //   'Exam'
+  // ];
 
   @override
   void initState() {
@@ -70,24 +70,24 @@ class _ClassNameScreenState extends State<ClassNameScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => StructureDetailsScreen(
-                                titleOfPage: title[index],
+                                titleOfPage: cubit.listLessons[index].name,
                               ),
                             ),
                           );
                         },
                         child: ContainerColorTitleWidget(
-                          title: cubit.listLessons[index].nameAr,
-                          subTitle: cubit.listLessons[index].note,
-                          titleBackground: title[index] == 'Lecture'
+                          title: cubit.listLessons[index].name,
+                          subTitle: cubit.listLessons[index].note??'',
+                          titleBackground: cubit.listLessons[index].type == 'lesson'
                               ? AppColors.primary
                               : AppColors.secondPrimary,
-                          color1: title[index] == 'Lecture'
+                          color1: cubit.listLessons[index].type == 'lesson'
                               ? AppColors.blueColor2
                               : AppColors.primary,
-                          color2: title[index] == 'Lecture'
+                          color2: cubit.listLessons[index].type == 'lesson'
                               ? AppColors.blueColor1
                               : AppColors.primary.withOpacity(0.5),
-                          titleIcon: title[index] == 'Lecture'
+                          titleIcon: cubit.listLessons[index].type == 'lesson'
                               ? Icons.video_collection
                               : Icons.newspaper,
                         ),

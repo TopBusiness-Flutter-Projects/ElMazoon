@@ -19,6 +19,9 @@
  "login_success": "Login Successfully",
  "field_required": "Please enter the code !!!",
  "code_not_found": "Code is Not Found !!!",
- "code_not_subscribe": "The student is not active, please contact the secretariat !!!"
+ "code_not_subscribe": "The student is not active, please contact the secretariat !!!",
+ "error_to_get_data": "Error to Get Data !!!",
+ "wait": "Wait",
+ "close": "Close"
 
 }

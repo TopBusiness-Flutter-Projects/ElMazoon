@@ -1,4 +1,4 @@
-import 'package:elmazoon/feature/auth/login/presentation/screens/login.dart';
+import 'package:elmazoon/feature/login/screens/login.dart';
 import 'package:elmazoon/feature/examRegister/presentation/screens/exam_register.dart';
 import 'package:flutter/material.dart';
 

@@ -6,6 +6,8 @@ import 'package:elmazoon/feature/mainscreens/profilePage/presentation/screens/pr
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/assets_manager.dart';
+import '../../../core/utils/restart_app_class.dart';
+import '../../../main.dart';
 import '../../mainscreens/profilePage/presentation/widgets/customAppbar.dart';
 import '../../mainscreens/study_page/screens/study_page.dart';
 
@@ -25,7 +27,6 @@ class _NavigatorBarState extends State<NavigatorBar> {
 
   @override
   Widget build(BuildContext context) {
-    String lang = EasyLocalization.of(context)!.locale.languageCode;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
@@ -110,11 +111,6 @@ class _NavigatorBarState extends State<NavigatorBar> {
         animationCurve: Curves.linear,
         animationDuration: const Duration(milliseconds: 100),
         onTap: (index) {
-          if(index==3){
-            lang == 'ar'
-                ? EasyLocalization.of(context)!.setLocale(const Locale('en'))
-                : EasyLocalization.of(context)!.setLocale(const Locale('ar'));
-          }
           setState(() {
             _page = index;
           });
