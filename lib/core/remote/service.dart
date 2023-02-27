@@ -9,7 +9,8 @@ import '../api/base_api_consumer.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
-import '../models/login_model.dart';
+import '../models/notifications_model.dart';
+import '../models/user_model.dart';
 import '../utils/app_strings.dart';
 
 class ServiceApi {
@@ -17,23 +18,23 @@ class ServiceApi {
 
   ServiceApi(this.dio);
 
-  Future<Either<Failure, LoginModel>> postLogin(String code) async {
+  Future<Either<Failure, UserModel>> postuser(String code) async {
     try {
       final response = await dio.post(
-        EndPoints.loginUrl,
+        EndPoints.userUrl,
         body: {
           'code': code,
         },
       );
       print(response);
-      return Right(LoginModel.fromJson(response));
+      return Right(UserModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
   }
 
   Future<Either<Failure, AllClassesModel>> getAllClasses() async {
-    LoginModel loginModel = await Preferences.instance.getUserModel();
+    UserModel userModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
     print('lan : $lan');
     try {
@@ -41,7 +42,7 @@ class ServiceApi {
         EndPoints.allClassesUrl,
         options: Options(
           headers: {
-            'Authorization': loginModel.data!.token,
+            'Authorization': userModel.data!.token,
             'Accept-Language': lan
           },
         ),
@@ -51,15 +52,34 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, NotificationsModel>> getAllNotification() async {
+    UserModel userModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    print('lan : $lan');
+    try {
+      final response = await dio.get(
+        EndPoints.notificationUrl,
+        options: Options(
+          headers: {
+            'Authorization': userModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(NotificationsModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
   Future<Either<Failure, LessonsClassModel>> getLessonsByClassId(int id) async {
-    LoginModel loginModel = await Preferences.instance.getUserModel();
+    UserModel userModel = await Preferences.instance.getUserModel();
     try {
       final response = await dio.get(
         EndPoints.lessonsByClassIdUrl + id.toString(),
         options: Options(
           headers: {
-            'Authorization': loginModel.data!.token,
+            'Authorization': userModel.data!.token,
           },
         ),
       );

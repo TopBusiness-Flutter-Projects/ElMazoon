@@ -1,8 +1,8 @@
-import 'package:elmazoon/feature/login/screens/login.dart';
 import 'package:elmazoon/feature/examRegister/presentation/screens/exam_register.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/utils/app_strings.dart';
+import '../../feature/login/screens/login.dart';
 import '../../feature/mydegree/presentation/screens/mydegree.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
 

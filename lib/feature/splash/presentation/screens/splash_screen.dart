@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:elmazoon/feature/login/screens/login.dart';
+import 'package:elmazoon/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,20 +41,23 @@ class _SplashScreenState extends State<SplashScreen>
           alignment: Alignment.center,
           duration: const Duration(milliseconds: 1300),
           child: NavigatorBar(
-            // loginDataModel: loginDataModel,
+            // userDataModel: userDataModel,
           ),
         ),
       );
     } else {
-      Navigator.pushReplacement(
-        context,
-        PageTransition(
-          type: PageTransitionType.fade,
-          alignment: Alignment.center,
-          duration: const Duration(milliseconds: 1300),
-          child:  LoginScreen(),
-        ),
-      );
+      Navigator.pushNamedAndRemoveUntil(context, Routes.loginRoute,  ModalRoute.withName(
+        Routes.initialRoute,
+      ),);
+      // Navigator.pushReplacement(
+      //   context,
+      //   PageTransition(
+      //     type: PageTransitionType.fade,
+      //     alignment: Alignment.center,
+      //     duration: const Duration(milliseconds: 1300),
+      //     child:  LoginScreen(),
+      //   ),
+      // );
     }
   }
 

@@ -8,13 +8,14 @@ import 'package:flutter/material.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/utils/restart_app_class.dart';
 import '../../../main.dart';
+import '../../mainscreens/notificationpage/presentation/screens/notification_page.dart';
 import '../../mainscreens/profilePage/presentation/widgets/customAppbar.dart';
 import '../../mainscreens/study_page/screens/study_page.dart';
 
 class NavigatorBar extends StatefulWidget {
   const NavigatorBar({Key? key}) : super(key: key);
 
-  // final LoginDataModel loginDataModel;
+  // final userDataModel userDataModel;
 
   @override
   State<NavigatorBar> createState() => _NavigatorBarState();
@@ -135,9 +136,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
         color: Colors.green,
       );
     } else if (_page == 3) {
-      return Container(
-        color: Colors.blue,
-      );
+      return  NotificationScreen();
     } else {
       return const ProfilePage();
     }
@@ -164,7 +163,8 @@ class _NavigatorBarState extends State<NavigatorBar> {
           ),
         ],
       );
-    } else if (_page == 1) {
+    }
+    else if (_page == 1) {
       return Column(
         children: [
           Text(
@@ -184,7 +184,8 @@ class _NavigatorBarState extends State<NavigatorBar> {
           ),
         ],
       );
-    } else if (_page == 2) {
+    }
+    else if (_page == 2) {
       return Column(
         children: [
           Text(
@@ -208,7 +209,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
       return Column(
         children: [
           Text(
-            'ذاكر',
+            'notification'.tr(),
             style: TextStyle(
               color: AppColors.white,
               fontSize: 20,
@@ -216,7 +217,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
             ),
           ),
           Text(
-            'محاضرات وامتحانات',
+            'important_notification'.tr(),
             style: TextStyle(
               color: AppColors.primary,
               fontSize: 16,

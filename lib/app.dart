@@ -9,6 +9,7 @@ import 'core/utils/app_strings.dart';
 import 'package:elmazoon/injector.dart' as injector;
 
 import 'feature/login/cubit/login_cubit.dart';
+import 'feature/mainscreens/notificationpage/cubit/notification_cubit.dart';
 import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 
 class Elmazoon extends StatefulWidget {
@@ -43,6 +44,9 @@ class _ElmazoonState extends State<Elmazoon> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<StudyPageCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<NotificationCubit>(),
         ),
       ],
       child: MaterialApp(

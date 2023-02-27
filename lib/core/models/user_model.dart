@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final loginModel = loginModelFromJson(jsonString);
+//     final userModel = userModelFromJson(jsonString);
 
 import 'dart:convert';
 
-LoginModel loginModelFromJson(String str) =>
-    LoginModel.fromJson(json.decode(str));
+UserModel userModelFromJson(String str) =>
+    UserModel.fromJson(json.decode(str));
 
-String loginModelToJson(LoginModel data) => json.encode(data.toJson());
+String userModelToJson(UserModel data) => json.encode(data.toJson());
 
-class LoginModel {
-  LoginModel({
+class UserModel {
+  UserModel({
     this.data,
     this.message,
     this.code,
@@ -20,7 +20,7 @@ class LoginModel {
   String? message;
   int? code;
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         data:json["data"]!=null? User.fromJson(json["data"]):null,
         message: json["message"],
         code: json["code"],
@@ -42,7 +42,7 @@ class User {
     required this.fatherPhone,
     // required this.userType,
     required this.image,
-    // required this.loginStatus,
+    // required this.userStatus,
     required this.userStatus,
     required this.code,
     required this.dateStartCode,
@@ -57,7 +57,7 @@ class User {
   String fatherPhone;
   // String userType;
   String image;
-  // String loginStatus;
+  // String userStatus;
   String userStatus;
   String code;
   DateTime dateStartCode;
@@ -73,7 +73,7 @@ class User {
         fatherPhone: json["father_phone"],
         // userType: json["user_type"],
         image: json["image"],
-        // loginStatus: json["login_status"],
+        // userStatus: json["user_status"],
         userStatus: json["user_status"],
         code: json["code"],
         dateStartCode: DateTime.parse(json["date_start_code"]),
@@ -89,7 +89,7 @@ class User {
         "father_phone": fatherPhone,
         // "user_type": userType,
         "image": image,
-        // "login_status": loginStatus,
+        // "user_status": userStatus,
         "user_status": userStatus,
         "code": code,
         "date_start_code":

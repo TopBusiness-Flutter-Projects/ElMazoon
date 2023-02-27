@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/utils/toast_message_method.dart';
 import 'package:elmazoon/core/widgets/custom_button.dart';
-import 'package:elmazoon/feature/login/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,15 +13,16 @@ import '../../../../../core/widgets/circle_image_widget.dart';
 import '../../../core/utils/call_method.dart';
 import '../../../core/utils/show_dialog.dart';
 import '../../navigation_bottom/screens/navigation_bottom.dart';
+import '../cubit/login_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _userScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _userScreenState extends State<LoginScreen> {
   final keyForm = GlobalKey<FormState>();
 
   @override
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   BlocBuilder<LoginCubit, LoginState>(
                     builder: (context, state) {
-                      if (state is LoginLoading) {
+                      if (state is userLoading) {
                         return SizedBox(
                             height: 120,
                             child: Center(
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ));
                       }
-                      if (state is LoginLoaded) {
+                      if (state is userLoaded) {
                         Future.delayed(
                           Duration(milliseconds: 300),
                           () {
@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Duration(milliseconds: 500),
                               () {
                                 toastMessage(
-                                  'login_success'.tr(),
+                                  'user_success'.tr(),
                                   context,
                                   color: AppColors.success,
                                 );
@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   alignment: Alignment.center,
                                   duration: const Duration(milliseconds: 1300),
                                   child: NavigatorBar(
-                                      // loginDataModel: loginDataModel,
+                                      // userDataModel: userDataModel,
                                       ),
                                 ),
                                 (route) => false);
@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       height: 15,
                                     ),
                                     Text(
-                                      'login_account'.tr(),
+                                      'user_account'.tr(),
                                       style: TextStyle(
                                           color: AppColors.white,
                                           fontWeight: FontWeight.bold,
@@ -172,13 +172,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       height: 30,
                                     ),
                                     CustomButton(
-                                      text: 'login'.tr(),
+                                      text: 'user'.tr(),
                                       color: AppColors.secondPrimary,
                                       onClick: () {
                                         if (keyForm.currentState!.validate()) {
                                           context
                                               .read<LoginCubit>()
-                                              .loginWithCode(context);
+                                              .userWithCode(context);
                                         }
                                       },
                                       paddingHorizontal: 60,
@@ -221,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  if (state is LoginCommunicationError) {
+                                  if (state is userCommunicationError) {
                                     createProgressDialog(context, 'wait'.tr());
                                     cubit.getCommunicationData().whenComplete(
                                       () {
@@ -257,7 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(width: 16.0),
                               InkWell(
                                 onTap: () async {
-                                  if (state is LoginCommunicationError) {
+                                  if (state is userCommunicationError) {
                                     createProgressDialog(context, 'wait'.tr());
                                     cubit.getCommunicationData().whenComplete(
                                       () {
@@ -293,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               const SizedBox(width: 16.0),
                               InkWell(
                                 onTap: () {
-                                  if (state is LoginCommunicationError) {
+                                  if (state is userCommunicationError) {
                                     createProgressDialog(context, 'wait'.tr());
                                     cubit.getCommunicationData().whenComplete(
                                       () {

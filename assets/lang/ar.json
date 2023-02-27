@@ -1,7 +1,7 @@
 {
-  "login_account": "الدخول الى الحساب",
+  "user_account": "الدخول الى الحساب",
   "please_write_code": "يرجى كتابة كود الدخول المستلم من السكرتارية",
-  "login": "تسجيل الدخول",
+  "user": "تسجيل الدخول",
   "contact_us_from": "تواصل معنا من خلال",
   "register_paper_exam": "التسجيل فى الامتحان الورقى",
   "register_data_enter_exam": "سجل بياناتك للتمكن من دخول الامتحان",
@@ -16,7 +16,7 @@
   "part_exam": "امتحانات جزئية",
   "tests": "اختبارات",
   "comprehensive_exam": "امتحانات شاملة",
-  "login_success": "تم تسجيل الدخول بنجاح",
+  "user_success": "تم تسجيل الدخول بنجاح",
   "field_required": "من فضلك ادخل الكود !!!",
   "code_not_found": "هذا الكود غير موجود!!!",
   "code_not_subscribe": "الطالب غير مفعل برجاء التواصل مع السيكرتاريه !!!",
@@ -24,6 +24,8 @@
   "wait": "انتظر",
   "close": "اغلاق",
   "number_of_videos": "عدد الفيديوهات : ",
-  "total_time_of_videos": "مدة الفيديوهات : "
+  "total_time_of_videos": "مدة الفيديوهات : ",
+  "notification": "التنبيهات",
+  "important_notification": "اهم الاخبار والاشعارات"
 
 }

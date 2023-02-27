@@ -1,7 +1,7 @@
 {
- "login_account": "Login to the account",
+ "user_account": "user to the account",
  "please_write_code": "Please write the access code received from the secretariat",
- "login": "Login",
+ "user": "user",
  "contact_us_from": "Contact Us From",
  "register_paper_exam":"Register for the paper exam",
  "register_data_enter_exam": "Register your data to be able to enter the exam",
@@ -16,7 +16,7 @@
  "part_exam": "Partial exams",
  "tests": "Tests",
  "comprehensive_exam": "Comprehensive exams",
- "login_success": "Login Successfully",
+ "user_success": "user Successfully",
  "field_required": "Please enter the code !!!",
  "code_not_found": "Code is Not Found !!!",
  "code_not_subscribe": "The student is not active, please contact the secretariat !!!",
@@ -24,6 +24,8 @@
  "wait": "Wait",
  "close": "Close",
  "number_of_videos": "Number of Videos : ",
- "total_time_of_videos": "Total Time of Videos : "
+ "total_time_of_videos": "Total Time of Videos : ",
+ "notification": "Notifications",
+ "important_notification": "Important  News and Notifications"
 
 }

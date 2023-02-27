@@ -11,7 +11,7 @@ import '../models/communication_model.dart';
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this.api) : super(LoginInitial()) {
+  LoginCubit(this.api) : super(userInitial()) {
     getCommunicationData();
   }
 
@@ -21,11 +21,11 @@ class LoginCubit extends Cubit<LoginState> {
 
   TextEditingController codeController = TextEditingController();
 
-  loginWithCode(context) async {
-    emit(LoginLoading());
-    final response = await api.postLogin(codeController.text);
+  userWithCode(context) async {
+    emit(userLoading());
+    final response = await api.postuser(codeController.text);
     response.fold(
-      (error) => emit(LoginError()),
+      (error) => emit(userError()),
       (response) {
         if (response.code == 407) {
           toastMessage(
@@ -33,38 +33,38 @@ class LoginCubit extends Cubit<LoginState> {
             context,
             color: AppColors.error,
           );
-          emit(LoginError());
+          emit(userError());
         } else if (response.code == 408) {
           toastMessage(
             'code_not_subscribe'.tr(),
             context,
             color: AppColors.error,
           );
-          emit(LoginError());
+          emit(userError());
         } else {
           Future.delayed(Duration(seconds: 2), () {
-            emit(LoginInitial());
+            emit(userInitial());
           });
           Preferences.instance.setUser(response);
-          emit(LoginLoaded());
+          emit(userLoaded());
         }
       },
     );
   }
 
   Future<void> getCommunicationData() async {
-    emit(LoginCommunicationLoading());
+    emit(userCommunicationLoading());
     final response = await api.getCommunicationData();
     response.fold(
-      (error) => emit(LoginCommunicationError()),
+      (error) => emit(userCommunicationError()),
       (response) {
         if (response.code == 200) {
           communicationData = response.data;
           isCommunicationData =true;
-          emit(LoginCommunicationLoaded());
+          emit(userCommunicationLoaded());
         } else {
           isCommunicationData =false;
-          emit(LoginCommunicationError());
+          emit(userCommunicationError());
         }
       },
     );
