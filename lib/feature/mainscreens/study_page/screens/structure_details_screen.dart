@@ -2,20 +2,14 @@ import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/assets_manager.dart';
+import '../models/all_classes_model.dart';
 import '../widgets/structure_details_widget.dart';
 
 class StructureDetailsScreen extends StatelessWidget {
-  StructureDetailsScreen({Key? key, required this.titleOfPage})
+  StructureDetailsScreen({Key? key, required this.titleOfPage, required this.model})
       : super(key: key);
   final String titleOfPage;
-
-  List<String> title = [
-    'Lecture Part 1',
-    'Lecture Part 2',
-    'Voice',
-    'PDF',
-    'Exam'
-  ];
+  final Lesson model;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +18,7 @@ class StructureDetailsScreen extends StatelessWidget {
         toolbarHeight: 80,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
-          child: Text(titleOfPage),
+          child: Text(model.name),
         ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -38,28 +32,26 @@ class StructureDetailsScreen extends StatelessWidget {
       body: ListView(
         children: [
           ...List.generate(
-            title.length,
+            model.videosCount,
             (index) => StructureDetailsWidget(
-              title: title[index],
-              titleIcon: title[index] == 'Voice'
-                  ? Icons.mic
-                  : title[index] == 'PDF'
-                      ? Icons.picture_as_pdf
-                      : title[index] == 'Exam'
-                          ? Icons.article
-                          : Icons.video_collection_rounded,
-              color2: title[index] == 'Exam'
-                  ? AppColors.primary
-                  : (title[index] == 'Voice' || title[index] == 'PDF')
-                      ? AppColors.blueLiteColor1
-                      : AppColors.blueColor1,
-              color1: title[index] == 'Exam'
-                  ? AppColors.primary.withOpacity(0.5)
-                  : (title[index] == 'Voice' || title[index] == 'PDF')
-                  ? AppColors.blueLiteColor2
-                  : AppColors.blueColor2,
+              title: 'Lecture Part ${index+1}',
+              titleIcon: Icons.video_collection_rounded,
+              color2: AppColors.blueColor1,
+              color1: AppColors.blueColor2,
             ),
-          )
+          ),
+          StructureDetailsWidget(
+            title: 'PDF',
+            titleIcon: Icons.picture_as_pdf,
+            color2: AppColors.blueLiteColor1,
+            color1: AppColors.blueLiteColor2,
+          ),
+          StructureDetailsWidget(
+            title: 'Voice',
+            titleIcon: Icons.mic,
+            color2: AppColors.primary,
+            color1: AppColors.primary.withOpacity(0.5),
+          ),
         ],
       ),
     );

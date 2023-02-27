@@ -11,30 +11,16 @@ import '../widgets/container_color_title_widget.dart';
 
 class ClassNameScreen extends StatefulWidget {
   ClassNameScreen({Key? key, required this.model}) : super(key: key);
-  final AllClassesDatum model;
+  final ClassLessons model;
 
   @override
   State<ClassNameScreen> createState() => _ClassNameScreenState();
 }
 
 class _ClassNameScreenState extends State<ClassNameScreen> {
-  // List<String> title = [
-  //   'Lecture',
-  //   'Exam',
-  //   'Lecture',
-  //   'Exam',
-  //   'Exam',
-  //   'Lecture',
-  //   'Exam',
-  //   'Lecture',
-  //   'Lecture',
-  //   'Exam'
-  // ];
-
   @override
   void initState() {
     super.initState();
-    context.read<StudyPageCubit>().getLessonsClass(widget.model.id);
   }
 
   @override
@@ -57,42 +43,61 @@ class _ClassNameScreenState extends State<ClassNameScreen> {
       ),
       body: BlocBuilder<StudyPageCubit, StudyPageState>(
         builder: (context, state) {
-          StudyPageCubit cubit = context.read<StudyPageCubit>();
           return state is StudyPageLessonsLoading
               ? ShowLoadingIndicator()
               : ListView(
                   children: [
                     ...List.generate(
-                      cubit.listLessons.length,
+                      widget.model.lessons.length,
                       (index) => InkWell(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => StructureDetailsScreen(
-                                titleOfPage: cubit.listLessons[index].name,
+                                titleOfPage: 'lesson',
+                                model: widget.model.lessons[index],
                               ),
                             ),
                           );
                         },
                         child: ContainerColorTitleWidget(
-                          title: cubit.listLessons[index].name,
-                          subTitle: cubit.listLessons[index].note??'',
-                          titleBackground: cubit.listLessons[index].type == 'lesson'
-                              ? AppColors.primary
-                              : AppColors.secondPrimary,
-                          color1: cubit.listLessons[index].type == 'lesson'
-                              ? AppColors.blueColor2
-                              : AppColors.primary,
-                          color2: cubit.listLessons[index].type == 'lesson'
-                              ? AppColors.blueColor1
-                              : AppColors.primary.withOpacity(0.5),
-                          titleIcon: cubit.listLessons[index].type == 'lesson'
-                              ? Icons.video_collection
-                              : Icons.newspaper,
+                          lesson: widget.model.lessons[index],
+                          title: widget.model.lessons[index].name,
+                          subTitle: widget.model.lessons[index].note,
+                          titleBackground: AppColors.primary,
+                          color1: AppColors.blueColor2,
+                          color2:  AppColors.blueColor1,
+                          titleIcon:  Icons.video_collection,
                         ),
                       ),
-                    )
+                    ),
+
+                    ...List.generate(
+                      widget.model.exams.length,
+                          (index) => InkWell(
+                        onTap: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => StructureDetailsScreen(
+                          //       titleOfPage: widget.model.exams[index].name,
+                          //       model: widget.model.lessons[index],
+                          //     ),
+                          //   ),
+                          // );
+                        },
+                        child: ContainerColorTitleWidget(
+                          lesson: widget.model.lessons[index],
+                          title: widget.model.exams[index].name,
+                          subTitle: widget.model.exams[index].note,
+                          titleBackground: AppColors.secondPrimary,
+                          color1:AppColors.primary,
+                          color2: AppColors.primary.withOpacity(0.5),
+                          titleIcon:Icons.newspaper,
+                        ),
+                      ),
+                    ),
                   ],
                 );
         },

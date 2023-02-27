@@ -1,20 +1,24 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:elmazoon/feature/mainscreens/study_page/models/all_classes_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/app_colors.dart';
 
 class ContainerColorTitleWidget extends StatelessWidget {
-  const ContainerColorTitleWidget(
-      {Key? key,
-      required this.title,
-      required this.subTitle,
-      required this.titleIcon,
-      required this.color1,
-      required this.color2,
-      required this.titleBackground})
-      : super(key: key);
+  const ContainerColorTitleWidget({
+    Key? key,
+    required this.title,
+    required this.subTitle,
+    required this.titleIcon,
+    required this.color1,
+    required this.color2,
+    required this.titleBackground,
+    required this.lesson,
+  }) : super(key: key);
 
   final String title;
   final String subTitle;
+  final Lesson lesson;
   final IconData titleIcon;
   final Color color1;
   final Color color2;
@@ -58,10 +62,9 @@ class ContainerColorTitleWidget extends StatelessWidget {
                       Text(
                         title,
                         style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
-                        ),
+                            color: AppColors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -71,12 +74,35 @@ class ContainerColorTitleWidget extends StatelessWidget {
             SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                subTitle,
-                style: TextStyle(
-                  color: AppColors.secondPrimary,
-                  fontSize: 18,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    subTitle,
+                    style: TextStyle(
+                      color: AppColors.secondPrimary,
+                      fontSize: 18,
+                    ),
+                  ),
+                  titleIcon != Icons.video_collection
+                      ? SizedBox()
+                      : Text(
+                          'number_of_videos'.tr() + '  ${lesson.videosCount}',
+                          style: TextStyle(
+                            color: AppColors.secondPrimary,
+                            fontSize: 18,
+                          ),
+                        ),
+                  titleIcon != Icons.video_collection
+                      ? SizedBox()
+                      : Text(
+                          'total_time_of_videos'.tr() + '  ${lesson.videosTime}',
+                          style: TextStyle(
+                            color: AppColors.secondPrimary,
+                            fontSize: 18,
+                          ),
+                        ),
+                ],
               ),
             ),
           ],

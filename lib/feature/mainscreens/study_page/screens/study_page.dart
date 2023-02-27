@@ -122,7 +122,8 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                                           crossAxisSpacing: 25,
                                           crossAxisCount: 2,
                                         ),
-                                        itemCount: cubit.allClassesDatum.length,
+                                        itemCount: cubit
+                                            .allClassesDatum.classes.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return InkWell(
@@ -132,18 +133,17 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       ClassNameScreen(
-                                                    model: cubit
-                                                        .allClassesDatum[index],
+                                                    model: cubit.allClassesDatum
+                                                        .classes[index],
                                                   ),
                                                 ),
                                               );
                                             },
                                             child: ContainerWithTwoColorWidget(
-                                              title: cubit
-                                                  .allClassesDatum[index]
-                                                  .name,
-                                              imagePath: cubit
-                                                  .allClassesDatum[index].image,
+                                              title: cubit.allClassesDatum
+                                                  .classes[index].name,
+                                              imagePath: cubit.allClassesDatum
+                                                  .classes[index].image,
                                               color1: AppColors.blueColor1,
                                               color2: AppColors.blueColor2,
                                               textColor:

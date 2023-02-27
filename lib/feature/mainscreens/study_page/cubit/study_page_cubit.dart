@@ -11,7 +11,7 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     getAllClasses();
   }
 
-  List<AllClassesDatum> allClassesDatum = [];
+  late AllClassesDatum allClassesDatum ;
   List<LessonsClassDatum> listLessons = [];
 
   final ServiceApi api;

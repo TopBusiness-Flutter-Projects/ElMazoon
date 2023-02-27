@@ -22,6 +22,8 @@
  "code_not_subscribe": "The student is not active, please contact the secretariat !!!",
  "error_to_get_data": "Error to Get Data !!!",
  "wait": "Wait",
- "close": "Close"
+ "close": "Close",
+ "number_of_videos": "Number of Videos : ",
+ "total_time_of_videos": "Total Time of Videos : "
 
 }
