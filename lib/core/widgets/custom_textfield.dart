@@ -40,7 +40,7 @@ class CustomTextField extends StatelessWidget {
         enabled: isEnable,
         decoration: InputDecoration(
           hintStyle: TextStyle(
-            color: AppColors.textBackground,
+            color: AppColors.secondPrimary,
             fontWeight: FontWeight.bold,
           ),
           prefixIcon: image != 'null'

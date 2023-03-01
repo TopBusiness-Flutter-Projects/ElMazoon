@@ -26,6 +26,20 @@
   "number_of_videos": "عدد الفيديوهات : ",
   "total_time_of_videos": "مدة الفيديوهات : ",
   "notification": "التنبيهات",
-  "important_notification": "اهم الاخبار والاشعارات"
+  "important_notification": "اهم الاخبار والاشعارات",
+  "suggest": "اقتراحك يهمنا",
+  "send_suggest": "ارسل مقتراحاتك لتطوير التطبيق",
+  "student_name": "اسم الطالب",
+  "student_name_valid": "من فضلك ادخل اسم الطالب ... !!!",
+  "city_name": "المحافظه",
+  "city_name_valid": "من فضلك ادخل المحافظه ... !!!",
+  "student_code": "كود الطالب",
+  "student_code_valid": "من فضلك ادخل كود الطالب ... !!!",
+  "suggest_valid": "من فضلك ادخل اقتراحك ... !!!",
+  "sent": "ارسال",
+  "send_success": "تم ارسال اقتراحك بنجاح",
+  "send_failure": "هناك مشكله فى الارسال",
+  "comments": "التعليقات"
+
 
 }

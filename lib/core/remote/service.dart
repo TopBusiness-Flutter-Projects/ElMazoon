@@ -9,6 +9,9 @@ import '../api/base_api_consumer.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
+import '../models/comments_model.dart';
+import '../models/lessons_details_model.dart';
+import '../models/response_message.dart';
 import '../models/notifications_model.dart';
 import '../models/user_model.dart';
 import '../utils/app_strings.dart';
@@ -72,18 +75,18 @@ class ServiceApi {
     }
   }
 
-  Future<Either<Failure, LessonsClassModel>> getLessonsByClassId(int id) async {
-    UserModel userModel = await Preferences.instance.getUserModel();
+  Future<Either<Failure, LessonsDetailsModel>> getLessonsDetails(int id) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
     try {
       final response = await dio.get(
-        EndPoints.lessonsByClassIdUrl + id.toString(),
+        EndPoints.lessonsDetailsUrl + id.toString(),
         options: Options(
           headers: {
-            'Authorization': userModel.data!.token,
+            'Authorization': loginModel.data!.token,
           },
         ),
       );
-      return Right(LessonsClassModel.fromJson(response));
+      return Right(LessonsDetailsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
@@ -97,4 +100,43 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, StatusResponse>> sendSuggest(
+      {required String suggest}) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.post(
+        EndPoints.suggestUrl,
+        body: {
+          'suggestion': suggest,
+        },
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+          },
+        ),
+      );
+      return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, CommentsModel>> getCommentsByLesson(int id) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.get(
+        EndPoints.commentByLessonUrl + id.toString(),
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+          },
+        ),
+      );
+      return Right(CommentsModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
 }

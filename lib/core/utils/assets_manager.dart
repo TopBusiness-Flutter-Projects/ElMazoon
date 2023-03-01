@@ -13,6 +13,7 @@ class ImageAssets {
   static const String appBarImage = '$imagePath/appbar_background.png';
   static const String userImage = '$imagePath/user.png';
   static const String userexamImage = '$imagePath/user_exam.png';
+  static const String suggestImage = '$imagePath/suggest.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';
@@ -28,6 +29,7 @@ class ImageAssets {
   static const String degreeIcon = '$iconsPath/degree.svg';
   static const String cupIcon = '$iconsPath/cup.svg';
   static const String calenderIcon = '$iconsPath/calender.svg';
+  static const String suggestIcon = '$iconsPath/suggest.svg';
 
 
   //Lottie

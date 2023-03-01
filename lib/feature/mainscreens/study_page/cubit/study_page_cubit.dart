@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
 
+import '../../../../core/models/comments_model.dart';
+import '../../../../core/models/lessons_details_model.dart';
 import '../../../../core/remote/service.dart';
 import '../models/all_classes_model.dart';
-import '../models/lessons_class_model.dart';
 
 part 'study_page_state.dart';
 
@@ -12,7 +13,9 @@ class StudyPageCubit extends Cubit<StudyPageState> {
   }
 
   late AllClassesDatum allClassesDatum ;
-  List<LessonsClassDatum> listLessons = [];
+  late LessonsDetailsModel lessonsDetailsModel ;
+  List<CommentDatum> commentsList = [];
+  late Comments comments;
 
   final ServiceApi api;
 
@@ -28,14 +31,27 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     );
   }
 
-  getLessonsClass(int id) async {
+  getLessonsDetails(int id) async {
     emit(StudyPageLessonsLoading());
-    final response = await api.getLessonsByClassId(id);
+    final response = await api.getLessonsDetails(id);
     response.fold(
       (error) => emit(StudyPageLessonsError()),
       (response) {
-        listLessons = response.data;
-        emit(StudyPageLessonsLoaded(response.data));
+        lessonsDetailsModel = response;
+        emit(StudyPageLessonsLoaded(response));
+      },
+    );
+  }
+
+  getCommentsLesson(int id) async {
+    emit(StudyPageCommentsLessonsLoading());
+    final response = await api.getCommentsByLesson(id);
+    response.fold(
+      (error) => emit(StudyPageCommentsLessonsError()),
+      (response) {
+        comments = response.comments;
+        commentsList= response.comments.comment;
+        emit(StudyPageCommentsLessonsLoaded());
       },
     );
   }

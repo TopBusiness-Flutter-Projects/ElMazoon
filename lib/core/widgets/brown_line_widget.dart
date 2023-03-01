@@ -9,7 +9,7 @@ class BrownLineWidget extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width - 40,
       height: 2,
-      color: AppColors.buttonBackground,
+      color: AppColors.secondPrimary,
     );
   }
 }

@@ -26,6 +26,19 @@
  "number_of_videos": "Number of Videos : ",
  "total_time_of_videos": "Total Time of Videos : ",
  "notification": "Notifications",
- "important_notification": "Important  News and Notifications"
+ "important_notification": "Important  News and Notifications",
+ "suggest": "Your suggestion matters to us",
+ "send_suggest": "Send your suggestions to develop the application",
+ "student_name": "Student Name",
+ "student_name_valid": "Please Enter Student Name ... !!!",
+ "city_name": "City Name",
+ "city_name_valid": "Please Enter City Name ... !!!",
+ "student_code": "Student Code",
+ "student_code_valid": "Please Enter Student Code ... !!!",
+ "suggest_valid": "Please Enter Your Suggest ... !!!",
+ "sent": "Send",
+ "send_success": "Send Suggest Successfully",
+ "send_failure": "Send Failure",
+ "comments": "Comments"
 
 }

@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import '../../../../core/models/lessons_details_model.dart';
+
 AllClassesModel allClassesModelFromJson(String str) => AllClassesModel.fromJson(json.decode(str));
 
 String allClassesModelToJson(AllClassesModel data) => json.encode(data.toJson());
@@ -92,53 +94,6 @@ class ClassLessons {
   };
 }
 
-class Exam {
-  Exam({
-    required this.id,
-    required this.name,
-    required this.seasonId,
-    required this.termId,
-    required this.examableType,
-    required this.examableId,
-    required this.note,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  int id;
-  String name;
-  int seasonId;
-  int termId;
-  String examableType;
-  int examableId;
-  String note;
-  DateTime createdAt;
-  DateTime updatedAt;
-
-  factory Exam.fromJson(Map<String, dynamic> json) => Exam(
-    id: json["id"],
-    name: json["name"],
-    seasonId: json["season_id"],
-    termId: json["term_id"],
-    examableType: json["examable_type"],
-    examableId: json["examable_id"],
-    note: json["note"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "season_id": seasonId,
-    "term_id": termId,
-    "examable_type": examableType,
-    "examable_id": examableId,
-    "note": note,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
-}
 
 class Lesson {
   Lesson({
@@ -216,50 +171,3 @@ class FullExam {
   };
 }
 
-class Instruction {
-  Instruction({
-    required this.id,
-    required this.instruction,
-    required this.tryingNumber,
-    required this.numberOfQuestion,
-    required this.quizMinute,
-    required this.examableType,
-    required this.examableId,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  int id;
-  String instruction;
-  int tryingNumber;
-  int numberOfQuestion;
-  String quizMinute;
-  String examableType;
-  int examableId;
-  DateTime createdAt;
-  DateTime updatedAt;
-
-  factory Instruction.fromJson(Map<String, dynamic> json) => Instruction(
-    id: json["id"],
-    instruction: json["instruction"],
-    tryingNumber: json["trying_number"],
-    numberOfQuestion: json["number_of_question"],
-    quizMinute: json["quiz_minute"],
-    examableType: json["examable_type"],
-    examableId: json["examable_id"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "instruction": instruction,
-    "trying_number": tryingNumber,
-    "number_of_question": numberOfQuestion,
-    "quiz_minute": quizMinute,
-    "examable_type": examableType,
-    "examable_id": examableId,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
-}

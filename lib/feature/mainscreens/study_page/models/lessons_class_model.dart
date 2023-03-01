@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import '../../../../core/models/lessons_details_model.dart';
+
 LessonsClassModel lessonsClassModelFromJson(String str) => LessonsClassModel.fromJson(json.decode(str));
 
 String lessonsClassModelToJson(LessonsClassModel data) => json.encode(data.toJson());
@@ -15,12 +17,12 @@ class LessonsClassModel {
     required this.code,
   });
 
-  List<LessonsClassDatum> data;
+  List<Lessons> data;
   String message;
   int code;
 
   factory LessonsClassModel.fromJson(Map<String, dynamic> json) => LessonsClassModel(
-    data: List<LessonsClassDatum>.from(json["data"].map((x) => LessonsClassDatum.fromJson(x))),
+    data: List<Lessons>.from(json["data"].map((x) => Lessons.fromJson(x))),
     message: json["message"],
     code: json["code"],
   );
@@ -32,38 +34,3 @@ class LessonsClassModel {
   };
 }
 
-class LessonsClassDatum {
-  LessonsClassDatum({
-    required this.id,
-    required this.name,
-    required this.type,
-    this.note,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  int id;
-  String name;
-  String type;
-  dynamic note;
-  DateTime createdAt;
-  DateTime updatedAt;
-
-  factory LessonsClassDatum.fromJson(Map<String, dynamic> json) => LessonsClassDatum(
-    id: json["id"],
-    name: json["name"],
-    type: json["type"],
-    note: json["note"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "type": type,
-    "note": note,
-    "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
-    "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",
-  };
-}

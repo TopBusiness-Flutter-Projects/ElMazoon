@@ -38,7 +38,6 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
       body: Column(
         children: [
           Expanded(
-            // flex: 2,
             child: TabBar(
               controller: _tabController,
               tabs: [
@@ -92,7 +91,7 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
             ),
           ),
           Expanded(
-            flex: 12,
+            flex: 10,
             child: BlocBuilder<StudyPageCubit, StudyPageState>(
               builder: (context, state) {
                 StudyPageCubit cubit = context.read<StudyPageCubit>();

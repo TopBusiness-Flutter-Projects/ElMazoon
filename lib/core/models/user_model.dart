@@ -40,14 +40,15 @@ class User {
     this.email,
     required this.phone,
     required this.fatherPhone,
-    // required this.userType,
     required this.image,
-    // required this.userStatus,
     required this.userStatus,
     required this.code,
     required this.dateStartCode,
     required this.dateEndCode,
+    required this.country,
     required this.token,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   int id;
@@ -55,47 +56,75 @@ class User {
   dynamic email;
   String phone;
   String fatherPhone;
-  // String userType;
   String image;
-  // String userStatus;
   String userStatus;
   String code;
   DateTime dateStartCode;
   DateTime dateEndCode;
+  Country country;
   String token;
-  late bool isLoggedIn = false;
+  DateTime createdAt;
+  DateTime updatedAt;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["id"],
-        name: json["name"]??'no name',
-        email: json["email"]??'no email',
-        phone: json["phone"],
-        fatherPhone: json["father_phone"],
-        // userType: json["user_type"],
-        image: json["image"],
-        // userStatus: json["user_status"],
-        userStatus: json["user_status"],
-        code: json["code"],
-        dateStartCode: DateTime.parse(json["date_start_code"]),
-        dateEndCode: DateTime.parse(json["date_end_code"]),
-        token: json["token"],
-      );
+    id: json["id"],
+    name: json["name"],
+    email: json["email"],
+    phone: json["phone"],
+    fatherPhone: json["father_phone"],
+    image: json["image"],
+    userStatus: json["user_status"],
+    code: json["code"],
+    dateStartCode: DateTime.parse(json["date_start_code"]),
+    dateEndCode: DateTime.parse(json["date_end_code"]),
+    country: Country.fromJson(json["country"]),
+    token: json["token"],
+    createdAt:json["created_at"]!=null? DateTime.parse(json["created_at"]):DateTime(2020),
+    updatedAt:json["updated_at"]!=null? DateTime.parse(json["updated_at"]):DateTime(2020),
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "email": email,
-        "phone": phone,
-        "father_phone": fatherPhone,
-        // "user_type": userType,
-        "image": image,
-        // "user_status": userStatus,
-        "user_status": userStatus,
-        "code": code,
-        "date_start_code":
-            "${dateStartCode.year.toString().padLeft(4, '0')}-${dateStartCode.month.toString().padLeft(2, '0')}-${dateStartCode.day.toString().padLeft(2, '0')}",
-        "date_end_code":
-            "${dateEndCode.year.toString().padLeft(4, '0')}-${dateEndCode.month.toString().padLeft(2, '0')}-${dateEndCode.day.toString().padLeft(2, '0')}",
-        "token": token,
-      };
+    "id": id,
+    "name": name,
+    "email": email,
+    "phone": phone,
+    "father_phone": fatherPhone,
+    "image": image,
+    "user_status": userStatus,
+    "code": code,
+    "date_start_code": "${dateStartCode.year.toString().padLeft(4, '0')}-${dateStartCode.month.toString().padLeft(2, '0')}-${dateStartCode.day.toString().padLeft(2, '0')}",
+    "date_end_code": "${dateEndCode.year.toString().padLeft(4, '0')}-${dateEndCode.month.toString().padLeft(2, '0')}-${dateEndCode.day.toString().padLeft(2, '0')}",
+    "country": country.toJson(),
+    "token": token,
+    "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
+    "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",
+  };
+}
+
+class Country {
+  Country({
+    required this.id,
+    required this.name,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  int id;
+  String name;
+  DateTime createdAt;
+  DateTime updatedAt;
+
+  factory Country.fromJson(Map<String, dynamic> json) => Country(
+    id: json["id"],
+    name: json["name"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
+    "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",
+  };
 }
