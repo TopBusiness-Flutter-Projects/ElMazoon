@@ -57,26 +57,26 @@ class Comments {
 
 class CommentDatum {
   CommentDatum({
-    required this.id,
-    required this.comment,
-    required this.audio,
-    required this.image,
-    required this.type,
-    required this.user,
-    required this.replies,
-    required this.createdAt,
-    required this.updatedAt,
+     this.id,
+     this.comment,
+     this.audio,
+     this.image,
+     this.type,
+     this.user,
+     this.replies,
+     this.createdAt,
+     this.updatedAt,
   });
 
-  int id;
-  String comment;
-  String audio;
-  String image;
-  String type;
-  User user;
-  List<dynamic> replies;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? comment;
+  String? audio;
+  String? image;
+  String? type;
+  User? user;
+  List<dynamic>? replies;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory CommentDatum.fromJson(Map<String, dynamic> json) => CommentDatum(
     id: json["id"],
@@ -96,10 +96,10 @@ class CommentDatum {
     "audio": audio,
     "image": image,
     "type": type,
-    "user": user.toJson(),
-    "replies": List<dynamic>.from(replies.map((x) => x)),
-    "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
-    "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",
+    "user": user!.toJson(),
+    "replies": List<dynamic>.from(replies!.map((x) => x)),
+    "created_at": "${createdAt!.year.toString().padLeft(4, '0')}-${createdAt!.month.toString().padLeft(2, '0')}-${createdAt!.day.toString().padLeft(2, '0')}",
+    "updated_at": "${updatedAt!.year.toString().padLeft(4, '0')}-${updatedAt!.month.toString().padLeft(2, '0')}-${updatedAt!.day.toString().padLeft(2, '0')}",
   };
 }
 class Links {

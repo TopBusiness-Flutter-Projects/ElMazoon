@@ -64,8 +64,8 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 3,
+    return Container(
+      height: MediaQuery.of(context).size.height / 4,
       width: double.infinity,
       child: _chewieController != null &&
               _chewieController!.videoPlayerController.value.isInitialized

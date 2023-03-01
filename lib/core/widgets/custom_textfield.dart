@@ -39,29 +39,14 @@ class CustomTextField extends StatelessWidget {
         obscureText: isPassword,
         enabled: isEnable,
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 14,horizontal: 14),
           hintStyle: TextStyle(
             color: AppColors.secondPrimary,
             fontWeight: FontWeight.bold,
           ),
-          prefixIcon: image != 'null'
-              ? Padding(
-                  padding: EdgeInsets.only(
-                    // right: IsLanguage.isArLanguage(context) ? 0 : 12,
-                    // left: IsLanguage.isArLanguage(context) ? 12 : 0,
-                  ),
-                  child: SvgPicture.asset(
-                    image,
-                    color: imageColor,
-                    height: 16,
-                    width: 16,
-                  ),
-                )
-              : null,
-          prefixIconConstraints:
-              const BoxConstraints(minHeight: 32, minWidth: 32),
           hintText: title,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(25.0),
             borderSide: BorderSide.none,
           ),
           fillColor: backgroundColor,

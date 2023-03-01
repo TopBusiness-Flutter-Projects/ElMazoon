@@ -1,4 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:elmazoon/core/models/user_model.dart';
+import 'package:elmazoon/core/preferences/preferences.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../../../core/models/comments_model.dart';
 import '../../../../core/models/lessons_details_model.dart';
@@ -9,17 +12,31 @@ part 'study_page_state.dart';
 
 class StudyPageCubit extends Cubit<StudyPageState> {
   StudyPageCubit(this.api) : super(StudyPageInitial()) {
-    getAllClasses();
+    getAllClasses().whenComplete(() => getUserData());
   }
-
-  late AllClassesDatum allClassesDatum ;
-  late LessonsDetailsModel lessonsDetailsModel ;
-  List<CommentDatum> commentsList = [];
-  late Comments comments;
 
   final ServiceApi api;
 
-  getAllClasses() async {
+  late AllClassesDatum allClassesDatum;
+  late LessonsDetailsModel lessonsDetailsModel;
+  late Comments comments;
+  late UserModel userModel;
+
+  List<CommentDatum> commentsList = [];
+  List<CommentDatum> tempCommentsList = [];
+  String lan = 'en';
+
+  bool isCommentFieldEnable = true;
+  TextEditingController commentController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  getUserData() async {
+    userModel = await Preferences.instance.getUserModel();
+    lan = await Preferences.instance.getSavedLang();
+    emit(StudyPageGetUserModel());
+  }
+
+  Future<void> getAllClasses() async {
     emit(StudyPageLoading());
     final response = await api.getAllClasses();
     response.fold(
@@ -50,8 +67,42 @@ class StudyPageCubit extends Cubit<StudyPageState> {
       (error) => emit(StudyPageCommentsLessonsError()),
       (response) {
         comments = response.comments;
-        commentsList= response.comments.comment;
+        commentsList = response.comments.comment;
         emit(StudyPageCommentsLessonsLoaded());
+      },
+    );
+  }
+
+  getMoreCommentsLesson() async {
+    emit(StudyPageMoreCommentsLessonsLoading());
+    final response = await api.getMoreComments(comments.links.next);
+    response.fold(
+      (error) => emit(StudyPageMoreCommentsLessonsError()),
+      (response) {
+        comments = response.comments;
+        commentsList = commentsList + response.comments.comment;
+        emit(StudyPageMoreCommentsLessonsLoaded());
+      },
+    );
+  }
+
+  addComment(int lessonId, String type) async {
+    isCommentFieldEnable = false;
+    tempCommentsList = commentsList.reversed.toList();
+    emit(StudyPageAddCommentLoading());
+    final response = await api.addComment(
+      lessonId,
+      type,
+      comment: commentController.text,
+    );
+    response.fold(
+      (l) => emit(StudyPageAddCommentError()),
+      (r) {
+        tempCommentsList.add(r.oneComment);
+        commentsList = tempCommentsList.reversed.toList();
+        isCommentFieldEnable = true;
+        commentController.clear();
+        emit(StudyPageAddCommentLoaded());
       },
     );
   }

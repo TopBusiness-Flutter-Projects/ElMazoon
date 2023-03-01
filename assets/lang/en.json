@@ -39,6 +39,11 @@
  "sent": "Send",
  "send_success": "Send Suggest Successfully",
  "send_failure": "Send Failure",
- "comments": "Comments"
+ "comments": "Comments",
+ "add_comment": "Add Comment",
+ "add_comment_valid": "Please Enter Your Comment ...!!!",
+ "more_comment": "More Comments ...",
+ "reply": "Reply",
+ "show_reply": "Show Replies"
 
 }

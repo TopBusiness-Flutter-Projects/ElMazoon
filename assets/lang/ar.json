@@ -39,7 +39,11 @@
   "sent": "ارسال",
   "send_success": "تم ارسال اقتراحك بنجاح",
   "send_failure": "هناك مشكله فى الارسال",
-  "comments": "التعليقات"
-
+  "comments": "التعليقات",
+  "add_comment": "اكتب تعليقك",
+  "add_comment_valid": "من فضلك ادخل التعليق ...!!!",
+  "more_comment": "مزيد من التعليقات ...",
+  "reply": "رد",
+  "show_reply": "عرض الردود"
 
 }
