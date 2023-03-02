@@ -9,6 +9,7 @@ class EndPoints {
   static const String suggestUrl = '${baseUrl}auth/add-suggest';
   static const String commentByLessonUrl = '${baseUrl}lesson/video/comments/';
   static const String addCommentUrl = '${baseUrl}lesson/video/add-comment/';
+  static const String addReplyUrl = '${baseUrl}lesson/comment/add-replay/';
 
 
 

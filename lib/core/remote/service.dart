@@ -193,4 +193,42 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
+
+  Future<Either<Failure, OneComment>> addReply(
+      int commentId,
+      String type, {
+        String? replay,
+        String? image,
+        String? audio,
+      }) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.post(
+        EndPoints.addReplyUrl + commentId.toString(),
+        body: {
+          'type': type,
+          if (replay != null) ...{
+            'replay': replay,
+          },
+          if (image != null) ...{
+            'image': image,
+          },
+          if (audio != null) ...{
+            'audio': audio,
+          },
+        },
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+          },
+        ),
+      );
+      return Right(OneComment.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+
 }

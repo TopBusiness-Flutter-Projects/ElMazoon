@@ -66,7 +66,7 @@ class VideoScreen extends StatelessWidget {
                 ),
               ),
             ),
-            AddCommentWidget(lessons: lessons),
+            AddCommentWidget(id: lessons.id,type: 'comment'),
           ],
         ),
       ),

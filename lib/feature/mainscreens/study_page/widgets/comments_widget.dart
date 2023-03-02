@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
-import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/widgets/replies_screen.dart';
 import 'package:flutter/material.dart';
@@ -110,61 +108,85 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                       ],
                                     ),
                                     SizedBox(height: 8),
-                                    Text(
-                                      cubit.commentsList[index].comment!,
-                                      style: TextStyle(
-                                        color: AppColors.textBackground,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    SizedBox(height: 4),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        cubit.commentsList[index].replies!
-                                                .isNotEmpty
-                                            ? InkWell(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          RepliesScreen(
-                                                        commentDatum:
-                                                            cubit.commentsList[
-                                                                index],
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Center(
-                                                  child: Text(
-                                                    '${'show_reply'.tr()} ${cubit.commentsList[index].replies!.length}',
-                                                    style: TextStyle(
-                                                      color: Colors.blue,
-                                                    ),
-                                                    textAlign: TextAlign.end,
-                                                  ),
-                                                ),
+                                    cubit.commentsList[index].type == 'text'
+                                        ? Text(
+                                            cubit.commentsList[index].comment!,
+                                            style: TextStyle(
+                                              color: AppColors.textBackground,
+                                              fontSize: 14,
+                                            ),
+                                          )
+                                        : cubit.commentsList[index].type ==
+                                                'file'
+                                            ? ManageNetworkImage(
+                                                imageUrl: cubit
+                                                    .commentsList[index].image!,
                                               )
                                             : SizedBox(),
-                                        InkWell(
-                                          onTap: () {},
-                                          child: SizedBox(
-                                            width: 40,
-                                            child: Center(
-                                              child: Text(
-                                                'reply'.tr(),
-                                                style: TextStyle(
-                                                  color: Colors.blue,
+                                    SizedBox(height: 4),
+                                    SizedBox(
+                                      height: 20,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          cubit.commentsList[index].replies!
+                                                  .isNotEmpty
+                                              ? InkWell(
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            RepliesScreen(
+                                                          commentDatum:
+                                                              cubit.commentsList[
+                                                                  index],
+                                                          index: index,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Center(
+                                                    child: Text(
+                                                      '${'show_reply'.tr()} ${cubit.commentsList[index].replies!.length}',
+                                                      style: TextStyle(
+                                                        color: Colors.blue,
+                                                      ),
+                                                      textAlign: TextAlign.end,
+                                                    ),
+                                                  ),
+                                                )
+                                              : SizedBox(),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      RepliesScreen(
+                                                    commentDatum:
+                                                        cubit.commentsList[index],
+                                                    index: index,
+                                                  ),
                                                 ),
-                                                textAlign: TextAlign.end,
+                                              );
+                                            },
+                                            child: SizedBox(
+                                              width: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  'reply'.tr(),
+                                                  style: TextStyle(
+                                                    color: Colors.blue,
+                                                  ),
+                                                  textAlign: TextAlign.end,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     )
                                   ],
                                 ),

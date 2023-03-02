@@ -26,7 +26,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     loginModel = await Preferences.instance.getUserModel();
     studentName.text = loginModel.data!.name;
     studentCode.text = loginModel.data!.code;
-    cityName.text = loginModel.data!.country.name;
+    cityName.text = loginModel.data!.country!.name;
     suggest.clear();
     emit(ProfileGetUserData());
   }

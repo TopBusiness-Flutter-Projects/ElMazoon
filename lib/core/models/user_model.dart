@@ -45,7 +45,7 @@ class User {
     required this.code,
     required this.dateStartCode,
     required this.dateEndCode,
-    required this.country,
+     this.country,
     required this.token,
     required this.createdAt,
     required this.updatedAt,
@@ -61,7 +61,7 @@ class User {
   String code;
   DateTime dateStartCode;
   DateTime dateEndCode;
-  Country country;
+  Country? country;
   String token;
   DateTime createdAt;
   DateTime updatedAt;
@@ -70,15 +70,15 @@ class User {
     id: json["id"],
     name: json["name"],
     email: json["email"],
-    phone: json["phone"],
-    fatherPhone: json["father_phone"],
+    phone: json["phone"]??'no phone',
+    fatherPhone: json["father_phone"]??'no father phone',
     image: json["image"],
-    userStatus: json["user_status"],
-    code: json["code"],
-    dateStartCode: DateTime.parse(json["date_start_code"]),
-    dateEndCode: DateTime.parse(json["date_end_code"]),
-    country: Country.fromJson(json["country"]),
-    token: json["token"],
+    userStatus: json["user_status"]??'no status',
+    code: json["code"]??'no code',
+    dateStartCode: json["date_start_code"]!=null?DateTime.parse(json["date_start_code"]):DateTime(2022),
+    dateEndCode:json["date_end_code"]!=null? DateTime.parse(json["date_end_code"]):DateTime(2022),
+    country:json["country"]!=null? Country.fromJson(json["country"]):null,
+    token: json["token"]??'',
     createdAt:json["created_at"]!=null? DateTime.parse(json["created_at"]):DateTime(2020),
     updatedAt:json["updated_at"]!=null? DateTime.parse(json["updated_at"]):DateTime(2020),
   );
@@ -94,7 +94,7 @@ class User {
     "code": code,
     "date_start_code": "${dateStartCode.year.toString().padLeft(4, '0')}-${dateStartCode.month.toString().padLeft(2, '0')}-${dateStartCode.day.toString().padLeft(2, '0')}",
     "date_end_code": "${dateEndCode.year.toString().padLeft(4, '0')}-${dateEndCode.month.toString().padLeft(2, '0')}-${dateEndCode.day.toString().padLeft(2, '0')}",
-    "country": country.toJson(),
+    "country": country!.toJson(),
     "token": token,
     "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
     "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",

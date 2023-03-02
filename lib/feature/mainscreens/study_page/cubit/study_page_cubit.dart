@@ -25,10 +25,13 @@ class StudyPageCubit extends Cubit<StudyPageState> {
   List<CommentDatum> commentsList = [];
   List<CommentDatum> tempCommentsList = [];
   String lan = 'en';
+  int index = 0;
 
   bool isCommentFieldEnable = true;
   TextEditingController commentController = TextEditingController();
+  TextEditingController replyController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  final replyFormKey = GlobalKey<FormState>();
 
   getUserData() async {
     userModel = await Preferences.instance.getUserModel();
@@ -102,6 +105,26 @@ class StudyPageCubit extends Cubit<StudyPageState> {
         commentsList = tempCommentsList.reversed.toList();
         isCommentFieldEnable = true;
         commentController.clear();
+        emit(StudyPageAddCommentLoaded());
+      },
+    );
+  }
+
+  addReply(int commentId, String type) async {
+    isCommentFieldEnable = false;
+    emit(StudyPageAddCommentLoading());
+    final response = await api.addReply(
+      commentId,
+      type,
+      replay: replyController.text,
+    );
+    response.fold(
+      (l) => emit(StudyPageAddCommentError()),
+      (r) {
+        // tempReplyList.add(r.oneComment);
+        commentsList[index].replies!.add(r.oneComment);
+        isCommentFieldEnable = true;
+        replyController.clear();
         emit(StudyPageAddCommentLoaded());
       },
     );

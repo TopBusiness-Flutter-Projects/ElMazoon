@@ -9,8 +9,11 @@ import '../../../../core/utils/app_colors.dart';
 import '../../../../core/widgets/network_image.dart';
 
 class AddCommentWidget extends StatelessWidget {
-  AddCommentWidget({Key? key, required this.lessons}) : super(key: key);
-  final Lessons lessons;
+  AddCommentWidget({Key? key, required this.id, required this.type})
+      : super(key: key);
+  final int id;
+
+  final String type;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,9 @@ class AddCommentWidget extends StatelessWidget {
               ),
               Expanded(
                 child: CustomTextField(
-                  controller: cubit.commentController,
+                  controller: type == 'comment'
+                      ? cubit.commentController
+                      : cubit.replyController,
                   isEnable: cubit.isCommentFieldEnable,
                   title: 'add_comment'.tr(),
                   validatorMessage: 'add_comment_valid'.tr(),
@@ -54,8 +59,14 @@ class AddCommentWidget extends StatelessWidget {
                   ? CircularProgressIndicator(color: AppColors.secondPrimary)
                   : IconButton(
                       onPressed: () {
-                        if (cubit.formKey.currentState!.validate()) {
-                          cubit.addComment(lessons.id, 'text');
+                        if (type == 'comment') {
+                          if (cubit.formKey.currentState!.validate()) {
+                            cubit.addComment(id, 'text');
+                          }
+                        } else {
+                          if (cubit.replyFormKey.currentState!.validate()) {
+                            cubit.addReply(id, 'text');
+                          }
                         }
                       },
                       icon: Icon(

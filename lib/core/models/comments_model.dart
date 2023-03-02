@@ -74,7 +74,7 @@ class CommentDatum {
   String? image;
   String? type;
   User? user;
-  List<dynamic>? replies;
+  List<CommentDatum>? replies;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -85,7 +85,7 @@ class CommentDatum {
     image: json["image"],
     type: json["type"],
     user: User.fromJson(json["user"]),
-    replies: List<dynamic>.from(json["replies"].map((x) => x)),
+    replies: json["replies"] == null ? [] : List<CommentDatum>.from(json["replies"]!.map((x) => CommentDatum.fromJson(x))),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -97,7 +97,7 @@ class CommentDatum {
     "image": image,
     "type": type,
     "user": user!.toJson(),
-    "replies": List<dynamic>.from(replies!.map((x) => x)),
+    "replies": replies == null ? [] : List<dynamic>.from(replies!.map((x) => x.toJson())),
     "created_at": "${createdAt!.year.toString().padLeft(4, '0')}-${createdAt!.month.toString().padLeft(2, '0')}-${createdAt!.day.toString().padLeft(2, '0')}",
     "updated_at": "${updatedAt!.year.toString().padLeft(4, '0')}-${updatedAt!.month.toString().padLeft(2, '0')}-${updatedAt!.day.toString().padLeft(2, '0')}",
   };
