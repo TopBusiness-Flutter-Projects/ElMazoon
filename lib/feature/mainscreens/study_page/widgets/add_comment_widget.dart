@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/models/lessons_details_model.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/widgets/network_image.dart';
+import '../../../../testing/test.dart';
+import 'choose_icon_dialog.dart';
 
 class AddCommentWidget extends StatelessWidget {
   AddCommentWidget({Key? key, required this.id, required this.type})
@@ -59,15 +61,77 @@ class AddCommentWidget extends StatelessWidget {
                   ? CircularProgressIndicator(color: AppColors.secondPrimary)
                   : IconButton(
                       onPressed: () {
-                        if (type == 'comment') {
-                          if (cubit.formKey.currentState!.validate()) {
-                            cubit.addComment(id, 'text');
-                          }
-                        } else {
-                          if (cubit.replyFormKey.currentState!.validate()) {
-                            cubit.addReply(id, 'text');
-                          }
-                        }
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: Text('Choose'),
+                            ),
+                            contentPadding: EdgeInsets.zero,
+                            content: SizedBox(
+                              width: MediaQuery.of(context).size.width - 60,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ChooseIconDialog(
+                                    title: 'Camera',
+                                    icon: Icons.camera_alt,
+                                    onTap: () {},
+                                  ),
+                                  ChooseIconDialog(
+                                    title: 'Gallery',
+                                    icon: Icons.photo,
+                                    onTap: () {},
+                                  ),
+                                  ChooseIconDialog(
+                                    title: 'Voice',
+                                    icon: Icons.mic,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      Future.delayed(
+                                          Duration(milliseconds: 500), () {
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (ctx) => AlertDialog(
+                                            title: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 5,
+                                              ),
+                                              child: Text('Record'),
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            content: RecordWidget(),
+                                          ),
+                                        );
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Cancel'),
+                              )
+                            ],
+                          ),
+                        );
+
+                        // if (type == 'comment') {
+                        //   if (cubit.formKey.currentState!.validate()) {
+                        //     cubit.addComment(id, 'text');
+                        //   }
+                        // } else {
+                        //   if (cubit.replyFormKey.currentState!.validate()) {
+                        //     cubit.addReply(id, 'text');
+                        //   }
+                        // }
                       },
                       icon: Icon(
                         Icons.send,
@@ -81,3 +145,12 @@ class AddCommentWidget extends StatelessWidget {
     );
   }
 }
+
+/*
+
+
+
+
+
+
+*/
