@@ -122,7 +122,8 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                                           crossAxisCount: 2,
                                         ),
                                         itemCount: cubit
-                                            .allClassesDatum.classes.length,
+                                            .allClassesDatum!=null?cubit
+                                            .allClassesDatum!.classes.length:0,
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return InkWell(
@@ -133,16 +134,16 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                                                   builder: (context) =>
                                                       ClassNameScreen(
                                                     model: cubit.allClassesDatum
-                                                        .classes[index],
+                                                        !.classes[index],
                                                   ),
                                                 ),
                                               );
                                             },
                                             child: ContainerWithTwoColorWidget(
                                               title: cubit.allClassesDatum
-                                                  .classes[index].name,
+                                                  !.classes[index].name,
                                               imagePath: cubit.allClassesDatum
-                                                  .classes[index].image,
+                                                  !.classes[index].image,
                                               color1: AppColors.blueColor1,
                                               color2: AppColors.blueColor2,
                                               textColor:

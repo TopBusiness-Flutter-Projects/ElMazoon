@@ -99,7 +99,7 @@ class SuggestScreen extends StatelessWidget {
                   ),
                   CustomTextField(
                     controller: cubit.studentName,
-                    image: 'null',
+                    suffixWidget : null,
                     isEnable: false,
                     imageColor: AppColors.secondPrimary,
                     backgroundColor: AppColors.transparent,
@@ -110,7 +110,7 @@ class SuggestScreen extends StatelessWidget {
                   const BrownLineWidget(),
                   CustomTextField(
                     controller: cubit.cityName,
-                    image: 'null',
+                    suffixWidget : null,
                     isEnable: false,
                     imageColor: AppColors.secondPrimary,
                     backgroundColor: AppColors.transparent,
@@ -121,7 +121,7 @@ class SuggestScreen extends StatelessWidget {
                   const BrownLineWidget(),
                   CustomTextField(
                     controller: cubit.studentCode,
-                    image: 'null',
+                    suffixWidget : null,
                     isEnable: false,
                     imageColor: AppColors.secondPrimary,
                     backgroundColor: AppColors.transparent,
@@ -132,7 +132,7 @@ class SuggestScreen extends StatelessWidget {
                   const BrownLineWidget(),
                   CustomTextField(
                     controller: cubit.suggest,
-                    image: 'null',
+                    suffixWidget : null,
                     isEnable: true,
                     imageColor: AppColors.secondPrimary,
                     backgroundColor: AppColors.transparent,

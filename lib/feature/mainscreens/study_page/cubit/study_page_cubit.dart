@@ -17,7 +17,7 @@ class StudyPageCubit extends Cubit<StudyPageState> {
 
   final ServiceApi api;
 
-  late AllClassesDatum allClassesDatum;
+   AllClassesDatum? allClassesDatum;
   late LessonsDetailsModel lessonsDetailsModel;
   late Comments comments;
   late UserModel userModel;

@@ -7,7 +7,7 @@ import '../utils/app_colors.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
-    required this.image,
+     this.suffixWidget,
     required this.title,
     required this.textInputType,
     this.minLine = 1,
@@ -16,9 +16,9 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.imageColor = Colors.grey,
     required this.backgroundColor,
-     this.isEnable = true,
+    this.isEnable = true,
   }) : super(key: key);
-  final String image;
+  final Widget? suffixWidget;
   final Color imageColor;
   final Color backgroundColor;
   final String title;
@@ -39,7 +39,7 @@ class CustomTextField extends StatelessWidget {
         obscureText: isPassword,
         enabled: isEnable,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 14,horizontal: 14),
+          contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
           hintStyle: TextStyle(
             color: AppColors.secondPrimary,
             fontWeight: FontWeight.bold,
@@ -48,6 +48,10 @@ class CustomTextField extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.0),
             borderSide: BorderSide.none,
+          ),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.attach_file),
+            onPressed: () {},
           ),
           fillColor: backgroundColor,
           filled: true,

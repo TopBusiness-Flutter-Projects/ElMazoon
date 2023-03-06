@@ -20,7 +20,7 @@ class NotificationScreen extends StatelessWidget {
               : ListView(
             children: [
               ...List.generate(
-                cubit.data!.length,
+                cubit.data!=null?cubit.data!.length:0,
                     (index) => InkWell(
 
                   child:

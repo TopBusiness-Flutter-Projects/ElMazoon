@@ -53,7 +53,10 @@ class AddCommentWidget extends StatelessWidget {
                   title: 'add_comment'.tr(),
                   validatorMessage: 'add_comment_valid'.tr(),
                   backgroundColor: AppColors.commentBackground,
-                  image: 'null',
+                  suffixWidget: IconButton(
+                    icon: Icon(Icons.attach_file),
+                    onPressed: () {},
+                  ),
                   textInputType: TextInputType.text,
                 ),
               ),
