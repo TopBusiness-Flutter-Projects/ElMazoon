@@ -8,6 +8,7 @@ import '../../../../core/models/comments_model.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/widgets/custom_appbar_widget.dart';
 import '../../../../core/widgets/network_image.dart';
+import '../../../../testing/aduio_player.dart';
 import 'add_comment_widget.dart';
 
 class RepliesScreen extends StatefulWidget {
@@ -90,14 +91,15 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Row(
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        widget.commentDatum.user!
-                                                            .name,
+                                                        widget.commentDatum
+                                                            .user!.name,
                                                         style: TextStyle(
                                                           color: AppColors
                                                               .secondPrimary,
@@ -114,28 +116,47 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                                       child: Text(
                                                         '${widget.commentDatum.createdAt!.year}-${widget.commentDatum.createdAt!.month}-${widget.commentDatum.createdAt!.day}',
                                                         style: TextStyle(
-                                                            color:
-                                                                AppColors.primary,
+                                                            color: AppColors
+                                                                .primary,
                                                             fontSize: 12),
                                                       ),
                                                     )
                                                   ],
                                                 ),
                                                 SizedBox(height: 8),
-                                                widget.commentDatum.type == 'text'
+                                                widget.commentDatum.type ==
+                                                        'text'
                                                     ? Text(
-                                                  widget.commentDatum.comment!,
-                                                  style: TextStyle(
-                                                    color: AppColors.textBackground,
-                                                    fontSize: 14,
-                                                  ),
-                                                )
-                                                    :  widget.commentDatum.type ==
-                                                    'file'
-                                                    ? ManageNetworkImage(
-                                                  imageUrl:  widget.commentDatum.image!,
-                                                )
-                                                    : SizedBox(),
+                                                        widget.commentDatum
+                                                            .comment!,
+                                                        style: TextStyle(
+                                                          color: AppColors
+                                                              .textBackground,
+                                                          fontSize: 14,
+                                                        ),
+                                                      )
+                                                    : widget.commentDatum
+                                                                .type ==
+                                                            'file'
+                                                        ? ManageNetworkImage(
+                                                            imageUrl: widget
+                                                                .commentDatum
+                                                                .image!,
+                                                          )
+                                                        : Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                              horizontal: 8,
+                                                            ),
+                                                            child: AudioPlayer(
+                                                              source: widget
+                                                                  .commentDatum
+                                                                  .audio!,
+                                                              onDelete: () {},
+                                                              type: 'onlyShow',
+                                                            ),
+                                                          ),
                                                 SizedBox(height: 4),
                                                 SizedBox(
                                                   height: 20,
@@ -145,10 +166,13 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                                             .spaceBetween,
                                                     children: [
                                                       SizedBox(),
-                                                      SizedBox(height: 23,),
+                                                      SizedBox(
+                                                        height: 23,
+                                                      ),
                                                       Opacity(
                                                         opacity: 0,
-                                                        child: Text('reply'.tr()),
+                                                        child:
+                                                            Text('reply'.tr()),
                                                       ),
                                                     ],
                                                   ),
@@ -166,7 +190,8 @@ class _RepliesScreenState extends State<RepliesScreen> {
                             Column(
                               children: [
                                 ...List.generate(
-                                  cubit.commentsList[widget.index].replies!.length,
+                                  cubit.commentsList[widget.index].replies!
+                                      .length,
                                   (index) => Padding(
                                     padding: const EdgeInsets.only(right: 30),
                                     child: Card(
@@ -285,7 +310,26 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                                                       index]
                                                                   .image!,
                                                             )
-                                                          : SizedBox(),
+                                                          : Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .symmetric(
+                                                                horizontal: 8,
+                                                              ),
+                                                              child:
+                                                                  AudioPlayer(
+                                                                source: cubit
+                                                                    .commentsList[
+                                                                        widget
+                                                                            .index]
+                                                                    .replies![
+                                                                        index]
+                                                                    .audio!,
+                                                                onDelete: () {},
+                                                                type:
+                                                                    'onlyShow',
+                                                              ),
+                                                            ),
                                                   SizedBox(height: 2),
                                                 ],
                                               ),
@@ -303,9 +347,10 @@ class _RepliesScreenState extends State<RepliesScreen> {
                       ),
                     ),
                   ),
-
                   AddCommentWidget(
-                      id: cubit.commentsList[widget.index].id!, type: 'reply',),
+                    id: cubit.commentsList[widget.index].id!,
+                    type: 'reply',
+                  ),
                 ],
               ),
             ),

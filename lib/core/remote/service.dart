@@ -4,7 +4,6 @@ import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/models/all_classes_model.dart';
 
 import '../../feature/login/models/communication_model.dart';
-import '../../feature/mainscreens/study_page/models/lessons_class_model.dart';
 import '../api/base_api_consumer.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
@@ -15,7 +14,6 @@ import '../models/one_comment_model.dart';
 import '../models/response_message.dart';
 import '../models/notifications_model.dart';
 import '../models/user_model.dart';
-import '../utils/app_strings.dart';
 
 class ServiceApi {
   final BaseApiConsumer dio;
@@ -169,6 +167,7 @@ class ServiceApi {
     UserModel loginModel = await Preferences.instance.getUserModel();
     try {
       final response = await dio.post(
+        formDataIsEnabled: true,
         EndPoints.addCommentUrl + lessonId.toString(),
         body: {
           'type': type,
@@ -176,10 +175,10 @@ class ServiceApi {
             'comment': comment,
           },
           if (image != null) ...{
-            'image': image,
+            'image': await MultipartFile.fromFile(image),
           },
           if (audio != null) ...{
-            'audio': audio,
+            'audio': await MultipartFile.fromFile(audio),
           },
         },
         options: Options(
@@ -194,17 +193,17 @@ class ServiceApi {
     }
   }
 
-
   Future<Either<Failure, OneComment>> addReply(
-      int commentId,
-      String type, {
-        String? replay,
-        String? image,
-        String? audio,
-      }) async {
+    int commentId,
+    String type, {
+    String? replay,
+    String? image,
+    String? audio,
+  }) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     try {
       final response = await dio.post(
+        formDataIsEnabled: true,
         EndPoints.addReplyUrl + commentId.toString(),
         body: {
           'type': type,
@@ -212,10 +211,10 @@ class ServiceApi {
             'replay': replay,
           },
           if (image != null) ...{
-            'image': image,
+            'image': await MultipartFile.fromFile(image),
           },
           if (audio != null) ...{
-            'audio': audio,
+            'audio': await MultipartFile.fromFile(audio),
           },
         },
         options: Options(
@@ -229,6 +228,4 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
-
-
 }

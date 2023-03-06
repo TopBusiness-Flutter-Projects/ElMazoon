@@ -4,6 +4,8 @@ abstract class StudyPageState {}
 
 class StudyPageInitial extends StudyPageState {}
 
+class StudyPagePickImageSuccess extends StudyPageState {}
+
 class StudyPageGetUserModel extends StudyPageState {}
 
 class StudyPageLoading extends StudyPageState {}
@@ -28,6 +30,7 @@ class StudyPageCommentsLessonsError extends StudyPageState {}
 class StudyPageMoreCommentsLessonsLoading extends StudyPageState {}
 class StudyPageMoreCommentsLessonsLoaded extends StudyPageState {}
 class StudyPageMoreCommentsLessonsError extends StudyPageState {}
+
 
 
 

@@ -5,6 +5,7 @@ const String lottiePath = 'assets/lottie';
 class ImageAssets {
   //images
   static const String logoImage = '$imagePath/logo.png';
+  static const String noImage = '$imagePath/no_image.png';
   static const String twoCircleImage = '$imagePath/two_circle.png';
   static const String profileImage = '$imagePath/user.png';
   static const String facebookImage = '$imagePath/facebook.png';

@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:elmazoon/core/models/user_model.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/models/comments_model.dart';
 import '../../../../core/models/lessons_details_model.dart';
@@ -17,7 +19,7 @@ class StudyPageCubit extends Cubit<StudyPageState> {
 
   final ServiceApi api;
 
-   AllClassesDatum? allClassesDatum;
+  AllClassesDatum? allClassesDatum;
   late LessonsDetailsModel lessonsDetailsModel;
   late Comments comments;
   late UserModel userModel;
@@ -32,11 +34,34 @@ class StudyPageCubit extends Cubit<StudyPageState> {
   TextEditingController replyController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   final replyFormKey = GlobalKey<FormState>();
+  XFile? imageFile;
+  String imagePath = '';
+  String audioPath = '';
 
   getUserData() async {
     userModel = await Preferences.instance.getUserModel();
     lan = await Preferences.instance.getSavedLang();
     emit(StudyPageGetUserModel());
+  }
+
+  pickImage({required String type}) async {
+    imageFile = await ImagePicker().pickImage(
+      source: type == 'camera' ? ImageSource.camera : ImageSource.gallery,
+    );
+    CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
+      sourcePath: imageFile!.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio7x5,
+        CropAspectRatioPreset.ratio16x9
+      ],
+      cropStyle: CropStyle.rectangle,
+      compressFormat: ImageCompressFormat.png,
+      compressQuality: 90,
+    );
+    imagePath = croppedFile!.path;
+    emit(StudyPagePickImageSuccess());
   }
 
   Future<void> getAllClasses() async {
@@ -96,7 +121,9 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     final response = await api.addComment(
       lessonId,
       type,
-      comment: commentController.text,
+      comment: type == 'text' ? commentController.text : null,
+      image: type == 'file' ? imagePath : null,
+      audio: type == 'audio' ? audioPath : null,
     );
     response.fold(
       (l) => emit(StudyPageAddCommentError()),
@@ -116,7 +143,9 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     final response = await api.addReply(
       commentId,
       type,
-      replay: replyController.text,
+      replay: type == 'text' ? replyController.text : null,
+      image: type == 'file' ? imagePath : null,
+      audio: type == 'audio' ? audioPath : null,
     );
     response.fold(
       (l) => emit(StudyPageAddCommentError()),

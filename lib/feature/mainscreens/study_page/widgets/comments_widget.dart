@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/network_image.dart';
 import '../../../../core/widgets/show_loading_indicator.dart';
+import '../../../../testing/aduio_player.dart';
 
 class CommentsWidget extends StatefulWidget {
   const CommentsWidget({Key? key, required this.lessonsId}) : super(key: key);
@@ -122,7 +123,18 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                                 imageUrl: cubit
                                                     .commentsList[index].image!,
                                               )
-                                            : SizedBox(),
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8),
+                                                child: AudioPlayer(
+                                                  source: cubit
+                                                      .commentsList[index]
+                                                      .audio!,
+                                                  onDelete: () {},
+                                                  type: 'onlyShow',
+                                                ),
+                                              ),
                                     SizedBox(height: 4),
                                     SizedBox(
                                       height: 20,
@@ -139,9 +151,9 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                                       MaterialPageRoute(
                                                         builder: (context) =>
                                                             RepliesScreen(
-                                                          commentDatum:
-                                                              cubit.commentsList[
-                                                                  index],
+                                                          commentDatum: cubit
+                                                                  .commentsList[
+                                                              index],
                                                           index: index,
                                                         ),
                                                       ),
@@ -165,8 +177,8 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       RepliesScreen(
-                                                    commentDatum:
-                                                        cubit.commentsList[index],
+                                                    commentDatum: cubit
+                                                        .commentsList[index],
                                                     index: index,
                                                   ),
                                                 ),

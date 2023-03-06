@@ -49,10 +49,7 @@ class CustomTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(25.0),
             borderSide: BorderSide.none,
           ),
-          suffixIcon: IconButton(
-            icon: Icon(Icons.attach_file),
-            onPressed: () {},
-          ),
+          suffixIcon: suffixWidget,
           fillColor: backgroundColor,
           filled: true,
         ),

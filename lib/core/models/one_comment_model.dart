@@ -9,7 +9,7 @@ class OneComment {
   OneComment({required this.oneComment, required this.response});
 
   factory OneComment.fromJson(Map<String, dynamic> json) => OneComment(
-        oneComment: CommentDatum.fromJson(json["data"]),
+        oneComment:json["data"]!=null? CommentDatum.fromJson(json["data"]):CommentDatum(),
         response: StatusResponse.fromJson(json),
       );
 
