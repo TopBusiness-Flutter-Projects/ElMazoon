@@ -1,10 +1,16 @@
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/remote/service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
+import '../../../../core/models/times_model.dart';
 import '../../../../core/models/user_model.dart';
 import '../../../../core/preferences/preferences.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_routes.dart';
+import '../../../../core/utils/show_dialog.dart';
+import '../../../../core/utils/toast_message_method.dart';
 
 part 'profile_state.dart';
 
@@ -44,4 +50,30 @@ class ProfileCubit extends Cubit<ProfileState> {
       },
     );
   }
+  getTimes(BuildContext context) async {
+    createProgressDialog(context, 'wait'.tr());
+
+    final response = await api.gettimes();
+    response.fold(
+
+          (error) =>   Navigator.of(context).pop(),
+          (response) {
+    Navigator.of(context).pop();
+            TimeDataModel data=response;
+            if(data.code==200){
+              Navigator.pushNamed(context, Routes.examRegisterRoute,arguments: data);
+            }
+            else{
+              toastMessage(
+                'no_exam'.tr(),
+                context,
+                color: AppColors.error,
+              );
+            }
+        //data = response.data;
+      //  emit(NotificationPageLoaded());
+      },
+    );
+  }
+
 }

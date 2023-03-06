@@ -13,6 +13,7 @@ import '../models/lessons_details_model.dart';
 import '../models/one_comment_model.dart';
 import '../models/response_message.dart';
 import '../models/notifications_model.dart';
+import '../models/times_model.dart';
 import '../models/user_model.dart';
 
 class ServiceApi {
@@ -224,6 +225,25 @@ class ServiceApi {
         ),
       );
       return Right(OneComment.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+  Future<Either<Failure, TimeDataModel>> gettimes() async {
+    UserModel userModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    print('lan : $lan');
+    try {
+      final response = await dio.get(
+        EndPoints.timesUrl,
+        options: Options(
+          headers: {
+            'Authorization': userModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(TimeDataModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
