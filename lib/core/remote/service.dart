@@ -228,4 +228,46 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, StatusResponse>> openFirstVideo(
+      {required String status, required int id}) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.post(
+        '${EndPoints.openFirstVideoUrl}$id',
+        body: {
+          'status': status,
+        },
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+          },
+        ),
+      );
+      return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, StatusResponse>> openNextVideo(
+      {required int id}) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.post(
+        '${EndPoints.openNextVideoUrl}$id',
+        body: {
+          'status': 'watched',
+        },
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+          },
+        ),
+      );
+      return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

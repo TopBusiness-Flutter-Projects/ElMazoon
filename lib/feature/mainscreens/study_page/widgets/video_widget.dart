@@ -1,10 +1,13 @@
 import 'package:chewie/chewie.dart';
+import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoWidget extends StatefulWidget {
-  const VideoWidget({Key? key, required this.videoLink}) : super(key: key);
+  const VideoWidget({Key? key, required this.videoLink, required this.videoId}) : super(key: key);
   final String videoLink;
+  final int videoId;
 
   @override
   State<VideoWidget> createState() => _VideoWidgetState();
@@ -22,8 +25,8 @@ class _VideoWidgetState extends State<VideoWidget> {
     }
     if (_videoPlayerController.value.position ==
         _videoPlayerController.value.duration) {
-      // setState(() {});
-      print('video Ended');
+      context.read<StudyPageCubit>().accessNextVideo(widget.videoId);
+      // print('video Ended');
     }
   }
 

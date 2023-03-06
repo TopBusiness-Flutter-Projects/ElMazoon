@@ -30,7 +30,7 @@ class VideoScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      VideoWidget(videoLink: lessons.link),
+                      VideoWidget(videoLink: lessons.link, videoId: lessons.id),
                       Text(lessons.note),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -41,8 +41,8 @@ class VideoScreen extends StatelessWidget {
                               ...List.generate(
                                 lessons.exams.length,
                                 (index) => SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width / 2 - 12,
+                                  width: MediaQuery.of(context).size.width / 2 -
+                                      12,
                                   child: StructureDetailsWidget(
                                     title: lessons.exams[index].name,
                                     isSmall: true,
@@ -66,7 +66,7 @@ class VideoScreen extends StatelessWidget {
                 ),
               ),
             ),
-            AddCommentWidget(id: lessons.id,type: 'comment'),
+            AddCommentWidget(id: lessons.id, type: 'comment'),
           ],
         ),
       ),

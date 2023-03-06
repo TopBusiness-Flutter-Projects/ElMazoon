@@ -10,6 +10,8 @@ class EndPoints {
   static const String commentByLessonUrl = '${baseUrl}lesson/video/comments/';
   static const String addCommentUrl = '${baseUrl}lesson/video/add-comment/';
   static const String addReplyUrl = '${baseUrl}lesson/comment/add-replay/';
+  static const String openFirstVideoUrl = '${baseUrl}lesson/';
+  static const String openNextVideoUrl = '${baseUrl}lesson/access-next-video/';
 
 
 

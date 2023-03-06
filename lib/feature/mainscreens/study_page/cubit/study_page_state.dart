@@ -21,6 +21,10 @@ class StudyPageLessonsLoaded extends StudyPageState {
 }
 class StudyPageLessonsError extends StudyPageState {}
 
+class StudyPageAccessFirstVideoLoading extends StudyPageState {}
+class StudyPageAccessFirstVideoLoaded extends StudyPageState {}
+class StudyPageAccessFirstVideoError extends StudyPageState {}
+
 
 
 class StudyPageCommentsLessonsLoading extends StudyPageState {}

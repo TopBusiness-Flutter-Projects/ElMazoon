@@ -1,4 +1,5 @@
 import 'package:elmazoon/core/utils/app_colors.dart';
+import 'package:elmazoon/core/utils/toast_message_method.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/screens/video_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<StudyPageCubit>().getLessonsDetails(widget.model.id);
+    context.read<StudyPageCubit>().accessFirstVideo(widget.model.id);
   }
 
   @override
@@ -35,7 +36,11 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
       body: BlocBuilder<StudyPageCubit, StudyPageState>(
         builder: (context, state) {
           StudyPageCubit cubit = context.read<StudyPageCubit>();
-          if (state is StudyPageLessonsLoading) {
+          if (state is StudyPageAccessFirstVideoLoading||state is StudyPageLessonsLoading) {
+            return ShowLoadingIndicator();
+          }
+          if(state is StudyPageAccessFirstVideoLoaded){
+            cubit.getLessonsDetails(widget.model.id);
             return ShowLoadingIndicator();
           }
           return ListView(
@@ -46,15 +51,24 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
                   onTap: () {
                     if (cubit.lessonsDetailsModel.data.videos[index].type ==
                         'video') {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => VideoScreen(
-                            lessons:
-                                cubit.lessonsDetailsModel.data.videos[index],
+                      if (cubit.lessonsDetailsModel.data.videos[index].status ==
+                          'lock') {
+                        toastMessage(
+                          'Please Watch The Previous Video First',
+                          context,
+                          color: AppColors.error,
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VideoScreen(
+                              lessons:
+                                  cubit.lessonsDetailsModel.data.videos[index],
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     }
                   },
                   child: StructureDetailsWidget(

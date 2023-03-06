@@ -158,4 +158,23 @@ class StudyPageCubit extends Cubit<StudyPageState> {
       },
     );
   }
+
+  Future<void> accessFirstVideo(int id) async {
+    emit(StudyPageAccessFirstVideoLoading());
+    final response = await api.openFirstVideo(status: 'open', id: id);
+    response.fold(
+      (l) => emit(StudyPageAccessFirstVideoError()),
+      (r) => emit(StudyPageAccessFirstVideoLoaded()),
+    );
+  }
+
+  Future<void> accessNextVideo(int id) async {
+    emit(StudyPageAccessFirstVideoLoading());
+    final response = await api.openNextVideo(id: id);
+    response.fold(
+          (l) => emit(StudyPageAccessFirstVideoError()),
+          (r) => emit(StudyPageAccessFirstVideoLoaded()),
+    );
+  }
+
 }
