@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/models/comments_model.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../../../core/widgets/audio_player_widget.dart';
 import '../../../../core/widgets/custom_appbar_widget.dart';
 import '../../../../core/widgets/network_image.dart';
-import '../../../../testing/aduio_player.dart';
 import 'add_comment_widget.dart';
 
 class RepliesScreen extends StatefulWidget {

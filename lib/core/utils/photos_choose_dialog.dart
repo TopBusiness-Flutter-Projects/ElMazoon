@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../testing/app_colors.dart';
+import 'app_colors.dart';
+
 
 choosePhoto(
     BuildContext context, VoidCallback cameraClick, VoidCallback photoClick) {
@@ -25,7 +26,7 @@ choosePhoto(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.camera_alt, size: 45, color: AppColors.grey),
+                    Icon(Icons.camera_alt, size: 45, color: AppColors.gray),
                     Text('camera')
                   ],
                 ),
@@ -40,7 +41,7 @@ choosePhoto(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.photo, size: 45, color: AppColors.grey),
+                    Icon(Icons.photo, size: 45, color: AppColors.gray),
                     Text('Gallery')
                   ],
                 ),

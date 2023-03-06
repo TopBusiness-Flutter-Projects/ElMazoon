@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/mainscreens/study_page/cubit/study_page_cubit.dart';
-import '../../testing/aduio_player.dart';
-import '../../testing/app_colors.dart';
+import '../utils/app_colors.dart';
 import '../utils/assets_manager.dart';
+import 'audio_player_widget.dart';
 import 'audio_recorder_widget.dart';
 
 class RecordWidget extends StatefulWidget {
@@ -119,7 +119,7 @@ class _RecordWidgetState extends State<RecordWidget> {
                       },
                       icon: Icon(
                         Icons.camera_alt,
-                        color: AppColors.grey,
+                        color: AppColors.gray,
                       ),
                     ),
                     IconButton(
@@ -128,7 +128,7 @@ class _RecordWidgetState extends State<RecordWidget> {
                       },
                       icon: Icon(
                         Icons.photo,
-                        color: AppColors.grey,
+                        color: AppColors.gray,
                       ),
                     ),
                   ],

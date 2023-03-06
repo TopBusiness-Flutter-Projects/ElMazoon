@@ -5,9 +5,9 @@ import 'package:elmazoon/feature/mainscreens/study_page/widgets/replies_screen.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/widgets/audio_player_widget.dart';
 import '../../../../core/widgets/network_image.dart';
 import '../../../../core/widgets/show_loading_indicator.dart';
-import '../../../../testing/aduio_player.dart';
 
 class CommentsWidget extends StatefulWidget {
   const CommentsWidget({Key? key, required this.lessonsId}) : super(key: key);
