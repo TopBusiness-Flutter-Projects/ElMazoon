@@ -34,6 +34,8 @@ class MonthPage extends StatelessWidget {
               // change the display mode as appointment using the appointment display
               // mode property
               monthViewSettings: const MonthViewSettings(
+                agendaItemHeight: 200,
+                  agendaStyle: AgendaStyle(appointmentTextStyle: TextStyle(fontSize: 14,fontWeight: FontWeight.bold)),
                   appointmentDisplayMode: MonthAppointmentDisplayMode
                       .appointment),
             );
