@@ -7,6 +7,7 @@ import 'package:elmazoon/feature/examRegister/cubit/exam_register_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/models/TimeModel.dart';
 import '../../../../core/models/times_model.dart';
 import '../../../../core/models/times_model.dart';
 import '../../../../core/models/times_model.dart';
@@ -58,7 +59,9 @@ class _ExmRegisterPageState extends State<ExmRegisterPage> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: BlocBuilder<ExamRegisterCubit, ExamRegisterState>(
+  builder: (context, state) {
+    return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
           child: Column(
@@ -77,9 +80,15 @@ class _ExmRegisterPageState extends State<ExmRegisterPage> {
                     const SizedBox(width: 25),
                     Expanded(
                       child: TextFormField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+
+                        ),
                         controller: context.read<ExamRegisterCubit>().studentName,
                         enabled: false,
                         style: TextStyle(
+                            backgroundColor: AppColors.transparent,
+
                             color: AppColors.secondPrimary,
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
@@ -94,7 +103,7 @@ class _ExmRegisterPageState extends State<ExmRegisterPage> {
                 height: 3,
                 thickness: 3,
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 10),
               Container(
                 child: Row(
                   children: [
@@ -103,7 +112,13 @@ class _ExmRegisterPageState extends State<ExmRegisterPage> {
                       child:  TextFormField(
                         controller: context.read<ExamRegisterCubit>().phoneName,
                         enabled: false,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+
+                        ),
                         style: TextStyle(
+                            backgroundColor: AppColors.transparent,
+
                             color: AppColors.secondPrimary,
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
@@ -112,22 +127,28 @@ class _ExmRegisterPageState extends State<ExmRegisterPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 10),
               Divider(
                 color: AppColors.secondPrimary,
                 height: 3,
                 thickness: 3,
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 10),
               Container(
                 child: Row(
                   children: [
                     const SizedBox(width: 25),
                     Expanded(
                       child:  TextFormField(
+
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+
+                        ),
                         controller: context.read<ExamRegisterCubit>().studentCode,
                         enabled: false,
                         style: TextStyle(
+                          backgroundColor: AppColors.transparent,
                             color: AppColors.secondPrimary,
                             fontSize: 15,
                             fontWeight: FontWeight.bold),
@@ -136,7 +157,7 @@ class _ExmRegisterPageState extends State<ExmRegisterPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 10),
               Divider(
                 color: AppColors.secondPrimary,
                 height: 3,
@@ -149,7 +170,7 @@ class _ExmRegisterPageState extends State<ExmRegisterPage> {
                     const SizedBox(width: 25),
                     Expanded(
                       child: Text(
-                        'exam_num'+" : ".tr()+widget.timeDataModel.data.id.toString(),
+                        'exam_num'.tr()+" : ".tr()+widget.timeDataModel.data.id.toString(),
                         style: TextStyle(
                             color: AppColors.secondPrimary,
                             fontSize: 15,
@@ -222,13 +243,17 @@ class _ExmRegisterPageState extends State<ExmRegisterPage> {
               CustomButton(
                 text: 'record_data'.tr(),
                 color: AppColors.primary,
-                onClick: () {},
+                onClick: () {
+                  context.read<ExamRegisterCubit>().openexam(widget.timeDataModel, dropdownValue!, context);
+                },
               ),
               const SizedBox(height: 25),
             ],
           ),
         ),
-      ),
+      );
+  },
+),
     );
   }
 }

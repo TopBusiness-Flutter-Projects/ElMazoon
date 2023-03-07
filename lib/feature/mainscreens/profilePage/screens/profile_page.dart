@@ -54,10 +54,16 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(
                 height: 30,
               ),
-              ProfileItemWidget(
-                  image: ImageAssets.calenderIcon,
-                  title: 'month_plan'.tr(),
-                  subTitle: 'month_course'.tr(),),
+              InkWell(
+                onTap: () => {
+                Navigator.pushNamed(context, Routes.monthplansRoute)
+
+              },
+                child: ProfileItemWidget(
+                    image: ImageAssets.calenderIcon,
+                    title: 'month_plan'.tr(),
+                    subTitle: 'month_course'.tr(),),
+              ),
               const SizedBox(
                 height: 30,
               ),

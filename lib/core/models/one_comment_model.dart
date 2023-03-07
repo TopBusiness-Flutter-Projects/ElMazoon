@@ -1,6 +1,6 @@
-import 'package:elmazoon/core/models/response_message.dart';
 
 import 'comments_model.dart';
+import 'status_response_model.dart';
 
 class OneComment {
   final CommentDatum oneComment;

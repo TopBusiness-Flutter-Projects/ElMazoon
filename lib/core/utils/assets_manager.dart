@@ -15,6 +15,7 @@ class ImageAssets {
   static const String userImage = '$imagePath/user.png';
   static const String userexamImage = '$imagePath/user_exam.png';
   static const String suggestImage = '$imagePath/suggest.png';
+  static const String correctImage = '$imagePath/correct.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';

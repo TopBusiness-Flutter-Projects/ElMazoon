@@ -47,6 +47,10 @@
  "show_reply": "Show Replies",
  "replies": "Replies",
  "group_time": "Group Time",
- "exam_num": "Exam Num"
+ "exam_num": "Exam Num",
+ "success_register": "Your data has been recorded in the exam",
+ "exam_time": "Exam Time",
+ "address": "Address",
+ "exam_hall": "Exam hall"
 
 }

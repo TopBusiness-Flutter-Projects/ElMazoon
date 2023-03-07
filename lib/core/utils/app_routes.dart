@@ -1,13 +1,16 @@
 import 'package:elmazoon/core/models/times_model.dart';
 import 'package:elmazoon/feature/login/screens/login.dart';
 import 'package:elmazoon/feature/examRegister/presentation/screens/exam_register.dart';
+import 'package:elmazoon/feature/month_plan/presentation/screens/month_plan.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/utils/app_strings.dart';
+import '../../feature/confirm_exam_register/presentation/screens/confirm_exam_register.dart';
 import '../../feature/login/screens/login.dart';
 import '../../feature/mainscreens/profilePage/screens/suggest_screen.dart';
 import '../../feature/mydegree/presentation/screens/mydegree.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
+import '../models/exam_model.dart';
 
 class Routes {
   static const String initialRoute = '/';
@@ -18,6 +21,9 @@ class Routes {
   static const String homePageScreenRoute = '/homePageScreen';
   static const String paymentRoute = '/paymentRoute';
   static const String suggestRoute = '/suggestRoute';
+  static const String monthplansRoute = '/monthplansRoute';
+  static const String confirmexamRegisterRoute = '/confirmexamregister';
+
 
 }
 
@@ -34,6 +40,10 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => const LoginScreen(),
         );
+        case Routes.monthplansRoute:
+        return MaterialPageRoute(
+          builder: (context) => const MonthPage(),
+        );
 
       case Routes.examRegisterRoute:
         TimeDataModel timeDataModel =
@@ -42,6 +52,13 @@ class AppRoutes {
 
         return MaterialPageRoute(
           builder: (context) =>  ExmRegisterPage(timeDataModel: timeDataModel),
+        );
+        case Routes.confirmexamRegisterRoute:
+          ExamModel examModel = settings.arguments as ExamModel;
+
+
+        return MaterialPageRoute(
+          builder: (context) =>  ConfirmExamRegister(examModel: examModel,),
         );
         case Routes.myDegreeRoute:
         return MaterialPageRoute(

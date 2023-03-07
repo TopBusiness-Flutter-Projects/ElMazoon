@@ -9,10 +9,13 @@ import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
 import '../models/comments_model.dart';
+import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
+import '../models/month_plan_model.dart';
 import '../models/one_comment_model.dart';
 import '../models/response_message.dart';
 import '../models/notifications_model.dart';
+import '../models/status_response_model.dart';
 import '../models/times_model.dart';
 import '../models/user_model.dart';
 
@@ -248,6 +251,25 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, MothPlanModel>> getMonthPlans() async {
+    UserModel userModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    print('lan : $lan');
+    try {
+      final response = await dio.get(
+        EndPoints.monthplanUrl,
+        options: Options(
+          headers: {
+            'Authorization': userModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(MothPlanModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
   Future<Either<Failure, StatusResponse>> openFirstVideo(
       {required String status, required int id}) async {
@@ -286,6 +308,29 @@ class ServiceApi {
         ),
       );
       return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+  Future<Either<Failure, ExamModel>> registerExam(
+      {required int exma_id,required int time_id}) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+
+    try {
+      final response = await dio.post(
+        EndPoints.registerExamUrl+exma_id.toString(),
+        body: {
+          'papel_sheet_exam_time_id': time_id,
+        },
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(ExamModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
