@@ -2,14 +2,14 @@ import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/models/lessons_details_model.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../../core/widgets/custom_appbar_widget.dart';
+import '../../../../../core/models/lessons_details_model.dart';
+import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/widgets/custom_appbar_widget.dart';
 
-import '../widgets/add_comment_widget.dart';
-import '../widgets/comments_widget.dart';
-import '../widgets/structure_details_widget.dart';
-import '../widgets/video_widget.dart';
+import '../../widgets/add_comment_widget.dart';
+import '../../widgets/comments_widget.dart';
+import '../../widgets/structure_details_widget.dart';
+import '../../widgets/video_widget.dart';
 
 class VideoScreen extends StatelessWidget {
   const VideoScreen({Key? key, required this.lessons}) : super(key: key);

@@ -59,7 +59,7 @@ class AddCommentWidget extends StatelessWidget {
                         builder: (ctx) => AlertDialog(
                           title: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: Text('Choose'),
+                            child: Text('choose'.tr()),
                           ),
                           contentPadding: EdgeInsets.zero,
                           content: SizedBox(
@@ -68,7 +68,7 @@ class AddCommentWidget extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 ChooseIconDialog(
-                                  title: 'Camera',
+                                  title: 'camera'.tr(),
                                   icon: Icons.camera_alt,
                                   onTap: () {
                                     cubit.pickImage(type: 'camera');
@@ -83,7 +83,7 @@ class AddCommentWidget extends StatelessWidget {
                                             padding: const EdgeInsets.symmetric(
                                               vertical: 5,
                                             ),
-                                            child: Text('Photo'),
+                                            child: Text('photo'.tr()),
                                           ),
                                           contentPadding: EdgeInsets.zero,
                                           content: RecordWidget(
@@ -97,7 +97,7 @@ class AddCommentWidget extends StatelessWidget {
                                   },
                                 ),
                                 ChooseIconDialog(
-                                  title: 'Gallery',
+                                  title: 'photo'.tr(),
                                   icon: Icons.photo,
                                   onTap: () {
                                     cubit.pickImage(type: 'photo');
@@ -112,7 +112,7 @@ class AddCommentWidget extends StatelessWidget {
                                             padding: const EdgeInsets.symmetric(
                                               vertical: 5,
                                             ),
-                                            child: Text('Photo'),
+                                            child: Text('photo'.tr()),
                                           ),
                                           contentPadding: EdgeInsets.zero,
                                           content: RecordWidget(
@@ -126,7 +126,7 @@ class AddCommentWidget extends StatelessWidget {
                                   },
                                 ),
                                 ChooseIconDialog(
-                                  title: 'Voice',
+                                  title: 'voice'.tr(),
                                   icon: Icons.mic,
                                   onTap: () {
                                     Navigator.pop(context);
@@ -140,7 +140,7 @@ class AddCommentWidget extends StatelessWidget {
                                             padding: const EdgeInsets.symmetric(
                                               vertical: 5,
                                             ),
-                                            child: Text('Record'),
+                                            child: Text('voice'.tr()),
                                           ),
                                           contentPadding: EdgeInsets.zero,
                                           content: RecordWidget(
@@ -161,7 +161,7 @@ class AddCommentWidget extends StatelessWidget {
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: Text('Cancel'),
+                              child: Text('cancel'.tr()),
                             )
                           ],
                         ),

@@ -48,9 +48,21 @@
   "replies": "الردود",
   "group_time": "ميعاد المجموعه",
   "exam_num": "رقم الامتحان",
-  "success_register": "تم تسجيل بياناتك فى الامتحان",
-  "exam_time": "ميعاد الامتحان",
-  "address": "العنوان",
-  "exam_hall": "قاعة الامتحان"
+  "cancel": "الغاء",
+  "choose": "إختار",
+  "camera": "كاميرا",
+  "photo": "المعرض",
+  "voice": "صوتى",
+  "record": "تسجيل",
+  "exam_instruction_note": "على كل الطلبة قراءة هذه التعليمات\nقبل بدء الامتحان",
+  "instruction_before_eXam": "ارشادات قبل الامتحان",
+  "try_numbers": "عدد المحاولات",
+  "number_of_question": "عدد اسئلة الامتحان",
+  "quiz_minute": "وقت الامتحان",
+  "min": "دقيقة",
+  "start": "ابدأ الان"
+
+
+
 
 }

@@ -69,7 +69,7 @@ class ClassLessons {
   String name;
   String image;
   List<Lesson> lessons;
-  List<Exam> exams;
+  List<FullExam> exams;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -78,7 +78,7 @@ class ClassLessons {
     name: json["name"],
     image: json["image"],
     lessons: List<Lesson>.from(json["lessons"].map((x) => Lesson.fromJson(x))),
-    exams: List<Exam>.from(json["exams"].map((x) => Exam.fromJson(x))),
+    exams: List<FullExam>.from(json["exams"].map((x) => FullExam.fromJson(x))),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -140,6 +140,7 @@ class FullExam {
     required this.id,
     required this.name,
     required this.note,
+    required this.image,
     required this.createdAt,
     required this.updatedAt,
     this.instruction,
@@ -148,6 +149,7 @@ class FullExam {
   int id;
   String name;
   String note;
+  String image;
   DateTime createdAt;
   DateTime updatedAt;
   Instruction? instruction;
@@ -156,6 +158,7 @@ class FullExam {
     id: json["id"],
     name: json["name"],
     note: json["note"],
+    image: json["image"]??'https://elmazone.topbusiness.io/classes/default/p.png',
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
     instruction: json["instruction"] == null ? null : Instruction.fromJson(json["instruction"]),
@@ -165,6 +168,7 @@ class FullExam {
     "id": id,
     "name": name,
     "note": note,
+    "image": image,
     "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
     "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",
     "instruction": instruction?.toJson(),

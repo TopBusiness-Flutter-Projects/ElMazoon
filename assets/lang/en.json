@@ -52,5 +52,20 @@
  "exam_time": "Exam Time",
  "address": "Address",
  "exam_hall": "Exam hall"
+ "exam_num": "Exam Num",
+ "cancel": "Cancel",
+ "choose": "Choose",
+ "camera": "Camera",
+ "photo": "Photo",
+ "voice": "Voice",
+ "record": "Record",
+ "exam_instruction_note": "All students should read these instructions\nbefore starting the exam",
+ "instruction_before_eXam": "Instruction Before Exam",
+ "try_numbers": "Try Numbers",
+ "number_of_question": "Number of Question",
+ "quiz_minute": "Time of The Exam",
+ "min": "Minutes",
+ "start": "Start"
+
 
 }

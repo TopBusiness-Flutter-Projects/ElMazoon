@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -78,14 +79,14 @@ class _RecordWidgetState extends State<RecordWidget> {
                         }
                         Navigator.pop(context);
                       },
-                      child: Text('Send'),
+                      child: Text('sent'.tr()),
                     )
                         : SizedBox(width: 12),
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Cancel'),
+                      child: Text('cancel'.tr()),
                     ),
                   ],
                 ),
@@ -150,7 +151,7 @@ class _RecordWidgetState extends State<RecordWidget> {
                         }
                         Navigator.pop(context);
                       },
-                      child: Text('Send'),
+                      child: Text('sent'.tr()),
                     )
                         : SizedBox(width: 12),
                     TextButton(
@@ -158,7 +159,7 @@ class _RecordWidgetState extends State<RecordWidget> {
                         cubit.imagePath = '';
                         Navigator.pop(context);
                       },
-                      child: Text('Cancel'),
+                      child: Text('cancel'.tr()),
                     ),
                   ],
                 ),

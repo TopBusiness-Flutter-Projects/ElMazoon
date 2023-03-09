@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:record/record.dart';
@@ -82,13 +83,19 @@ class _AudioRecorderState extends State<AudioRecorder> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            Spacer(),
             _buildRecordStopControl(),
+            Spacer(),
             const SizedBox(width: 20),
             _buildPauseResumeControl(),
             const SizedBox(width: 20),
+            Spacer(),
             _buildText(),
+            Spacer(),
+            Spacer(),
+            Spacer(),
           ],
         ),
         // if (_amplitude != null) ...[
@@ -169,7 +176,7 @@ class _AudioRecorderState extends State<AudioRecorder> {
       return _buildTimer();
     }
 
-    return const Text("Waiting to record");
+    return  Text("record".tr());
   }
 
   Widget _buildTimer() {

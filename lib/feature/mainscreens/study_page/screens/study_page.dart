@@ -1,13 +1,14 @@
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/widgets/show_loading_indicator.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
-import 'package:elmazoon/feature/mainscreens/study_page/screens/class_name_screen.dart';
+import 'package:elmazoon/feature/mainscreens/study_page/screens/all_lecture/class_name_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/utils/assets_manager.dart';
 import '../../../../core/widgets/container_with_two_color_widget.dart';
+import 'full_exam/stucture_of_exam.dart';
 
 class StudyPage extends StatefulWidget {
   const StudyPage({Key? key}) : super(key: key);
@@ -121,9 +122,10 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                                           crossAxisSpacing: 25,
                                           crossAxisCount: 2,
                                         ),
-                                        itemCount: cubit
-                                            .allClassesDatum!=null?cubit
-                                            .allClassesDatum!.classes.length:0,
+                                        itemCount: cubit.allClassesDatum != null
+                                            ? cubit
+                                                .allClassesDatum!.classes.length
+                                            : 0,
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return InkWell(
@@ -133,17 +135,18 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       ClassNameScreen(
-                                                    model: cubit.allClassesDatum
-                                                        !.classes[index],
+                                                    model: cubit
+                                                        .allClassesDatum!
+                                                        .classes[index],
                                                   ),
                                                 ),
                                               );
                                             },
                                             child: ContainerWithTwoColorWidget(
-                                              title: cubit.allClassesDatum
-                                                  !.classes[index].name,
-                                              imagePath: cubit.allClassesDatum
-                                                  !.classes[index].image,
+                                              title: cubit.allClassesDatum!
+                                                  .classes[index].name,
+                                              imagePath: cubit.allClassesDatum!
+                                                  .classes[index].image,
                                               color1: AppColors.blueColor1,
                                               color2: AppColors.blueColor2,
                                               textColor:
@@ -176,22 +179,32 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                                       crossAxisSpacing: 25,
                                       crossAxisCount: 2,
                                     ),
-                                    itemCount: 10,
+                                    itemCount: cubit.allClassesDatum != null
+                                        ? cubit
+                                            .allClassesDatum!.fullExams.length
+                                        : 0,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return InkWell(
                                         onTap: () {
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) =>
-                                          //         ClassNameScreen(),
-                                          //   ),
-                                          // );
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ExamInstruction(
+                                                examInstruction: cubit
+                                                    .allClassesDatum!
+                                                    .fullExams[index]
+                                                    .instruction!,
+                                              ),
+                                            ),
+                                          );
                                         },
                                         child: ContainerWithTwoColorWidget(
-                                          title: 'First Class',
-                                          imagePath: '',
+                                          title: cubit.allClassesDatum!
+                                              .fullExams[index].name,
+                                          imagePath: cubit.allClassesDatum!
+                                              .fullExams[index].image,
                                           color1: AppColors.primary,
                                           color2: AppColors.primary,
                                           textColor: AppColors.secondPrimary,
