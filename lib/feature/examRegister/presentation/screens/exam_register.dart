@@ -240,14 +240,14 @@ class _ExmRegisterPageState extends State<ExmRegisterPage> {
                 thickness: 3,
               ),
               const SizedBox(height: 40),
-              CustomButton(
+
+              const SizedBox(height: 25),       CustomButton(
                 text: 'record_data'.tr(),
                 color: AppColors.primary,
                 onClick: () {
                   context.read<ExamRegisterCubit>().openexam(widget.timeDataModel, dropdownValue!, context);
                 },
               ),
-              const SizedBox(height: 25),
             ],
           ),
         ),

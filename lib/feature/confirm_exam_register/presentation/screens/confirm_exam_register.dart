@@ -121,7 +121,7 @@ class ConfirmExamRegister extends StatelessWidget {
             ),
             CustomButton(
               paddingHorizontal: 50,
-              text: 'record_data'.tr(),
+              text: 'confirm'.tr(),
               color: AppColors.primary,
               onClick: () {
                 Navigator.pop(context);

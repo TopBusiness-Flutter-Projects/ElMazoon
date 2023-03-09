@@ -62,6 +62,8 @@ class Instruction {
     required this.tryingNumber,
     required this.numberOfQuestion,
     required this.quizMinute,
+    required this.all_exam_id,
+    required this.online_exam_id,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -70,6 +72,8 @@ class Instruction {
   String instruction;
   int tryingNumber;
   int numberOfQuestion;
+  int all_exam_id;
+  int online_exam_id;
   String quizMinute;
   DateTime createdAt;
   DateTime updatedAt;
@@ -80,6 +84,8 @@ class Instruction {
     tryingNumber: json["trying_number"],
     numberOfQuestion: json["number_of_question"],
     quizMinute: json["quiz_minute"],
+    all_exam_id: json["all_exam_id"]??0,
+    online_exam_id: json["online_exam_id"]??0,
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -88,6 +94,8 @@ class Instruction {
     "id": id,
     "instruction": instruction,
     "trying_number": tryingNumber,
+    "all_exam_id": all_exam_id,
+    "online_exam_id": online_exam_id,
     "number_of_question": numberOfQuestion,
     "quiz_minute": quizMinute,
     "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",

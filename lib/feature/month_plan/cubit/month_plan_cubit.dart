@@ -24,7 +24,7 @@ class MonthPlanCubit extends Cubit<MonthPlanState> {
           },
           (response) {
 
-        if(response.code==500){
+        if(response.code==200){
 
           monthdataList=response.data!;
 

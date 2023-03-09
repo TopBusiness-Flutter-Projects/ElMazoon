@@ -6,6 +6,7 @@ import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
 import 'core/remote/service.dart';
+import 'feature/exam/cubit/exam_cubit.dart';
 import 'feature/examRegister/cubit/exam_register_cubit.dart';
 import 'feature/login/cubit/login_cubit.dart';
 import 'feature/mainscreens/profilePage/cubit/profile_cubit.dart';
@@ -41,6 +42,9 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => MonthPlanCubit(serviceLocator()),
+  );
+  serviceLocator.registerFactory(
+    () => ExamCubit(serviceLocator()),
   );
   ///////////////////////////////////////////////////////////////////////////////
 

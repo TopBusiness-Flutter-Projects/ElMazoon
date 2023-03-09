@@ -51,8 +51,8 @@
  "success_register": "Your data has been recorded in the exam",
  "exam_time": "Exam Time",
  "address": "Address",
- "exam_hall": "Exam hall"
- "exam_num": "Exam Num",
+ "exam_hall": "Exam hall",
+ "title": "Title",
  "cancel": "Cancel",
  "choose": "Choose",
  "camera": "Camera",

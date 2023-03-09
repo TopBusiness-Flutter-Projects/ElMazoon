@@ -5,6 +5,7 @@ import 'package:elmazoon/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/models/lessons_details_model.dart';
+import '../../../../../core/utils/app_routes.dart';
 
 class ExamInstruction extends StatelessWidget {
   const ExamInstruction({Key? key, required this.examInstruction})
@@ -102,7 +103,9 @@ class ExamInstruction extends StatelessWidget {
               ),
             ),
           ),
-          CustomButton(text: 'start'.tr(), color: AppColors.primary, onClick: (){},paddingHorizontal: 50,),
+          CustomButton(text: 'start'.tr(), color: AppColors.primary, onClick: (){
+            Navigator.pushNamed(context, Routes.examRoute,arguments: examInstruction.online_exam_id);
+          },paddingHorizontal: 50,),
           SizedBox(height: 25),
         ],
       ),

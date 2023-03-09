@@ -13,6 +13,7 @@ import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
 import '../models/month_plan_model.dart';
 import '../models/one_comment_model.dart';
+import '../models/questiones_data_model.dart';
 import '../models/response_message.dart';
 import '../models/notifications_model.dart';
 import '../models/status_response_model.dart';
@@ -247,6 +248,25 @@ class ServiceApi {
         ),
       );
       return Right(TimeDataModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+  Future<Either<Failure, QuestionesDataModel>> getQuestion(int exam_id) async {
+    UserModel userModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    print('lan : $lan');
+    try {
+      final response = await dio.get(
+        EndPoints.questionsUrl+"${exam_id}",
+        options: Options(
+          headers: {
+            'Authorization': userModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(QuestionesDataModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
