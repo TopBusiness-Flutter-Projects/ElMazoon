@@ -164,19 +164,21 @@ class _ExamScreenState extends State<ExamScreen> {
                   ? Container(
                       child: Column(
                         children: [
-                          Text(
-                            'remind_time'.tr(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.success,
-                                fontSize: 50),
+                          Container(
+                            child: Text(
+                              'remind_time'.tr(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.success,
+                                  fontSize: 13),
+                            ),
                           ),
                           Text(
                             '$minutes:$seconds',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: AppColors.success,
-                                fontSize: 50),
+                                fontSize: 13),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
