@@ -66,10 +66,12 @@ class Instruction {
     required this.online_exam_id,
     required this.createdAt,
     required this.updatedAt,
+    required this.exam_type,
   });
 
   int id;
   String instruction;
+  String exam_type;
   int tryingNumber;
   int numberOfQuestion;
   int all_exam_id;
@@ -81,6 +83,7 @@ class Instruction {
   factory Instruction.fromJson(Map<String, dynamic> json) => Instruction(
     id: json["id"],
     instruction: json["instruction"],
+    exam_type: json["exam_type"],
     tryingNumber: json["trying_number"],
     numberOfQuestion: json["number_of_question"],
     quizMinute: json["quiz_minute"],
@@ -97,6 +100,7 @@ class Instruction {
     "all_exam_id": all_exam_id,
     "online_exam_id": online_exam_id,
     "number_of_question": numberOfQuestion,
+    "exam_type": exam_type,
     "quiz_minute": quizMinute,
     "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
     "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",

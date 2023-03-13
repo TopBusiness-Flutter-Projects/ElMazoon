@@ -13,6 +13,7 @@ import '../../feature/monthplandetials/presentation/screens/month_plan_detials.d
 import '../../feature/mydegree/presentation/screens/mydegree.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
 import '../models/exam_model.dart';
+import '../models/lessons_details_model.dart';
 import '../models/month_plan_model.dart';
 
 class Routes {
@@ -55,10 +56,10 @@ class AppRoutes {
           builder: (context) => ExmRegisterPage(timeDataModel: timeDataModel),
         );
         case Routes.examRoute:
-        int exam_id = settings.arguments as int;
+          Instruction examInstruction = settings.arguments as Instruction;
 
         return MaterialPageRoute(
-          builder: (context) => ExamScreen(exam_id: exam_id),
+          builder: (context) => ExamScreen(examInstruction: examInstruction),
         );
       case Routes.monthplanDetialsRoute:
         List<dynamic> data = settings.arguments as List<dynamic>;

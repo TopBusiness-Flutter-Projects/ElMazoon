@@ -258,13 +258,17 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
-  Future<Either<Failure, QuestionesDataModel>> getQuestion(int exam_id) async {
+  Future<Either<Failure, QuestionesDataModel>> getQuestion(int exam_id, String exam_type) async {
     UserModel userModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
     print('lan : $lan');
     try {
       final response = await dio.get(
         EndPoints.questionsUrl+"${exam_id}",
+        queryParameters: {
+          "exam_type":exam_type
+        }
+        ,
         options: Options(
           headers: {
             'Authorization': userModel.data!.token,

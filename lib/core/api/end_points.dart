@@ -6,7 +6,7 @@ class EndPoints {
   static const String lessonsDetailsUrl = '${baseUrl}lesson/videos/';
   static const String notificationUrl = '${baseUrl}auth/all-notifications';
   static const String timesUrl = '${baseUrl}auth/papel-sheet-exam/show';
-  static const String questionsUrl = '${baseUrl}video/onlineExam/questions/';
+  static const String questionsUrl = '${baseUrl}show_exam/questions/';
   static const String communicationUrl = '${baseUrl}auth/communication';
   static const String suggestUrl = '${baseUrl}auth/add-suggest';
   static const String monthplanUrl = '${baseUrl}plans/all';

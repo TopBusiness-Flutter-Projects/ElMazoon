@@ -15,8 +15,8 @@ class ExamCubit extends Cubit<ExamState> {
 
   ExamCubit(this.api) : super(ExamInitial());
 
-  getExam(int exam_id) async {
-    final response = await api.getQuestion(exam_id);
+  getExam(int exam_id, String exam_type) async {
+    final response = await api.getQuestion(exam_id,exam_type);
     response.fold(
       (error) => {},
       (response) {
