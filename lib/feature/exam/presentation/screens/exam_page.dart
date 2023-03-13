@@ -19,39 +19,47 @@ import '../../cubit/exam_cubit.dart';
 class ExamScreen extends StatefulWidget {
   final Instruction examInstruction;
 
-  const ExamScreen({Key? key, required this.examInstruction, }) : super(key: key);
+  const ExamScreen({
+    Key? key,
+    required this.examInstruction,
+  }) : super(key: key);
 
   @override
   State<ExamScreen> createState() => _ExamScreenState();
 }
 
 class _ExamScreenState extends State<ExamScreen> {
-
   CountdownTimerController? controller;
   Timer? countdownTimer;
-  Duration?  myDuration;
+  Duration? myDuration;
+
   @override
   void initState() {
     super.initState();
     print("object");
     print(widget.examInstruction.quizMinute);
-    controller = CountdownTimerController(endTime: widget.examInstruction.quizMinute, onEnd: onEnd);
+    controller = CountdownTimerController(
+        endTime: widget.examInstruction.quizMinute, onEnd: onEnd);
     myDuration = Duration(minutes: widget.examInstruction.quizMinute);
-
+    startTimer();
   }
+
   void startTimer() {
     countdownTimer =
         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
   }
+
   // Step 4
   void stopTimer() {
     setState(() => countdownTimer!.cancel());
   }
+
   // Step 5
   void resetTimer() {
     stopTimer();
     setState(() => myDuration = Duration(days: 5));
   }
+
   void setCountDown() {
     final reduceSecondsBy = 1;
     setState(() {
@@ -63,6 +71,7 @@ class _ExamScreenState extends State<ExamScreen> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     String strDigits(int n) => n.toString().padLeft(2, '0');
@@ -71,7 +80,11 @@ class _ExamScreenState extends State<ExamScreen> {
     final seconds = strDigits(myDuration!.inSeconds.remainder(60));
     ExamCubit cubit = context.read<ExamCubit>();
 
-    cubit.getExam(widget.examInstruction.online_exam_id!=0?widget.examInstruction.online_exam_id:widget.examInstruction.all_exam_id,widget.examInstruction.exam_type);
+    cubit.getExam(
+        widget.examInstruction.online_exam_id != 0
+            ? widget.examInstruction.online_exam_id
+            : widget.examInstruction.all_exam_id,
+        widget.examInstruction.exam_type);
     String lang = EasyLocalization.of(context)!.locale.languageCode;
 
     return BlocBuilder<ExamCubit, ExamState>(
@@ -100,7 +113,14 @@ class _ExamScreenState extends State<ExamScreen> {
                           width: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color:cubit.index==index? AppColors.primary:cubit.questionesDataModel!.questions.elementAt(index).status=='pending'?AppColors.error:AppColors.white,
+                            color: cubit.index == index
+                                ? AppColors.primary
+                                : cubit.questionesDataModel!.questions
+                                            .elementAt(index)
+                                            .status ==
+                                        'pending'
+                                    ? AppColors.error
+                                    : AppColors.white,
                           ),
                           child: InkWell(
                             onTap: () {
@@ -112,7 +132,9 @@ class _ExamScreenState extends State<ExamScreen> {
                                 child: Text(
                                   "${index + 1}",
                                   style: TextStyle(
-                                      color:cubit.index==index? AppColors.white:AppColors.primary,
+                                      color: cubit.index == index
+                                          ? AppColors.white
+                                          : AppColors.primary,
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -135,65 +157,92 @@ class _ExamScreenState extends State<ExamScreen> {
               ),
             ),
           ),
-          body:cubit.questionesDataModel!.questions.length>0?
-          cubit.questionesDataModel!.questions[cubit.index].answers!.length>0?
-          Container(
-
-            child: Column(
-              children: [
-            Text(
-            '$minutes:$seconds',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 50),
-            ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(cubit.questionesDataModel!.questions[cubit.index].question!,
-                  style: TextStyle(fontWeight: FontWeight.normal,fontSize: 15,),),
-                ),
-
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: cubit.questionesDataModel!.questions[cubit.index].answers!.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Container(
-
-                        child: Center(
-                          child: Padding(
+          body: cubit.questionesDataModel!.questions.length > 0
+              ? cubit.questionesDataModel!.questions[cubit.index].answers!
+                          .length >
+                      0
+                  ? Container(
+                      child: Column(
+                        children: [
+                          Text(
+                            'remind_time'.tr(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.success,
+                                fontSize: 50),
+                          ),
+                          Text(
+                            '$minutes:$seconds',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.success,
+                                fontSize: 50),
+                          ),
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () {
-                                cubit.updateSelectAnswer(cubit.index,index);
-                              },
-                              child: Container(
-                                width: double.maxFinite,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: cubit.questionesDataModel!.questions[cubit.index].answers![index].status=='select'?AppColors.primary:AppColors.unselectedTab,
-                                    shape: BoxShape.rectangle,borderRadius: BorderRadius.all(Radius.circular(10))),
-                           child:  Padding(
-                             padding: const EdgeInsets.all(8.0),
-                             child: Text(cubit.questionesDataModel!.questions[cubit.index].answers![index].answer!),
-                           ),
-
+                            child: Text(
+                              cubit.questionesDataModel!.questions[cubit.index]
+                                  .question!,
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15,
                               ),
                             ),
                           ),
-                        ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: cubit.questionesDataModel!
+                                .questions[cubit.index].answers!.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Container(
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: InkWell(
+                                        onTap: () {
+                                          cubit.updateSelectAnswer(
+                                              cubit.index, index);
+                                        },
+                                        child: Container(
+                                          width: double.maxFinite,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: cubit
+                                                          .questionesDataModel!
+                                                          .questions[
+                                                              cubit.index]
+                                                          .answers![index]
+                                                          .status ==
+                                                      'select'
+                                                  ? AppColors.primary
+                                                  : AppColors.unselectedTab,
+                                              shape: BoxShape.rectangle,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(cubit
+                                                .questionesDataModel!
+                                                .questions[cubit.index]
+                                                .answers![index]
+                                                .answer!),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ):
-              Container()
-              :   Container()
-          ,
+                    )
+                  : Container()
+              : Container(),
         );
       },
     );
@@ -202,5 +251,4 @@ class _ExamScreenState extends State<ExamScreen> {
   void onEnd() {
     print('onEnd');
   }
-
 }
