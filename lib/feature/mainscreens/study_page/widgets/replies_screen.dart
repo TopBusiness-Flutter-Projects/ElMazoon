@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/models/comments_model.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/show_dialog.dart';
+import '../../../../core/utils/toast_message_method.dart';
 import '../../../../core/widgets/audio_player_widget.dart';
 import '../../../../core/widgets/custom_appbar_widget.dart';
 import '../../../../core/widgets/network_image.dart';
@@ -37,6 +39,28 @@ class _RepliesScreenState extends State<RepliesScreen> {
       body: BlocBuilder<StudyPageCubit, StudyPageState>(
         builder: (context, state) {
           StudyPageCubit cubit = context.read<StudyPageCubit>();
+
+          if (state is StudyPageDeleteReplyLoaded) {
+            Navigator.pop(context);
+            Future.delayed(Duration(milliseconds: 300), () {
+              toastMessage(
+                'success_delete'.tr(),
+                context,
+                color: AppColors.success,
+              );
+            });
+          }
+          if (state is StudyPageDeleteReplyError) {
+            Navigator.pop(context);
+            Future.delayed(Duration(milliseconds: 300), () {
+              toastMessage(
+                'error_delete'.tr(),
+                context,
+                color: AppColors.error,
+              );
+            });
+          }
+
           return Form(
             key: cubit.replyFormKey,
             child: Padding(
@@ -237,6 +261,81 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
+                                                  cubit
+                                                              .commentsList[
+                                                                  widget.index]
+                                                              .replies![index]
+                                                              .user!
+                                                              .id ==
+                                                          cubit.userModel.data!
+                                                              .id
+                                                      ? Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            PopupMenuButton<
+                                                                int>(
+                                                              itemBuilder: (BuildContext
+                                                                      context) =>
+                                                                  <
+                                                                      PopupMenuItem<
+                                                                          int>>[
+                                                                PopupMenuItem<
+                                                                    int>(
+                                                                  value: 1,
+                                                                  child: Text(
+                                                                      'update'
+                                                                          .tr()),
+                                                                ),
+                                                                PopupMenuItem<
+                                                                    int>(
+                                                                  value: 2,
+                                                                  child: Text(
+                                                                      'delete'
+                                                                          .tr()),
+                                                                ),
+                                                              ],
+                                                              onSelected:
+                                                                  (int value) {
+                                                                if (value ==
+                                                                    1) {
+                                                                  print(
+                                                                      '******** $value *********');
+                                                                }
+                                                                if (value ==
+                                                                    2) {
+                                                                  createProgressDialog(
+                                                                    context,
+                                                                    'wait'.tr(),
+                                                                  );
+                                                                  cubit
+                                                                      .deleteReply(
+                                                                    cubit
+                                                                        .commentsList[widget
+                                                                            .index]
+                                                                        .replies![
+                                                                            index]
+                                                                        .id!,
+                                                                    widget
+                                                                        .index,
+                                                                    index,
+                                                                  );
+                                                                }
+                                                              },
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(0),
+                                                              child: Icon(
+                                                                Icons.more_vert,
+                                                                color: AppColors
+                                                                    .secondPrimary,
+                                                              ),
+                                                              splashRadius: 25,
+                                                            ),
+                                                          ],
+                                                        )
+                                                      : SizedBox(),
                                                   Row(
                                                     children: [
                                                       Expanded(

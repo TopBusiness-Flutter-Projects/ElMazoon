@@ -11,6 +11,7 @@ import 'package:elmazoon/injector.dart' as injector;
 import 'feature/exam/cubit/exam_cubit.dart';
 import 'feature/examRegister/cubit/exam_register_cubit.dart';
 import 'feature/login/cubit/login_cubit.dart';
+import 'feature/mainscreens/homePage/cubit/home_page_cubit.dart';
 import 'feature/mainscreens/notificationpage/cubit/notification_cubit.dart';
 import 'feature/mainscreens/profilePage/cubit/profile_cubit.dart';
 import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
@@ -67,6 +68,9 @@ class _ElmazoonState extends State<Elmazoon> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<NavigationCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<HomePageCubit>(),
         ),
       ],
       child: MaterialApp(

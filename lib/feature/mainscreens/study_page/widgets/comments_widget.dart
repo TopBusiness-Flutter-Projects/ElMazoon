@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
+import 'package:elmazoon/core/utils/toast_message_method.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/widgets/replies_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/utils/show_dialog.dart';
 import '../../../../core/widgets/audio_player_widget.dart';
 import '../../../../core/widgets/network_image.dart';
 import '../../../../core/widgets/show_loading_indicator.dart';
@@ -42,6 +44,28 @@ class _CommentsWidgetState extends State<CommentsWidget> {
         BlocBuilder<StudyPageCubit, StudyPageState>(
           builder: (context, state) {
             StudyPageCubit cubit = context.read<StudyPageCubit>();
+
+            if (state is StudyPageDeleteCommentLoaded) {
+              Navigator.pop(context);
+              Future.delayed(Duration(milliseconds: 300), () {
+                toastMessage(
+                  'success_delete'.tr(),
+                  context,
+                  color: AppColors.success,
+                );
+              });
+            }
+            if (state is StudyPageDeleteCommentError) {
+              Navigator.pop(context);
+              Future.delayed(Duration(milliseconds: 300), () {
+                toastMessage(
+                  'error_delete'.tr(),
+                  context,
+                  color: AppColors.error,
+                );
+              });
+            }
+
             if (state is StudyPageCommentsLessonsLoading) {
               return ShowLoadingIndicator();
             }
@@ -84,6 +108,53 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
+                                    cubit.commentsList[index].user!.id ==
+                                            cubit.userModel.data!.id
+                                        ? Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              PopupMenuButton<int>(
+                                                itemBuilder:
+                                                    (BuildContext context) =>
+                                                        <PopupMenuItem<int>>[
+                                                  PopupMenuItem<int>(
+                                                    value: 1,
+                                                    child: Text('update'.tr()),
+                                                  ),
+                                                  PopupMenuItem<int>(
+                                                    value: 2,
+                                                    child: Text('delete'.tr()),
+                                                  ),
+                                                ],
+                                                onSelected: (int value) {
+                                                  if (value == 1) {
+                                                    print(
+                                                        '******** $value *********');
+                                                  }
+                                                  if (value == 2) {
+                                                    createProgressDialog(
+                                                      context,
+                                                      'wait'.tr(),
+                                                    );
+                                                    cubit.deleteComment(
+                                                      cubit.commentsList[index]
+                                                          .id!,
+                                                      index
+                                                    );
+                                                  }
+                                                },
+                                                padding: EdgeInsets.all(0),
+                                                child: Icon(
+                                                  Icons.more_vert,
+                                                  color:
+                                                      AppColors.secondPrimary,
+                                                ),
+                                                splashRadius: 25,
+                                              ),
+                                            ],
+                                          )
+                                        : SizedBox(),
                                     Row(
                                       children: [
                                         Expanded(
@@ -105,7 +176,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                                 color: AppColors.primary,
                                                 fontSize: 12),
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                     SizedBox(height: 8),

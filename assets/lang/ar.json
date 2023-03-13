@@ -78,7 +78,16 @@
   "end_code": "نهايه الاشتراك",
   "government": "المحافظه",
   "season": "الصف",
-  "term": "الترم"
+  "term": "الترم",
+  "logout": "تسجيل خروج",
+  "renew": "تجديد الاشتراك",
+  "change_photo": "تغير الصوره",
+  "update": "تعديل",
+  "start_study": "أبدا المذكرة",
+  "home_page": "الصفحة الرئيسية",
+  "delete": "حذف",
+  "success_delete": "تم الحذف بنجاح",
+  "error_delete": "هناك مشكله فى الحذف"
 
 
 

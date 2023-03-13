@@ -41,3 +41,12 @@ class StudyPageMoreCommentsLessonsError extends StudyPageState {}
 class StudyPageAddCommentLoading extends StudyPageState {}
 class StudyPageAddCommentLoaded extends StudyPageState {}
 class StudyPageAddCommentError extends StudyPageState {}
+
+class StudyPageDeleteCommentLoading extends StudyPageState {}
+class StudyPageDeleteCommentLoaded extends StudyPageState {}
+class StudyPageDeleteCommentError extends StudyPageState {}
+
+
+class StudyPageDeleteReplyLoading extends StudyPageState {}
+class StudyPageDeleteReplyLoaded extends StudyPageState {}
+class StudyPageDeleteReplyError extends StudyPageState {}

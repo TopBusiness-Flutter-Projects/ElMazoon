@@ -11,4 +11,8 @@ abstract class BaseApiConsumer {
 
   Future<dynamic> put(String path,
       {Map<String, dynamic>? body, Map<String, dynamic>? queryParameters,Options? options});
+
+  Future<dynamic> delete(String path,
+      { bool formDataIsEnabled = false,Map<String, dynamic>? body, Map<String, dynamic>? queryParameters,Options? options});
+
 }

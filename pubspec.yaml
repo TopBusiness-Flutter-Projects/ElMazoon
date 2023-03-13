@@ -34,16 +34,16 @@ dependencies:
   get_it: ^7.2.0
   dartz: ^0.10.1
   dio: ^4.0.6
-  flutter_svg: ^2.0.2
+  flutter_svg: ^2.0.3
   page_transition: "^2.0.9"
   equatable: ^2.0.5
-  shared_preferences: ^2.0.17
+  shared_preferences: ^2.0.18
   cached_network_image: ^3.2.3
-  firebase_messaging: ^14.2.5
-  flutter_launcher_icons: ^0.11.0
-  firebase_auth: ^4.2.9
-  firebase_core: ^2.7.0
-  syncfusion_flutter_calendar: ^20.4.52
+  firebase_messaging: ^14.2.6
+  flutter_launcher_icons: ^0.12.0
+  firebase_auth: ^4.2.10
+  firebase_core: ^2.7.1
+  syncfusion_flutter_calendar: ^20.4.53
   flutter_local_notifications: ^13.0.0
   internet_connection_checker: ^1.0.0+1
   flutter_countdown_timer: ^4.1.0
@@ -60,12 +60,16 @@ dependencies:
   path_provider: any
   permission_handler: ^10.2.0
   any_link_preview: ^3.0.0
-  video_player: ^2.5.2
-  image_picker: ^0.8.6+1
+  video_player: ^2.6.0
+  image_picker: ^0.8.7
   record: ^4.4.4
   audioplayers: ^3.0.1
   image_cropper: ^3.0.1
-  syncfusion_flutter_pdfviewer: ^20.4.52
+  syncfusion_flutter_pdfviewer: ^20.4.53
+  carousel_slider: ^4.2.1
+
+
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5

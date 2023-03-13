@@ -172,9 +172,60 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     emit(StudyPageAccessFirstVideoLoading());
     final response = await api.openNextVideo(id: id);
     response.fold(
-          (l) => emit(StudyPageAccessFirstVideoError()),
-          (r) => emit(StudyPageAccessFirstVideoLoaded()),
+      (l) => emit(StudyPageAccessFirstVideoError()),
+      (r) => emit(StudyPageAccessFirstVideoLoaded()),
     );
   }
 
+  deleteReply(int id, int commentIndex, int index) async {
+    final response = await api.deleteReply(id);
+    response.fold(
+      (l) {
+        emit(StudyPageDeleteReplyError());
+        Future.delayed(Duration(milliseconds: 500), () {
+          emit(StudyPageDeleteReplyLoading());
+        });
+      },
+      (r) {
+        if (r.code != 200) {
+          emit(StudyPageDeleteReplyError());
+          Future.delayed(Duration(milliseconds: 500), () {
+            emit(StudyPageDeleteReplyLoading());
+          });
+        } else {
+          commentsList[commentIndex].replies!.removeAt(index);
+          emit(StudyPageDeleteReplyLoaded());
+          Future.delayed(Duration(milliseconds: 500), () {
+            emit(StudyPageDeleteReplyLoading());
+          });
+        }
+      },
+    );
+  }
+
+  deleteComment(int id, int index) async {
+    final response = await api.deleteComment(id);
+    response.fold(
+      (l) {
+        emit(StudyPageDeleteCommentError());
+        Future.delayed(Duration(milliseconds: 500), () {
+          emit(StudyPageDeleteCommentLoading());
+        });
+      },
+      (r) {
+        if (r.code != 200) {
+          emit(StudyPageDeleteCommentError());
+          Future.delayed(Duration(milliseconds: 500), () {
+            emit(StudyPageDeleteCommentLoading());
+          });
+        } else {
+          commentsList.removeAt(index);
+          emit(StudyPageDeleteCommentLoaded());
+          Future.delayed(Duration(milliseconds: 500), () {
+            emit(StudyPageDeleteCommentLoading());
+          });
+        }
+      },
+    );
+  }
 }

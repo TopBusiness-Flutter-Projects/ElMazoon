@@ -133,7 +133,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                       type: PageTransitionType.bottomToTopJoined,
                       alignment: Alignment.bottomCenter,
                       duration: const Duration(milliseconds: 700),
-                      child: ProfilePageDetails(userModel: cubit.userModel!),
+                      child: ProfilePageDetails(),
                       childCurrent: NavigatorBar(),
                     ),
                   );

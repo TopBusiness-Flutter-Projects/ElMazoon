@@ -78,7 +78,16 @@
  "end_code": "End of Subscribe",
  "government": "Government",
  "season": "Season",
- "term": "Term"
+ "term": "Term",
+ "logout": "Logout",
+ "renew": "Subscription Renewal",
+ "change_photo": "Change Photo",
+ "update": "Update",
+ "start_study": "Start Study",
+ "home_page": "Home Page",
+ "delete": "Delete",
+ "success_delete": "Successfully Delete Comment",
+ "error_delete": "Error To Delete Comment"
 
 
 }

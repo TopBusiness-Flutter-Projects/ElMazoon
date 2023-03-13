@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:elmazoon/core/models/home_page_model.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/models/all_classes_model.dart';
 
@@ -35,9 +36,7 @@ class ServiceApi {
 
         },
         options: Options(
-          headers: {
-            'Accept-Language': lan
-          },
+          headers: {'Accept-Language': lan},
         ),
       );
       print(response);
@@ -205,6 +204,24 @@ class ServiceApi {
     }
   }
 
+  Future<Either<Failure, StatusResponse>> deleteComment(int commentId) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.delete(
+        EndPoints.deleteCommentUrl + commentId.toString(),
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+          },
+        ),
+      );
+      return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+
   Future<Either<Failure, OneComment>> addReply(
     int commentId,
     String type, {
@@ -240,6 +257,25 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, StatusResponse>> deleteReply(int replyId) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.delete(
+        EndPoints.deleteReplayUrl + replyId.toString(),
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+          },
+        ),
+      );
+      return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+
   Future<Either<Failure, TimeDataModel>> gettimes() async {
     UserModel userModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
@@ -258,12 +294,15 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
+  Future<Either<Failure, QuestionesDataModel>> getQuestion(int exam_id) async {
   Future<Either<Failure, QuestionesDataModel>> getQuestion(int exam_id, String exam_type) async {
     UserModel userModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
     print('lan : $lan');
     try {
       final response = await dio.get(
+        EndPoints.questionsUrl + "${exam_id}",
         EndPoints.questionsUrl+"${exam_id}",
         queryParameters: {
           "exam_type":exam_type
@@ -281,6 +320,7 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, MothPlanModel>> getMonthPlans() async {
     UserModel userModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
@@ -342,14 +382,15 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, ExamModel>> registerExam(
-      {required int exma_id,required int time_id}) async {
+      {required int exma_id, required int time_id}) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
 
     try {
       final response = await dio.post(
-        EndPoints.registerExamUrl+exma_id.toString(),
+        EndPoints.registerExamUrl + exma_id.toString(),
         body: {
           'papel_sheet_exam_time_id': time_id,
         },
@@ -361,6 +402,39 @@ class ServiceApi {
         ),
       );
       return Right(ExamModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, UserModel>> updateProfile(
+      {required String imagePath}) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.post(
+        EndPoints.updateProfileUrl,
+        formDataIsEnabled: true,
+        body: {"image": await MultipartFile.fromFile(imagePath)},
+        options: Options(headers: {'Authorization': loginModel.data!.token}),
+      );
+      return Right(UserModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, HomePageModel>> getHomePageData() async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.get(
+        EndPoints.homePageUrl,
+        options: Options(headers: {
+          'Authorization': loginModel.data!.token,
+          'Accept-Language': lan
+        }),
+      );
+      return Right(HomePageModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

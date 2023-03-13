@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/utils/restart_app_class.dart';
 import '../../../main.dart';
+import '../../mainscreens/homePage/screens/home_page.dart';
 import '../../mainscreens/notificationpage/presentation/screens/notification_page.dart';
 import '../../mainscreens/profilePage/widgets/customAppbar.dart';
 import '../../mainscreens/study_page/screens/study_page.dart';
@@ -132,9 +133,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
         color: Colors.red,
       );
     } else if (_page == 2) {
-      return Container(
-        color: Colors.green,
-      );
+      return HomePage();
     } else if (_page == 3) {
       return  NotificationScreen();
     } else {
@@ -187,20 +186,19 @@ class _NavigatorBarState extends State<NavigatorBar> {
     }
     else if (_page == 2) {
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'ذاكر',
-            style: TextStyle(
-              color: AppColors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            'محاضرات وامتحانات',
-            style: TextStyle(
-              color: AppColors.primary,
-              fontSize: 16,
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Text(
+              'home_page'.tr(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

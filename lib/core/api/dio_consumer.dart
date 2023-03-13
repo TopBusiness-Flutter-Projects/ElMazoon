@@ -142,4 +142,23 @@ class DioConsumer implements BaseApiConsumer {
       _handleDioError(error);
     }
   }
+
+  @override
+  Future delete(String path,
+      {bool formDataIsEnabled = false,
+      Map<String, dynamic>? body,
+      Map<String, dynamic>? queryParameters,
+      Options? options}) async {
+    try {
+      final response = await client.delete(
+        path,
+        data: formDataIsEnabled ? FormData.fromMap(body!) : body,
+        queryParameters: queryParameters,
+        options: options,
+      );
+      return _handleResponseAsJson(response);
+    } on DioError catch (error) {
+      _handleDioError(error);
+    }
+  }
 }

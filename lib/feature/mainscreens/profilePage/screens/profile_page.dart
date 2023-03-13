@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/core/utils/assets_manager.dart';
 import 'package:elmazoon/feature/login/cubit/login_cubit.dart';
 import 'package:elmazoon/feature/mainscreens/profilePage/cubit/profile_cubit.dart';
@@ -199,18 +200,32 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 30),
               InkWell(
-                onTap: (){
+                onTap: () {
                   lang == 'ar'
                       ? EasyLocalization.of(context)!
-                      .setLocale(const Locale('en'))
+                          .setLocale(const Locale('en'))
                       : EasyLocalization.of(context)!
-                      .setLocale(const Locale('ar'));
+                          .setLocale(const Locale('ar'));
                   HotRestartController.performHotRestart(context);
                 },
                 child: ProfileItemWidget(
                   image: ImageAssets.languageIcon,
                   title: 'language'.tr(),
                   subTitle: 'language_type'.tr(),
+                ),
+              ),
+              const SizedBox(height: 30),
+              InkWell(
+                onTap: () {
+                  Preferences.instance.clearUserData().then(
+                        (value) =>
+                            HotRestartController.performHotRestart(context),
+                      );
+                },
+                child: ProfileItemWidget(
+                  image: ImageAssets.logoutIcon,
+                  title: 'logout'.tr(),
+                  subTitle: 'logout'.tr(),
                 ),
               ),
             ],

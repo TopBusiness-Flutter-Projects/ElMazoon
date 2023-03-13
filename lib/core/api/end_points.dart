@@ -13,9 +13,13 @@ class EndPoints {
   static const String registerExamUrl = '${baseUrl}auth/papel-sheet-exam/user/';
   static const String commentByLessonUrl = '${baseUrl}lesson/video/comments/';
   static const String addCommentUrl = '${baseUrl}lesson/video/add-comment/';
+  static const String deleteCommentUrl = '${baseUrl}video/comment/delete/';
+  static const String deleteReplayUrl = '${baseUrl}video/replay/delete/';
   static const String addReplyUrl = '${baseUrl}lesson/comment/add-replay/';
   static const String openFirstVideoUrl = '${baseUrl}lesson/';
   static const String openNextVideoUrl = '${baseUrl}lesson/access-next-video/';
+  static const String updateProfileUrl = '${baseUrl}auth/update-profile';
+  static const String homePageUrl = '${baseUrl}auth/home-page';
 
 
 

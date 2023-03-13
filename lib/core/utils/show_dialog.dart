@@ -24,15 +24,6 @@ createProgressDialog(BuildContext context, String msg) {
             )
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () =>Navigator.of(context).pop(),
-            child: Text(
-              'close'.tr(),
-              style: TextStyle(color: AppColors.primary),
-            ),
-          )
-        ],
       );
     },
   );

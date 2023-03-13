@@ -9,6 +9,7 @@ import 'core/remote/service.dart';
 import 'feature/exam/cubit/exam_cubit.dart';
 import 'feature/examRegister/cubit/exam_register_cubit.dart';
 import 'feature/login/cubit/login_cubit.dart';
+import 'feature/mainscreens/homePage/cubit/home_page_cubit.dart';
 import 'feature/mainscreens/profilePage/cubit/profile_cubit.dart';
 import 'feature/mainscreens/notificationpage/cubit/notification_cubit.dart';
 import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
@@ -49,6 +50,9 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => NavigationCubit(),
+  );
+  serviceLocator.registerFactory(
+    () => HomePageCubit(serviceLocator()),
   );
   ///////////////////////////////////////////////////////////////////////////////
 
