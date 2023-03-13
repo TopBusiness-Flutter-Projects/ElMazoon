@@ -68,7 +68,7 @@ class _ExmRegisterPageState extends State<ExmRegisterPage> {
             children: [
               Center(
                 child: Image.asset(
-                  ImageAssets.userexamImage,
+                  ImageAssets.userExamImage,
                   fit: BoxFit.cover,
                   height: 300,
                 ),

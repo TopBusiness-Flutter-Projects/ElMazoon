@@ -23,7 +23,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   userWithCode(context) async {
     emit(userLoading());
-    final response = await api.postuser(codeController.text);
+    final response = await api.postUser(codeController.text);
     response.fold(
       (error) => emit(userError()),
       (response) {

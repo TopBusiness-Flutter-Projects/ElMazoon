@@ -3,6 +3,8 @@
   "please_write_code": "يرجى كتابة كود الدخول المستلم من السكرتارية",
   "user": "تسجيل الدخول",
   "contact_us_from": "تواصل معنا من خلال",
+  "contact_us": "تواصل معنا",
+  "call_us": "اتصل بنا",
   "register_paper_exam": "التسجيل فى الامتحان الورقى",
   "register_data_enter_exam": "سجل بياناتك للتمكن من دخول الامتحان",
   "mygards_rate": "درجاتى وتقييماتى",
@@ -65,7 +67,18 @@
   "number_of_question": "عدد اسئلة الامتحان",
   "quiz_minute": "وقت الامتحان",
   "min": "دقيقة",
-  "start": "ابدأ الان"
+  "start": "ابدأ الان",
+  "language": "اللغة",
+  "language_type": "العربيه",
+  "profile": "الصفحه الشخصيه",
+  "report": "تقرير الطالب",
+  "no_user": "لا يوجد مسخدم",
+  "phone": "الهاتف",
+  "father_phone": "هاتف ولى الامر",
+  "end_code": "نهايه الاشتراك",
+  "government": "المحافظه",
+  "season": "الصف",
+  "term": "الترم"
 
 
 

@@ -57,12 +57,13 @@ class _userScreenState extends State<LoginScreen> {
                     builder: (context, state) {
                       if (state is userLoading) {
                         return SizedBox(
-                            height: 120,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.primary,
-                              ),
-                            ));
+                          height: 120,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        );
                       }
                       if (state is userLoaded) {
                         Future.delayed(
@@ -196,19 +197,16 @@ class _userScreenState extends State<LoginScreen> {
                       );
                     },
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizedBox(height: 30),
                   Text(
                     'contact_us_from'.tr(),
                     style: TextStyle(
-                        color: AppColors.gray1,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15),
+                      color: AppColors.gray1,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizedBox(height: 30),
                   BlocBuilder<LoginCubit, LoginState>(
                     builder: (context, state) {
                       LoginCubit cubit = context.read<LoginCubit>();
@@ -335,8 +333,6 @@ class _userScreenState extends State<LoginScreen> {
 
   getCommunicationTab(String type, LoginCubit cubit) async {
     if (type == 'facebook') {
-      // String urls =
-      //     "https://www.facebook.com/profile.php?id=100086522961483&mibextid=ZbWKwL";
       await launchUrl(Uri.parse(cubit.communicationData.facebookLink));
     } else if (type == 'youtube') {
       await launchUrl(Uri.parse(cubit.communicationData.youtubeLink));

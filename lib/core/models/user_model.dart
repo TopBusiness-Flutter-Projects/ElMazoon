@@ -43,6 +43,8 @@ class User {
     required this.image,
     required this.userStatus,
     required this.code,
+    required this.season,
+    required this.term,
     required this.dateStartCode,
     required this.dateEndCode,
      this.country,
@@ -59,6 +61,8 @@ class User {
   String image;
   String userStatus;
   String code;
+  Season season;
+  Term term;
   DateTime dateStartCode;
   DateTime dateEndCode;
   Country? country;
@@ -75,6 +79,8 @@ class User {
     image: json["image"],
     userStatus: json["user_status"]??'no status',
     code: json["code"]??'no code',
+    season: Season.fromJson(json["season"]),
+    term: Term.fromJson(json["term"]),
     dateStartCode: json["date_start_code"]!=null?DateTime.parse(json["date_start_code"]):DateTime(2022),
     dateEndCode:json["date_end_code"]!=null? DateTime.parse(json["date_end_code"]):DateTime(2022),
     country:json["country"]!=null? Country.fromJson(json["country"]):null,
@@ -92,6 +98,8 @@ class User {
     "image": image,
     "user_status": userStatus,
     "code": code,
+    "season": season.toJson(),
+    "term": term.toJson(),
     "date_start_code": "${dateStartCode.year.toString().padLeft(4, '0')}-${dateStartCode.month.toString().padLeft(2, '0')}-${dateStartCode.day.toString().padLeft(2, '0')}",
     "date_end_code": "${dateEndCode.year.toString().padLeft(4, '0')}-${dateEndCode.month.toString().padLeft(2, '0')}-${dateEndCode.day.toString().padLeft(2, '0')}",
     "country": country!.toJson(),
@@ -104,27 +112,82 @@ class User {
 class Country {
   Country({
     required this.id,
-    required this.name,
+    required this.nameAr,
+    required this.nameEn,
     required this.createdAt,
     required this.updatedAt,
   });
 
   int id;
-  String name;
+  String nameAr;
+  String nameEn;
   DateTime createdAt;
   DateTime updatedAt;
 
   factory Country.fromJson(Map<String, dynamic> json) => Country(
     id: json["id"],
-    name: json["name"],
+    nameAr: json["name_ar"],
+    nameEn: json["name_en"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name": name,
+    "name_ar": nameAr,
+    "name_en": nameEn,
     "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
     "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",
+  };
+}
+
+class Season {
+  Season({
+    required this.id,
+    required this.nameAr,
+    required this.nameEn,
+
+  });
+
+  int id;
+  String nameAr;
+  String nameEn;
+
+
+  factory Season.fromJson(Map<String, dynamic> json) => Season(
+    id: json["id"],
+    nameAr: json["name_ar"],
+    nameEn: json["name_en"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name_ar": nameAr,
+    "name_en": nameEn,
+  };
+}
+
+class Term {
+  Term({
+    required this.id,
+    required this.nameAr,
+    required this.nameEn,
+  });
+
+  int id;
+  String nameAr;
+  String nameEn;
+
+
+  factory Term.fromJson(Map<String, dynamic> json) => Term(
+    id: json["id"],
+    nameAr: json["name_ar"],
+    nameEn: json["name_en"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name_ar": nameAr,
+    "name_en": nameEn,
   };
 }

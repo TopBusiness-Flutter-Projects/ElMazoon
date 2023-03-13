@@ -155,7 +155,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
             ),
           ),
           Text(
-            'محاضرات وامتحانات',
+            'محاضرات و امتحانات',
             style: TextStyle(
               color: AppColors.primary,
               fontSize: 16,

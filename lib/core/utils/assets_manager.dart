@@ -13,7 +13,7 @@ class ImageAssets {
   static const String callImage = '$imagePath/call.png';
   static const String appBarImage = '$imagePath/appbar_background.png';
   static const String userImage = '$imagePath/user.png';
-  static const String userexamImage = '$imagePath/user_exam.png';
+  static const String userExamImage = '$imagePath/user_exam.png';
   static const String suggestImage = '$imagePath/suggest.png';
   static const String correctImage = '$imagePath/correct.png';
 
@@ -27,14 +27,17 @@ class ImageAssets {
   static const String moreIcon = '$iconsPath/more.svg';
   static const String studyTap1Icon = '$iconsPath/study_tap1.svg';
   static const String studyTap2Icon = '$iconsPath/study_tap2.svg';
-  static const String usereditIcon = '$iconsPath/user_edit.svg';
+  static const String userEditIcon = '$iconsPath/user_edit.svg';
   static const String degreeIcon = '$iconsPath/degree.svg';
   static const String cupIcon = '$iconsPath/cup.svg';
   static const String calenderIcon = '$iconsPath/calender.svg';
   static const String suggestIcon = '$iconsPath/suggest.svg';
+  static const String callUsIcon = '$iconsPath/call_us.svg';
+  static const String languageIcon = '$iconsPath/language.svg';
+  static const String reportIcon = '$iconsPath/report.svg';
 
 
   //Lottie
-  static const String nouser = '$lottiePath/no_item.json';
+  static const String noUser = '$lottiePath/no_item.json';
 
 }

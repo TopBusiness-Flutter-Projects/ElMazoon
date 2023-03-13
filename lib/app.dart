@@ -15,6 +15,7 @@ import 'feature/mainscreens/notificationpage/cubit/notification_cubit.dart';
 import 'feature/mainscreens/profilePage/cubit/profile_cubit.dart';
 import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'feature/month_plan/cubit/month_plan_cubit.dart';
+import 'feature/navigation_bottom/cubit/navigation_cubit.dart';
 
 class Elmazoon extends StatefulWidget {
   const Elmazoon({Key? key}) : super(key: key);
@@ -63,6 +64,9 @@ class _ElmazoonState extends State<Elmazoon> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<ExamCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<NavigationCubit>(),
         ),
       ],
       child: MaterialApp(

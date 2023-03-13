@@ -13,6 +13,7 @@ import 'feature/mainscreens/profilePage/cubit/profile_cubit.dart';
 import 'feature/mainscreens/notificationpage/cubit/notification_cubit.dart';
 import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'feature/month_plan/cubit/month_plan_cubit.dart';
+import 'feature/navigation_bottom/cubit/navigation_cubit.dart';
 import 'feature/splash/presentation/cubit/splash_cubit.dart';
 
 final serviceLocator = GetIt.instance;
@@ -45,6 +46,9 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => ExamCubit(serviceLocator()),
+  );
+  serviceLocator.registerFactory(
+    () => NavigationCubit(),
   );
   ///////////////////////////////////////////////////////////////////////////////
 

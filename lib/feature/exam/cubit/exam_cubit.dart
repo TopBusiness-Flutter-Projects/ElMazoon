@@ -23,7 +23,7 @@ class ExamCubit extends Cubit<ExamState> {
           questionesDataModel = response.data!;
           index = 0;
           List<Questions> qu=questionesDataModel!.questions;
-          Questions data=qu.elementAt(1);
+          Questions data=qu.elementAt(0);
           data.status='pending';
          qu.removeAt(1);
          qu.insert(1, data);

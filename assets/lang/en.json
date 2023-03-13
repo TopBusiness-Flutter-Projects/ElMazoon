@@ -3,6 +3,8 @@
  "please_write_code": "Please write the access code received from the secretariat",
  "user": "user",
  "contact_us_from": "Contact Us From",
+ "contact_us": "Contact Us",
+ "call_us": "Call Us",
  "register_paper_exam":"Register for the paper exam",
  "register_data_enter_exam": "Register your data to be able to enter the exam",
  "mygards_rate": "My grades and ratings",
@@ -65,7 +67,18 @@
  "number_of_question": "Number of Question",
  "quiz_minute": "Time of The Exam",
  "min": "Minutes",
- "start": "Start"
+ "start": "Start",
+ "language": "Language",
+ "language_type": "English",
+ "profile": "Profile",
+ "report": "Student Report",
+ "no_user": "No User",
+ "phone": "Phone",
+ "father_phone": "Father Phone",
+ "end_code": "End of Subscribe",
+ "government": "Government",
+ "season": "Season",
+ "term": "Term"
 
 
 }
