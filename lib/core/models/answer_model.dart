@@ -3,6 +3,7 @@ class Answers {
   String? answer;
   String? answerNumber;
   String? answerStatus;
+  String status='';
   String? createdAt;
   String? updatedAt;
 

@@ -12,6 +12,7 @@ import '../../../../../core/widgets/custom_appbar_widget.dart';
 import '../../../../../core/widgets/show_loading_indicator.dart';
 import '../../models/all_classes_model.dart';
 import '../../widgets/structure_details_widget.dart';
+import '../full_exam/stucture_of_exam.dart';
 
 class StructureDetailsScreen extends StatefulWidget {
   StructureDetailsScreen(
@@ -151,11 +152,26 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
               SizedBox(height: 25),
               ...List.generate(
                 cubit.lessonsDetailsModel.data.exams.length,
-                (index) => StructureDetailsWidget(
-                  title: cubit.lessonsDetailsModel.data.exams[index].name,
-                  titleIcon: Icons.newspaper,
-                  color2: AppColors.primary,
-                  color1: AppColors.primary.withOpacity(0.5),
+                (index) => InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ExamInstruction(
+                              examInstruction:
+                              cubit.lessonsDetailsModel.data.exams[index]
+                                  .instruction!,
+                            ),
+                      ),
+                    );
+                  },
+                  child: StructureDetailsWidget(
+                    title: cubit.lessonsDetailsModel.data.exams[index].name,
+                    titleIcon: Icons.newspaper,
+                    color2: AppColors.primary,
+                    color1: AppColors.primary.withOpacity(0.5),
+                  ),
                 ),
               ),
             ],

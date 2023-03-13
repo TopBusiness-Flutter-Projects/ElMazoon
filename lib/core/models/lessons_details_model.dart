@@ -74,7 +74,7 @@ class Instruction {
   int numberOfQuestion;
   int all_exam_id;
   int online_exam_id;
-  String quizMinute;
+  int quizMinute;
   DateTime createdAt;
   DateTime updatedAt;
 

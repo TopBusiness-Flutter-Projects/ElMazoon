@@ -104,7 +104,7 @@ class ExamInstruction extends StatelessWidget {
             ),
           ),
           CustomButton(text: 'start'.tr(), color: AppColors.primary, onClick: (){
-            Navigator.pushNamed(context, Routes.examRoute,arguments: examInstruction.online_exam_id);
+            Navigator.pushNamed(context, Routes.examRoute,arguments: examInstruction.all_exam_id!=0? examInstruction.all_exam_id: examInstruction.online_exam_id);
           },paddingHorizontal: 50,),
           SizedBox(height: 25),
         ],

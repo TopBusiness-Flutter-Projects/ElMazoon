@@ -10,6 +10,7 @@ import '../../widgets/add_comment_widget.dart';
 import '../../widgets/comments_widget.dart';
 import '../../widgets/structure_details_widget.dart';
 import '../../widgets/video_widget.dart';
+import '../full_exam/stucture_of_exam.dart';
 
 class VideoScreen extends StatelessWidget {
   const VideoScreen({Key? key, required this.lessons}) : super(key: key);
@@ -43,12 +44,27 @@ class VideoScreen extends StatelessWidget {
                                 (index) => SizedBox(
                                   width: MediaQuery.of(context).size.width / 2 -
                                       12,
-                                  child: StructureDetailsWidget(
-                                    title: lessons.exams[index].name,
-                                    isSmall: true,
-                                    titleIcon: Icons.newspaper,
-                                    color2: AppColors.primary,
-                                    color1: AppColors.primary.withOpacity(0.5),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ExamInstruction(
+                                                examInstruction:
+                                                lessons.exams[index]
+                                                    .instruction!,
+                                              ),
+                                        ),
+                                      );
+                                    },
+                                    child: StructureDetailsWidget(
+                                      title: lessons.exams[index].name,
+                                      isSmall: true,
+                                      titleIcon: Icons.newspaper,
+                                      color2: AppColors.primary,
+                                      color1: AppColors.primary.withOpacity(0.5),
+                                    ),
                                   ),
                                 ),
                               )

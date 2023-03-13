@@ -28,15 +28,21 @@ class CustomAppBar extends StatelessWidget {
                           fontSize: 15,
                           fontWeight: FontWeight.bold),
                     ),
+                    Visibility(
+                        visible: subtitle.isNotEmpty,
+                        child:
                     const SizedBox(
                       height: 5,
-                    ),
-                    Text(
-                     subtitle,
-                      style: TextStyle(
-                          color: AppColors.primary,
-                          fontSize: 13,
-                          fontWeight: FontWeight.normal),
+                    )),
+                    Visibility(
+                      visible: subtitle.isNotEmpty,
+                      child: Text(
+                       subtitle,
+                        style: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 13,
+                            fontWeight: FontWeight.normal),
+                      ),
                     ),
                   ],
                 ),

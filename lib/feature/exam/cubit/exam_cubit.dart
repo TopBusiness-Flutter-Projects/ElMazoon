@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:elmazoon/core/models/answer_model.dart';
 import 'package:elmazoon/core/remote/service.dart';
 import 'package:meta/meta.dart';
 
@@ -22,12 +23,12 @@ class ExamCubit extends Cubit<ExamState> {
         if (response.code == 200) {
           questionesDataModel = response.data!;
           index = 0;
-          List<Questions> qu=questionesDataModel!.questions;
-          Questions data=qu.elementAt(0);
-          data.status='pending';
-         qu.removeAt(1);
-         qu.insert(1, data);
-         questionesDataModel!.questions=qu;
+          //List<Questions> qu=questionesDataModel!.questions;
+          //Questions data=qu.elementAt(0);
+         // data.status='pending';
+         ///qu.removeAt(1);
+         //qu.insert(1, data);
+         //questionesDataModel!.questions=qu;
           emit(Questionupdate());
           // Navigator.pushNamed(context, Routes.examRegisterRoute,arguments: data);
         } else {}
@@ -41,6 +42,21 @@ class ExamCubit extends Cubit<ExamState> {
     this.index=index;
     emit(Questionupdate());
 
+
+  }
+
+  void updateSelectAnswer(int index, int index2) {
+    List<Answers>? answers=questionesDataModel!.questions[index].answers;
+    for(int i=0;i<answers!.length;i++){
+      if(index2==i){
+        answers[i].status='select';
+      }
+      else{
+        answers[i].status='';
+
+      }
+    }
+    emit(Questionupdate());
 
   }
 }
