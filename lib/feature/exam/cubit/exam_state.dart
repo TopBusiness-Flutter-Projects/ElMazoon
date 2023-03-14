@@ -5,3 +5,4 @@ abstract class ExamState {}
 
 class ExamInitial extends ExamState {}
 class Questionupdate extends ExamState {}
+class ExamPagePickImageSuccess extends ExamState {}

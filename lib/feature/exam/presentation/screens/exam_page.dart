@@ -14,6 +14,8 @@ import '../../../../core/models/lessons_details_model.dart';
 import '../../../../core/models/month_plan_model.dart';
 import '../../../../core/utils/assets_manager.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/custom_button.dart';
+import '../../../mainscreens/study_page/widgets/add_question_replay_widget.dart';
 import '../../cubit/exam_cubit.dart';
 
 class ExamScreen extends StatefulWidget {
@@ -79,12 +81,12 @@ class _ExamScreenState extends State<ExamScreen> {
     final minutes = strDigits(myDuration!.inMinutes.remainder(60));
     final seconds = strDigits(myDuration!.inSeconds.remainder(60));
     ExamCubit cubit = context.read<ExamCubit>();
-
+if(cubit.questionesDataModel!.questions.length==0){
     cubit.getExam(
         widget.examInstruction.online_exam_id != 0
             ? widget.examInstruction.online_exam_id
             : widget.examInstruction.all_exam_id,
-        widget.examInstruction.exam_type);
+        widget.examInstruction.exam_type);}
     String lang = EasyLocalization.of(context)!.locale.languageCode;
 
     return BlocBuilder<ExamCubit, ExamState>(
@@ -158,92 +160,173 @@ class _ExamScreenState extends State<ExamScreen> {
             ),
           ),
           body: cubit.questionesDataModel!.questions.length > 0
-              ? cubit.questionesDataModel!.questions[cubit.index].answers!
-                          .length >
-                      0
-                  ? Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Text(
-                              'remind_time'.tr(),
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.success,
-                                  fontSize: 13),
-                            ),
-                          ),
-                          Text(
-                            '$minutes:$seconds',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.success,
-                                fontSize: 13),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              cubit.questionesDataModel!.questions[cubit.index]
-                                  .question!,
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: cubit.questionesDataModel!
-                                .questions[cubit.index].answers!.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Container(
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: InkWell(
-                                        onTap: () {
-                                          cubit.updateSelectAnswer(
-                                              cubit.index, index);
-                                        },
-                                        child: Container(
-                                          width: double.maxFinite,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              color: cubit
-                                                          .questionesDataModel!
-                                                          .questions[
-                                                              cubit.index]
-                                                          .answers![index]
-                                                          .status ==
-                                                      'select'
-                                                  ? AppColors.primary
-                                                  : AppColors.unselectedTab,
-                                              shape: BoxShape.rectangle,
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(cubit
-                                                .questionesDataModel!
-                                                .questions[cubit.index]
-                                                .answers![index]
-                                                .answer!),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+              ? SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                 //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                 //      /mainAxisSize: MainAxisSize.max,
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                    //  crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        child: Text(
+                          'remind_time'.tr(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.success,
+                              fontSize: 13),
+                        ),
                       ),
-                    )
-                  : Container()
+                      Container(
+                        width: double.infinity,
+                        child: Text(
+                          '$minutes:$seconds',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.success,
+                              fontSize: 13),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 30.0),
+                          child: Text(
+                            cubit.questionesDataModel!.questions[cubit.index]
+                                .question!,
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ),
+                       cubit.questionesDataModel!.questions[cubit.index].answers!
+                           .length >
+                           0
+                           ?
+                       ListView.builder(
+                       shrinkWrap: true,
+
+
+                         physics: NeverScrollableScrollPhysics(),
+                         itemCount: cubit.questionesDataModel!
+                             .questions[cubit.index].answers!.length,
+                         itemBuilder: (context, index) {
+                           return Padding(
+                             padding:
+                                 const EdgeInsets.symmetric(horizontal: 8.0),
+                             child: Container(
+                               child: Center(
+                                 child: Padding(
+                                   padding: const EdgeInsets.all(8.0),
+                                   child: InkWell(
+                                     onTap: () {
+                                       cubit.updateSelectAnswer(
+                                           cubit.index, index);
+                                     },
+                                     child: Container(
+                                       width: double.maxFinite,
+                                       height: 60,
+                                       decoration: BoxDecoration(
+                                           color: cubit
+                                                       .questionesDataModel!
+                                                       .questions[
+                                                           cubit.index]
+                                                       .answers![index]
+                                                       .status ==
+                                                   'select'
+                                               ? AppColors.blueColor3
+                                               : AppColors.unselectedTab,
+                                           shape: BoxShape.rectangle,
+                                           borderRadius: BorderRadius.all(
+                                               Radius.circular(10))),
+                                       child: Padding(
+                                         padding: const EdgeInsets.all(8.0),
+                                         child: Align(
+                                           alignment: Alignment.centerRight,
+                                           child: Text(cubit
+                                               .questionesDataModel!
+                                               .questions[cubit.index]
+                                               .answers![index]
+                                               .answer!,
+                                           style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14,
+                                               color:cubit
+                                                 .questionesDataModel!
+                                                 .questions[
+                                             cubit.index]
+                                                 .answers![index]
+                                                 .status ==
+                                             'select'
+                                             ? AppColors.white
+                                                 : AppColors.secondPrimary, ),
+                                           ),
+                                         ),
+                                       ),
+                                     ),
+                                   ),
+                                 ),
+                               ),
+                             ),
+                           );
+                         },
+                       )
+                           : Container(
+                         width: double.infinity,
+                         child: AddAnswerWidget(
+                             id: cubit
+                                 .questionesDataModel!.questions[cubit.index].id!,
+                             type: 'comment'),
+                       ),
+                      Container(
+                        height: 70,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [ Expanded(
+                            child: CustomButton(
+
+                            paddingHorizontal: 10,
+                            text: 'postpone_question'.tr(),
+                            color: AppColors.primary,
+                            onClick: () {
+                              cubit.postponeQuestion(cubit.index);
+                             // Navigator.pop(context);
+                            //  Navigator.pop(context);
+                            },
+                        ),
+                          ), Expanded(
+                            child: CustomButton(
+                            paddingHorizontal: 10,
+                            text: 'solution_done'.tr(),
+                            color: AppColors.success,
+                            onClick: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                        ),
+                          ),],),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: CustomButton(
+                          paddingHorizontal: 50,
+                          text: 'end_exam'.tr(),
+                          color: AppColors.secondPrimary,
+                          onClick: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                        ),
+                      )
+
+                    ],
+                  ),
+                ),
+              )
+
               : Container(),
         );
       },
@@ -251,6 +334,6 @@ class _ExamScreenState extends State<ExamScreen> {
   }
 
   void onEnd() {
-    print('onEnd');
+ Navigator.pop(context);
   }
 }

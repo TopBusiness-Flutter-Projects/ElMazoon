@@ -19,6 +19,7 @@ class AppColors {
 
   static Color blueColor1 = HexColor('#6A85B6');
   static Color blueColor2 = HexColor('#BAC8E0');
+  static Color blueColor3 = HexColor('#1877F2');
 
   static Color blueLiteColor1 = HexColor('#429993');
   static Color blueLiteColor2 = HexColor('#7CD4CC');

@@ -87,7 +87,12 @@
   "home_page": "الصفحة الرئيسية",
   "delete": "حذف",
   "success_delete": "تم الحذف بنجاح",
-  "error_delete": "هناك مشكله فى الحذف"
+  "error_delete": "هناك مشكله فى الحذف",
+  "remind_time": "الوقت المتبقى",
+  "solution_done": "تم الحل",
+  "end_exam": "انهاء الاختبار",
+  "postpone_question": "تاجيل السؤال"
+
 
 
 

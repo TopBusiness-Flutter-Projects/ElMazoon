@@ -87,7 +87,11 @@
  "home_page": "Home Page",
  "delete": "Delete",
  "success_delete": "Successfully Delete Comment",
- "error_delete": "Error To Delete Comment"
+ "error_delete": "Error To Delete Comment",
+ "remind_time": "Remind Time",
+ "solution_done": "Solution Done",
+ "end_exam": "End Exam",
+ "postpone_question": "postpone the question"
 
 
 }
