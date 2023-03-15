@@ -91,7 +91,15 @@
   "remind_time": "الوقت المتبقى",
   "solution_done": "تم الحل",
   "end_exam": "انهاء الاختبار",
-  "postpone_question": "تاجيل السؤال"
+  "postpone_question": "تاجيل السؤال",
+  "exams": "اختبارات",
+  "no_exam": " لا يوجد اختبارات",
+  "important_ques": "اهم الاسئلة",
+  "important_ques_desc": "تجميع اهم الاسئلة على المنهج",
+  "study": "ذاكر",
+  "lecture_exam": "محاضرات وامتحانات",
+  "guide": "استكشف",
+  "sources_references": "مصادر ومراجع"
 
 
 

@@ -21,9 +21,15 @@ class StructureDetailsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: isSmall! ? 6 : 12, vertical: isSmall! ? 4 :8),
+      padding: EdgeInsets.symmetric(
+        horizontal: isSmall! ? 6 : 12,
+        vertical: isSmall! ? 4 : 8,
+      ),
       child: Container(
-        padding:  EdgeInsets.symmetric(horizontal: isSmall! ? 6 :12, vertical: isSmall! ? 9 :18),
+        padding: EdgeInsets.symmetric(
+          horizontal: isSmall! ? 6 : 12,
+          vertical: isSmall! ? 9 : 18,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           gradient: LinearGradient(
@@ -43,12 +49,12 @@ class StructureDetailsWidget extends StatelessWidget {
                   titleIcon,
                   color: AppColors.secondPrimary,
                 ),
-                SizedBox(width: isSmall! ? 6 :12),
+                SizedBox(width: isSmall! ? 6 : 12),
                 Text(
                   title,
                   style: TextStyle(
                     color: AppColors.secondPrimary,
-                    fontSize: isSmall! ? 12 :20,
+                    fontSize: isSmall! ? 12 : 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

@@ -36,9 +36,12 @@ class ImageAssets {
   static const String languageIcon = '$iconsPath/language.svg';
   static const String reportIcon = '$iconsPath/report.svg';
   static const String logoutIcon = '$iconsPath/logout.svg';
+  static const String partialExamsIcon = '$iconsPath/partial_exams.svg';
+  static const String examsIcon = '$iconsPath/exams.svg';
 
 
   //Lottie
   static const String noUser = '$lottiePath/no_item.json';
+  static const String noExam = '$lottiePath/no_exam.json';
 
 }

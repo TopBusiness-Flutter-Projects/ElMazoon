@@ -105,6 +105,8 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                             onRefresh: () async {
                               cubit.getAllClasses();
                             },
+                            color: AppColors.primary,
+                            backgroundColor: AppColors.secondPrimary,
                             child: ListView(
                               children: [
                                 Padding(
@@ -163,10 +165,15 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                           ),
                     state is StudyPageLoading
                         ? ShowLoadingIndicator()
-                        : SingleChildScrollView(
+                        : RefreshIndicator(
+                            onRefresh: () async {
+                              cubit.getAllClasses();
+                            },
+                            color: AppColors.primary,
+                            backgroundColor: AppColors.secondPrimary,
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
-                              child: Column(
+                              child: ListView(
                                 children: [
                                   GridView.builder(
                                     physics:

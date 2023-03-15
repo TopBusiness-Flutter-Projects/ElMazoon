@@ -26,6 +26,8 @@ class HomePage extends StatelessWidget {
               onRefresh: () async {
                 cubit.getHomePageData();
               },
+              color: AppColors.primary,
+              backgroundColor: AppColors.secondPrimary,
               child: ListView(
                 children: [
                   BannerWidget(sliderData: state.model.data.sliders),

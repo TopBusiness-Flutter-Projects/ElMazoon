@@ -6,8 +6,7 @@ import 'package:elmazoon/feature/mainscreens/profilePage/screens/profile_page.da
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/assets_manager.dart';
-import '../../../core/utils/restart_app_class.dart';
-import '../../../main.dart';
+import '../../mainscreens/guide_page/screens/guide_page.dart';
 import '../../mainscreens/homePage/screens/home_page.dart';
 import '../../mainscreens/notificationpage/presentation/screens/notification_page.dart';
 import '../../mainscreens/profilePage/widgets/customAppbar.dart';
@@ -129,13 +128,11 @@ class _NavigatorBarState extends State<NavigatorBar> {
     if (_page == 0) {
       return const StudyPage();
     } else if (_page == 1) {
-      return Container(
-        color: Colors.red,
-      );
+      return GuidePage();
     } else if (_page == 2) {
       return HomePage();
     } else if (_page == 3) {
-      return  NotificationScreen();
+      return NotificationScreen();
     } else {
       return const ProfilePage();
     }
@@ -146,7 +143,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
       return Column(
         children: [
           Text(
-            'ذاكر',
+            'study'.tr(),
             style: TextStyle(
               color: AppColors.white,
               fontSize: 20,
@@ -154,7 +151,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
             ),
           ),
           Text(
-            'محاضرات و امتحانات',
+            'lecture_exam'.tr(),
             style: TextStyle(
               color: AppColors.primary,
               fontSize: 16,
@@ -162,12 +159,11 @@ class _NavigatorBarState extends State<NavigatorBar> {
           ),
         ],
       );
-    }
-    else if (_page == 1) {
+    } else if (_page == 1) {
       return Column(
         children: [
           Text(
-            'استكشاف',
+            'guide'.tr(),
             style: TextStyle(
               color: AppColors.white,
               fontSize: 20,
@@ -175,7 +171,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
             ),
           ),
           Text(
-            'مصادر ومراجع',
+            'sources_references'.tr(),
             style: TextStyle(
               color: AppColors.primary,
               fontSize: 16,
@@ -183,8 +179,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
           ),
         ],
       );
-    }
-    else if (_page == 2) {
+    } else if (_page == 2) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,

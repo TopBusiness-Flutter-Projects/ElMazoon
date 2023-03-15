@@ -84,7 +84,7 @@ class Instruction {
     id: json["id"],
     instruction: json["instruction"],
     exam_type: json["exam_type"],
-    tryingNumber: json["trying_number"],
+    tryingNumber: json["trying_number"]??0,
     numberOfQuestion: json["number_of_question"],
     quizMinute: json["quiz_minute"],
     all_exam_id: json["all_exam_id"]??0,

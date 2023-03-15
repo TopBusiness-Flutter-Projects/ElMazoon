@@ -13,12 +13,12 @@ class ContainerColorTitleWidget extends StatelessWidget {
     required this.color1,
     required this.color2,
     required this.titleBackground,
-    required this.lesson,
+     this.lesson,
   }) : super(key: key);
 
   final String title;
   final String subTitle;
-  final Lesson lesson;
+  final Lesson? lesson;
   final IconData titleIcon;
   final Color color1;
   final Color color2;
@@ -87,7 +87,7 @@ class ContainerColorTitleWidget extends StatelessWidget {
                   titleIcon != Icons.video_collection
                       ? SizedBox()
                       : Text(
-                          'number_of_videos'.tr() + '  ${lesson.videosCount}',
+                          'number_of_videos'.tr() + '  ${lesson!.videosCount}',
                           style: TextStyle(
                             color: AppColors.secondPrimary,
                             fontSize: 18,
@@ -96,7 +96,7 @@ class ContainerColorTitleWidget extends StatelessWidget {
                   titleIcon != Icons.video_collection
                       ? SizedBox()
                       : Text(
-                          'total_time_of_videos'.tr() + '  ${lesson.videosTime}',
+                          'total_time_of_videos'.tr() + '  ${lesson!.videosTime}',
                           style: TextStyle(
                             color: AppColors.secondPrimary,
                             fontSize: 18,

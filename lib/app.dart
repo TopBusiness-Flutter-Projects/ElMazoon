@@ -11,11 +11,13 @@ import 'package:elmazoon/injector.dart' as injector;
 import 'feature/exam/cubit/exam_cubit.dart';
 import 'feature/examRegister/cubit/exam_register_cubit.dart';
 import 'feature/login/cubit/login_cubit.dart';
+import 'feature/mainscreens/guide_page/cubit/guide_cubit.dart';
 import 'feature/mainscreens/homePage/cubit/home_page_cubit.dart';
 import 'feature/mainscreens/notificationpage/cubit/notification_cubit.dart';
 import 'feature/mainscreens/profilePage/cubit/profile_cubit.dart';
 import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'feature/month_plan/cubit/month_plan_cubit.dart';
+import 'feature/mydegree/cubit/my_degree_cubit.dart';
 import 'feature/navigation_bottom/cubit/navigation_cubit.dart';
 
 class Elmazoon extends StatefulWidget {
@@ -71,6 +73,12 @@ class _ElmazoonState extends State<Elmazoon> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<HomePageCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<MyDegreeCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<GuideCubit>(),
         ),
       ],
       child: MaterialApp(

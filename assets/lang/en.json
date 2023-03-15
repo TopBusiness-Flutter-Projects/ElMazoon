@@ -91,7 +91,16 @@
  "remind_time": "Remind Time",
  "solution_done": "Solution Done",
  "end_exam": "End Exam",
- "postpone_question": "postpone the question"
+ "postpone_question": "postpone the question",
+ "exams": "Exams",
+ "no_exam": "No Exams",
+ "important_ques": "Important Question",
+ "important_ques_desc": "Compilation of the most important questions on the curriculum",
+ "study": "Study",
+ "lecture_exam": "Lecture And Exams",
+ "guide": "Guide",
+ "sources_references": "Sources And References"
+
 
 
 }

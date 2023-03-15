@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:elmazoon/core/models/guide_model.dart';
 import 'package:elmazoon/core/models/home_page_model.dart';
+import 'package:elmazoon/core/models/my_degree_model.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/models/all_classes_model.dart';
 
@@ -33,7 +35,6 @@ class ServiceApi {
         EndPoints.userUrl,
         body: {
           'code': code,
-
         },
         options: Options(
           headers: {'Accept-Language': lan},
@@ -221,7 +222,6 @@ class ServiceApi {
     }
   }
 
-
   Future<Either<Failure, OneComment>> addReply(
     int commentId,
     String type, {
@@ -275,7 +275,6 @@ class ServiceApi {
     }
   }
 
-
   Future<Either<Failure, TimeDataModel>> gettimes() async {
     UserModel userModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
@@ -295,17 +294,15 @@ class ServiceApi {
     }
   }
 
-  Future<Either<Failure, QuestionesDataModel>> getQuestion(int exam_id, String exam_type) async {
+  Future<Either<Failure, QuestionesDataModel>> getQuestion(
+      int exam_id, String exam_type) async {
     UserModel userModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
     print('lan : $lan');
     try {
       final response = await dio.get(
         EndPoints.questionsUrl + "${exam_id}",
-        queryParameters: {
-          "exam_type":exam_type
-        }
-        ,
+        queryParameters: {"exam_type": exam_type},
         options: Options(
           headers: {
             'Authorization': userModel.data!.token,
@@ -433,6 +430,39 @@ class ServiceApi {
         }),
       );
       return Right(HomePageModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, MyDegreeModel>> getMyDegreeData() async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.get(
+        EndPoints.myDegreeUrl,
+        options: Options(headers: {
+          'Authorization': loginModel.data!.token,
+          'Accept-Language': lan
+        }),
+      );
+      return Right(MyDegreeModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+  Future<Either<Failure, GuideModel>> getGuideData() async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.get(
+        EndPoints.guideUrl,
+        options: Options(headers: {
+          'Authorization': loginModel.data!.token,
+          'Accept-Language': lan
+        }),
+      );
+      return Right(GuideModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

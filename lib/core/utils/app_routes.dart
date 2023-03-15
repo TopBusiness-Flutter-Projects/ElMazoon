@@ -10,7 +10,7 @@ import '../../feature/confirm_exam_register/presentation/screens/confirm_exam_re
 import '../../feature/login/screens/login.dart';
 import '../../feature/mainscreens/profilePage/screens/suggest_screen.dart';
 import '../../feature/monthplandetials/presentation/screens/month_plan_detials.dart';
-import '../../feature/mydegree/presentation/screens/mydegree.dart';
+import '../../feature/mydegree/screens/mydegree.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
 import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
