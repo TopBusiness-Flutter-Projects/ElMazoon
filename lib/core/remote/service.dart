@@ -499,7 +499,7 @@ class ServiceApi {
         answer.add(answerExamModel.answer[i]);
       }
       else{
-        answer.add(ans!);
+        answer.add(null);
       }
     }
     try {
