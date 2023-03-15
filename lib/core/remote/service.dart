@@ -6,12 +6,14 @@ import 'package:elmazoon/core/models/my_degree_model.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/models/all_classes_model.dart';
 
+import '../../feature/exam/models/answer_exam_model.dart';
 import '../../feature/login/models/communication_model.dart';
 import '../api/base_api_consumer.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
 import '../models/comments_model.dart';
+import '../models/exam_answer_model.dart';
 import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
 import '../models/month_plan_model.dart';
@@ -451,6 +453,7 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, GuideModel>> getGuideData() async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
@@ -463,6 +466,58 @@ class ServiceApi {
         }),
       );
       return Right(GuideModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, ExamAnswerModel>> answerExam(
+      {required QuestionData questionData,
+      required AnswerExamModel answerExamModel,
+      required int time,
+      required String type}) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+
+    List<String> Question = [];
+    List<dynamic> answer = [];
+    List<MultipartFile> audio = [];
+    List<MultipartFile> images = [];
+    MultipartFile? s=MultipartFile.fromString('');
+    String? ans;
+    for (int i = 0; i < questionData.questions.length; i++) {
+      Question.add(questionData.questions[i].id.toString());
+    }
+    for (int i = 0; i < answerExamModel.answer.length; i++) {
+      if (answerExamModel.audio[i].isNotEmpty) {
+        images.add(s!);
+        audio.add(await MultipartFile.fromFile(answerExamModel.audio[i]));
+      } else if (answerExamModel.image[i].isNotEmpty) {
+        audio.add(s);
+        images.add(await MultipartFile.fromFile(answerExamModel.image[i]));
+      }
+      if(answerExamModel.answer[i].isNotEmpty){
+        answer.add(answerExamModel.answer[i]);
+      }
+      else{
+        answer.add(ans!);
+      }
+    }
+    try {
+      final response = await dio.post(
+        EndPoints.answerExamUrl + questionData.id.toString(),
+        formDataIsEnabled: true,
+        body: {
+          "details[][question]": Question,
+          "exam_type": type,
+
+          'details[][audio]': audio,
+          'details[][image]': images,
+          'details[][answer]': answer,
+        },
+
+        options: Options(headers: {'Authorization': loginModel.data!.token}),
+      );
+      return Right(ExamAnswerModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

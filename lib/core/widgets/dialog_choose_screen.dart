@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../feature/exam/cubit/exam_cubit.dart';
 import '../../feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import '../utils/app_colors.dart';
 import '../utils/assets_manager.dart';
@@ -34,6 +35,139 @@ class _RecordWidgetState extends State<RecordWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.sendType=='question'){
+      return BlocBuilder<ExamCubit, ExamState>(
+          builder: (context, state) {
+            ExamCubit cubit = context.read<ExamCubit>();
+            return widget.type == 'voice'
+                ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 25),
+                showPlayer
+                    ? Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: AudioPlayer(
+                    source: audioPath!,
+                    onDelete: () {
+                      setState(() => showPlayer = false);
+                    },
+                    type: 'upload',
+                  ),
+                )
+                    : AudioRecorder(
+                  onStop: (path) {
+                    if (kDebugMode) print('Recorded file path: $path');
+                    setState(() {
+                      audioPath = path;
+                      cubit.audioPath = path;
+                      cubit.imagePath='';
+                      showPlayer = true;
+                    });
+                  },
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  child: Row(
+                    children: [
+                      showPlayer
+                          ? TextButton(
+                        onPressed: () {
+
+                            cubit.addanswer( 'audio');
+
+                          Navigator.pop(context);
+                        },
+                        child: Text('sent'.tr()),
+                      )
+                          : SizedBox(width: 12),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('cancel'.tr()),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            )
+                : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 25),
+                cubit.imagePath.isEmpty
+                    ? Image.asset(ImageAssets.noImage)
+                    : Image.file(
+                  File(
+                    cubit.imagePath,
+                  ),
+                  width: 140.0,
+                  height: 140.0,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 80, vertical: 6),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          cubit.pickImage(type: 'camera');
+                        },
+                        icon: Icon(
+                          Icons.camera_alt,
+                          color: AppColors.gray,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          cubit.pickImage(type: 'photo');
+                        },
+                        icon: Icon(
+                          Icons.photo,
+                          color: AppColors.gray,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  child: Row(
+                    children: [
+                      cubit.imagePath.isNotEmpty
+                          ? TextButton(
+                        onPressed: (){
+
+                            cubit.addanswer( 'image');
+
+                          Navigator.pop(context);
+                        },
+                        child: Text('sent'.tr()),
+                      )
+                          : SizedBox(width: 12),
+                      TextButton(
+                        onPressed: () {
+                          cubit.imagePath = '';
+                          Navigator.pop(context);
+                        },
+                        child: Text('cancel'.tr()),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            );
+          });
+    }
+    else{
     return BlocBuilder<StudyPageCubit, StudyPageState>(
         builder: (context, state) {
           StudyPageCubit cubit = context.read<StudyPageCubit>();
@@ -167,5 +301,6 @@ class _RecordWidgetState extends State<RecordWidget> {
             ],
           );
         });
+    }
   }
 }
