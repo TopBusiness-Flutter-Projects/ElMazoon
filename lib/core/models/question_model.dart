@@ -4,6 +4,8 @@ class Questions {
   int? id;
   String? question;
   String status='';
+  String type='text';
+  String answer='';
   String? note;
   List<Answers>? answers;
   String? createdAt;

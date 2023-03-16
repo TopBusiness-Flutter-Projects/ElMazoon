@@ -19,6 +19,7 @@ class EndPoints {
   static const String openFirstVideoUrl = '${baseUrl}lesson/';
   static const String openNextVideoUrl = '${baseUrl}lesson/access-next-video/';
   static const String updateProfileUrl = '${baseUrl}auth/update-profile';
+  static const String answerExamUrl = '${baseUrl}onlineExam/exam/';
   static const String homePageUrl = '${baseUrl}auth/home-page';
   static const String myDegreeUrl = '${baseUrl}degrees/all-exams-degrees';
   static const String guideUrl = '${baseUrl}guide/all';

@@ -4,17 +4,19 @@ import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/utils/app_colors.dart';
-import '../../../../core/widgets/dialog_choose_screen.dart';
-import '../../../../core/widgets/network_image.dart';
-import '../../../exam/cubit/exam_cubit.dart';
-import 'choose_icon_dialog.dart';
+import '../../../core/utils/app_colors.dart';
+import '../../../core/widgets/dialog_choose_screen.dart';
+import '../../../core/widgets/network_image.dart';
+import '../cubit/exam_cubit.dart';
+import '../../mainscreens/study_page/widgets/choose_icon_dialog.dart';
 
 class AddAnswerWidget extends StatelessWidget {
-  AddAnswerWidget({Key? key, required this.id, required this.type})
+  AddAnswerWidget(
+      {Key? key, required this.id, required this.type, required this.index})
       : super(key: key);
   final int id;
   final String type;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +35,8 @@ class AddAnswerWidget extends StatelessWidget {
                   child: TextFormField(
                     minLines: 30,
                     maxLines: 45,
-
                     controller: cubit.answerController,
                     decoration: InputDecoration(
-
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 14, horizontal: 14),
                       hintStyle: TextStyle(
@@ -48,9 +48,7 @@ class AddAnswerWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25.0),
                         borderSide: BorderSide.none,
                       ),
-
                       suffixIcon: IconButton(
-
                         icon: Icon(Icons.attach_file),
                         onPressed: () {
                           showDialog(
@@ -175,18 +173,21 @@ class AddAnswerWidget extends StatelessWidget {
                       filled: true,
                     ),
                     keyboardType: TextInputType.text,
-
                   ),
                 ),
-                state is StudyPageAddCommentLoading
-                    ? CircularProgressIndicator(color: AppColors.secondPrimary)
-                    : IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.send,
-                          color: AppColors.secondPrimary,
-                        ),
-                      ),
+                IconButton(
+                  onPressed: () {
+                    if (cubit.formKey.currentState!.validate()) {
+                      print('object');
+                      print(cubit.answerController.text);
+                      cubit.addtextanswer();
+                    }
+                  },
+                  icon: Icon(
+                    Icons.send,
+                    color: AppColors.secondPrimary,
+                  ),
+                ),
               ],
             ),
           ),
