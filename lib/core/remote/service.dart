@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:elmazoon/core/models/guide_model.dart';
@@ -419,6 +421,24 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, StatusResponse>> updateAcessTime(
+      {required int  exam_id,required int time, required String type}) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.post(
+        EndPoints.updateaccesstimeUrl+exam_id.toString(),
+        formDataIsEnabled: false,
+        body: {
+          "type": type,
+          "timer":time
+        },
+        options: Options(headers: {'Authorization': loginModel.data!.token}),
+      );
+      return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 
   Future<Either<Failure, HomePageModel>> getHomePageData() async {
     UserModel loginModel = await Preferences.instance.getUserModel();
@@ -477,46 +497,42 @@ class ServiceApi {
       required int time,
       required String type}) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
-
-    List<String> Question = [];
-    List<dynamic> answer = [];
-    List<MultipartFile> audio = [];
-    List<MultipartFile> images = [];
-    MultipartFile? s=MultipartFile.fromString('');
-    String? ans;
+ Map<String, dynamic> fields =
+      {
+        "exam_type": type,
+        "timer":time
+      }
+    ;
     for (int i = 0; i < questionData.questions.length; i++) {
-      Question.add(questionData.questions[i].id.toString());
-    }
-    for (int i = 0; i < answerExamModel.answer.length; i++) {
+      fields.addAll(
+          {"details[$i][question]": questionData.questions[i].id.toString()});
       if (answerExamModel.audio[i].isNotEmpty) {
-        images.add(s!);
-        audio.add(await MultipartFile.fromFile(answerExamModel.audio[i]));
+        fields.addAll({
+          "details[$i][audio]":
+              await MultipartFile.fromFile(answerExamModel.audio[i])
+        });
+        fields.addAll({"details[$i][image]": ''});
       } else if (answerExamModel.image[i].isNotEmpty) {
-        audio.add(s);
-        images.add(await MultipartFile.fromFile(answerExamModel.image[i]));
+        fields.addAll({
+          "details[$i][image]":
+              await MultipartFile.fromFile(answerExamModel.image[i])
+        });
+        fields.addAll({"details[$i][audio]": ''});
       }
       if(answerExamModel.answer[i].isNotEmpty){
-        answer.add(answerExamModel.answer[i]);
-      }
+      fields.addAll({"details[$i][answer]": answerExamModel.answer[i]});}
       else{
-        answer.add(null);
+        fields.addAll({"details[$i][answer]": ''});
       }
     }
+
     try {
       final response = await dio.post(
-        EndPoints.answerExamUrl + questionData.id.toString(),
-        formDataIsEnabled: true,
-        body: {
-          "details[][question]": Question,
-          "exam_type": type,
+          EndPoints.answerExamUrl + questionData.id.toString(),
+          formDataIsEnabled: true,
+          options: Options(headers: {'Authorization': loginModel.data!.token}),
+          body: fields);
 
-          'details[][audio]': audio,
-          'details[][image]': images,
-          'details[][answer]': answer,
-        },
-
-        options: Options(headers: {'Authorization': loginModel.data!.token}),
-      );
       return Right(ExamAnswerModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());

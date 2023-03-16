@@ -3,6 +3,7 @@ import 'dart:core';
 import 'dart:core';
 import 'dart:io';
 import '../../../../core/widgets/audio_player_widget.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import 'package:calendar_view/calendar_view.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -39,6 +40,9 @@ class _ExamScreenState extends State<ExamScreen> {
   Timer? countdownTimer;
   Duration? myDuration;
 
+  var minutes = "0";
+  var seconds = "0";
+
   @override
   void initState() {
     super.initState();
@@ -72,6 +76,9 @@ class _ExamScreenState extends State<ExamScreen> {
       final seconds = myDuration!.inSeconds - reduceSecondsBy;
       if (seconds < 0) {
         countdownTimer!.cancel();
+        context.read<ExamCubit>().endExamtime(    widget.examInstruction.quizMinute -
+            int.parse(minutes), context,widget.examInstruction.exam_type);
+
       } else {
         myDuration = Duration(seconds: seconds);
       }
@@ -81,10 +88,15 @@ class _ExamScreenState extends State<ExamScreen> {
   @override
   Widget build(BuildContext context) {
     String strDigits(int n) => n.toString().padLeft(2, '0');
-
-    final minutes = strDigits(myDuration!.inMinutes.remainder(60));
-    final seconds = strDigits(myDuration!.inSeconds.remainder(60));
     ExamCubit cubit = context.read<ExamCubit>();
+    if (cubit.minutes != -1 || cubit.seconed != -1) {
+      myDuration = Duration(minutes: cubit.minutes, seconds: cubit.seconed);
+      cubit.updateTime();
+    }
+
+    minutes = strDigits(myDuration!.inMinutes.remainder(60));
+    seconds = strDigits(myDuration!.inSeconds.remainder(60));
+    checkInternet(cubit);
     if (cubit.questionesDataModel!.questions.length == 0) {
       cubit.getExam(
           widget.examInstruction.online_exam_id != 0
@@ -302,18 +314,19 @@ class _ExamScreenState extends State<ExamScreen> {
                                   ),
                                 ),
                           Visibility(
-                            visible: cubit.imagePath.isNotEmpty||cubit.audioPath.isNotEmpty,
+                              visible: cubit.imagePath[cubit.index].isNotEmpty ||
+                                  cubit.audioPath[cubit.index].isNotEmpty,
                               child: cubit.imagePath.isNotEmpty
                                   ? Image.file(
                                       File(
-                                        cubit.imagePath,
+                                        cubit.imagePath[cubit.index],
                                       ),
                                       width: 140.0,
                                       height: 140.0,
                                       fit: BoxFit.cover,
                                     )
                                   : AudioPlayer(
-                                      source: cubit.audioPath,
+                                      source:cubit.audioPath[cubit.index],
                                       onDelete: () {},
                                       type: 'onlyShow',
                                     )),
@@ -408,8 +421,11 @@ class _ExamScreenState extends State<ExamScreen> {
                               text: 'end_exam'.tr(),
                               color: AppColors.secondPrimary,
                               onClick: () {
-
-                                cubit.endExam(widget.examInstruction.quizMinute-int.parse(minutes),context,widget.examInstruction.exam_type);
+                                cubit.endExam(
+                                    widget.examInstruction.quizMinute -
+                                        int.parse(minutes),
+                                    context,
+                                    widget.examInstruction.exam_type);
                               },
                             ),
                           )
@@ -425,6 +441,20 @@ class _ExamScreenState extends State<ExamScreen> {
   }
 
   void onEnd() {
-    Navigator.pop(context);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    stopTimer();
+  }
+
+  void checkInternet(ExamCubit cubit) async {
+    bool result = await InternetConnectionChecker().hasConnection;
+    print("D;ldldldl");
+    print(result);
+    if (result == false) {
+      cubit.saveExam(minutes + ":" + seconds);
+    }
   }
 }

@@ -99,7 +99,9 @@
   "study": "ذاكر",
   "lecture_exam": "محاضرات وامتحانات",
   "guide": "استكشف",
-  "sources_references": "مصادر ومراجع"
+  "sources_references": "مصادر ومراجع",
+  "you_dont_open_this_exam": "لا يمكنك فتح هذا الاختبار",
+  "please_complete_other_exam": "من فضلك اكمل الامتحان رقم : "
 
 
 

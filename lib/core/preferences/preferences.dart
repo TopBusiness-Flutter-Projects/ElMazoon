@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/exam_answer_list_model.dart';
 import '../models/user_model.dart';
 import '../utils/app_strings.dart';
 
@@ -46,6 +47,30 @@ class Preferences {
       userModel = UserModel();
     }
     return userModel;
+  }
+  Future<void> setexam(ExamAnswerListModel examAnswerListModel) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(
+      'exam',
+      jsonEncode(
+        ExamAnswerListModel.fromJson(
+          examAnswerListModel.toJson(),
+        ),
+      ),
+    );
+  }
+
+  Future<ExamAnswerListModel> getExamModel() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? jsonData = preferences.getString('exam');
+    ExamAnswerListModel examAnswerListModel;
+    if (jsonData != null) {
+      examAnswerListModel = ExamAnswerListModel.fromJson(jsonDecode(jsonData));
+      // userModel.data?.isLoggedIn = true;
+    } else {
+      examAnswerListModel = ExamAnswerListModel(answers: null, id: 0, time: '');
+    }
+    return examAnswerListModel;
   }
 
   Future<bool> clearUserData() async {

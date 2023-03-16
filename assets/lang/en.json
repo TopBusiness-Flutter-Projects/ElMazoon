@@ -99,7 +99,11 @@
  "study": "Study",
  "lecture_exam": "Lecture And Exams",
  "guide": "Guide",
- "sources_references": "Sources And References"
+ "sources_references": "Sources And References",
+ "you_dont_open_this_exam": "You Dont Open This Exam",
+ "please_complete_other_exam": "Please Compelete Exam Number : "
+
+
 
 
 
