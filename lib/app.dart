@@ -1,12 +1,20 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:elmazoon/core/utils/toast_message_method.dart';
 import 'package:elmazoon/feature/splash/presentation/cubit/splash_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'core/preferences/preferences.dart';
+import 'core/utils/app_colors.dart';
 import 'core/utils/app_routes.dart';
 import 'core/utils/app_strings.dart';
 import 'package:elmazoon/injector.dart' as injector;
+import 'dart:developer' as developer;
+import 'package:path/path.dart';
 
 import 'feature/exam/cubit/exam_cubit.dart';
 import 'feature/examRegister/cubit/exam_register_cubit.dart';
@@ -28,17 +36,62 @@ class Elmazoon extends StatefulWidget {
 }
 
 class _ElmazoonState extends State<Elmazoon> {
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
   @override
   void initState() {
     super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen((event) {
+      if (event.index == 4) {
+        toastMessage(
+          'no_internet_connection'.tr(),
+          context,
+          color: AppColors.error,
+        );
+      } else if (event == 1 || event == 3) {
+        toastMessage(
+          'internet_connection'.tr(),
+          context,
+          color: AppColors.success,
+        );
+      }
+      _updateConnectionStatus(event);
+    });
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      developer.log('Couldn\'t check connectivity status', error: e);
+      return;
+    }
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // print(",kkk");
-
-    //EasyLocalization.of(context)!.setLocale(const Locale('ar'));
-     print( EasyLocalization.of(context)!.locale.languageCode);
     Preferences.instance.savedLang(
       EasyLocalization.of(context)!.locale.languageCode,
     );

@@ -1,96 +1,83 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:elmazoon/core/models/times_model.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/utils/app_routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-
-import '../../../../core/models/exam_model.dart';
 import '../../../../core/models/month_plan_model.dart';
 import '../../../../core/utils/assets_manager.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../core/widgets/custom_appbar_widget.dart';
-import '../../../../core/widgets/custom_button.dart';
 import '../../cubit/month_plan_cubit.dart';
 
 class MonthPage extends StatelessWidget {
-  const MonthPage({
-    Key? key,
-  }) : super(key: key);
+  const MonthPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 80,
-          titleSpacing: 0,
-          title: CustomAppBar(
-            title: 'month_plan'.tr(),
-            subtitle: 'month_course'.tr(),
-          ),
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(ImageAssets.appBarImage),
-                fit: BoxFit.fill,
-              ),
+      appBar: AppBar(
+        toolbarHeight: 80,
+        titleSpacing: 0,
+        title: CustomAppBar(
+          title: 'month_plan'.tr(),
+          subtitle: 'month_course'.tr(),
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(ImageAssets.appBarImage),
+              fit: BoxFit.fill,
             ),
           ),
         ),
-        body: BlocBuilder<MonthPlanCubit, MonthPlanState>(
-          builder: (context, state) {
-            return SfCalendar(
-              view: CalendarView.month,
-              dataSource: PlansDataSource(_getDataSource(context)),
-              // by default the month appointment display mode set as Indicator, we can
-              // change the display mode as appointment using the appointment display
-              // mode property
-              onTap: (calendarTapDetails) {
-             List<Plans>? plans=   calendarTapDetails.appointments!.cast<Plans>();
-               print("object");
-               print(plans.length);
-
-               Navigator.pushNamed(context, Routes.monthplanDetialsRoute,arguments: [plans,calendarTapDetails.date]);
-
-              },
-              monthViewSettings: const MonthViewSettings(
-                  agendaStyle: AgendaStyle(
-                    appointmentTextStyle: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  appointmentDisplayMode:
-                      MonthAppointmentDisplayMode.appointment),
-            );
-          },
-        ));
+      ),
+      body: BlocBuilder<MonthPlanCubit, MonthPlanState>(
+        builder: (context, state) {
+          return SfCalendar(
+            view: CalendarView.month,
+            dataSource: PlansDataSource(_getDataSource(context)),
+            onTap: (calendarTapDetails) {
+              List<Plans>? plans =
+                  calendarTapDetails.appointments!.cast<Plans>();
+              Navigator.pushNamed(
+                context,
+                Routes.monthplanDetialsRoute,
+                arguments: [plans, calendarTapDetails.date],
+              );
+            },
+            monthViewSettings: const MonthViewSettings(
+              agendaStyle: AgendaStyle(
+                appointmentTextStyle: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
+            ),
+          );
+        },
+      ),
+    );
   }
 
   List<Plans> _getDataSource(BuildContext context) {
-    List<MothData>? monthlist = context.read<MonthPlanCubit>().monthdataList;
+    List<MothData>? monthList = context.read<MonthPlanCubit>().monthDataList;
     final List<Plans> meetings = <Plans>[];
-
-    for (int i = 0; i < monthlist.length; i++) {
-      meetings.addAll(monthlist.elementAt(i).plans!);
+    for (int i = 0; i < monthList.length; i++) {
+      meetings.addAll(monthList.elementAt(i).plans!);
     }
     return meetings;
   }
 }
 
 class PlansDataSource extends CalendarDataSource {
-  /// Creates a Plans data source, which used to set the appointment
-  /// collection to the calendar
   PlansDataSource(List<Plans> source) {
     appointments = source;
   }
 
   @override
   DateTime getStartTime(int index) {
-    print("flflfllfl");
-    print(_getPlansData(index).start!);
     return DateTime.parse(_getPlansData(index).start!);
   }
 
@@ -111,7 +98,6 @@ class PlansDataSource extends CalendarDataSource {
 
   Plans _getPlansData(int index) {
     final Plans plans = appointments![index];
-
     return plans;
   }
 }

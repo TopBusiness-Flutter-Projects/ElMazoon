@@ -16,7 +16,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   final ServiceApi api;
-  late CommunicationData communicationData;
+   CommunicationData? communicationData;
   bool isCommunicationData = false;
 
   TextEditingController codeController = TextEditingController();

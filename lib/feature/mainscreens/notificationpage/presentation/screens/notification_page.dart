@@ -2,6 +2,7 @@ import 'package:elmazoon/feature/mainscreens/notificationpage/presentation/scree
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/widgets/no_data_widget.dart';
 import '../../../../../core/widgets/show_loading_indicator.dart';
 import '../../cubit/notification_cubit.dart';
 
@@ -15,6 +16,9 @@ class NotificationScreen extends StatelessWidget {
     return  Scaffold(
       body: BlocBuilder<NotificationCubit, NotificationState>(
         builder: (context, state) {
+          if (state is NotificationPageError) {
+            return NoDataWidget(onclick: () => cubit.getAllNotification());
+          }
           return state is NotificationPageLoading
               ? ShowLoadingIndicator()
               : ListView(

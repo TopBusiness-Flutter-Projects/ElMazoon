@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/utils/app_colors.dart';
+import '../../../../core/widgets/no_data_widget.dart';
 import '../../../../core/widgets/show_loading_indicator.dart';
 import '../../study_page/widgets/container_color_title_widget.dart';
 import 'guide_page_details.dart';
@@ -18,6 +19,9 @@ class GuidePage extends StatelessWidget {
           GuideCubit cubit = context.read<GuideCubit>();
           if (state is GuideLoading) {
             return ShowLoadingIndicator();
+          }
+          if (state is GuideError) {
+            return NoDataWidget(onclick: () => cubit.getGuideData());
           }
           return RefreshIndicator(
             onRefresh: () async {

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/banner.dart';
 import '../../../../core/widgets/container_with_two_color_widget.dart';
+import '../../../../core/widgets/no_data_widget.dart';
 import '../../../../core/widgets/show_loading_indicator.dart';
 import '../../notificationpage/presentation/screens/widget/notification_details_widget.dart';
 import '../../study_page/screens/all_lecture/class_name_screen.dart';
@@ -113,26 +114,7 @@ class HomePage extends StatelessWidget {
               ),
             );
           } else {
-            return InkWell(
-              onTap: (){
-                cubit.getHomePageData();
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'no_date'.tr(),
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.secondPrimary,
-                    ),
-                  ),
-                  Icon(Icons.refresh,color: AppColors.secondPrimary,),
-                ],
-              ),
-            );
+            return NoDataWidget(onclick: () => cubit.getHomePageData());
           }
         },
       ),

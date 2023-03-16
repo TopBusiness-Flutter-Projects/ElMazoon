@@ -99,7 +99,11 @@
   "study": "ذاكر",
   "lecture_exam": "محاضرات وامتحانات",
   "guide": "استكشف",
-  "sources_references": "مصادر ومراجع"
+  "sources_references": "مصادر ومراجع",
+  "hello": "مرحبا  ",
+  "no_date": "لا يوجد بيانات",
+  "no_internet_connection": "تم قطع الاتصال بالانترنت !!!",
+  "internet_connection": "انت متصل بالانترنت"
 
 
 

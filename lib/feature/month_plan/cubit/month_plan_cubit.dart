@@ -8,36 +8,23 @@ import '../../../core/models/month_plan_model.dart';
 part 'month_plan_state.dart';
 
 class MonthPlanCubit extends Cubit<MonthPlanState> {
- final ServiceApi api;
- List<MothData> monthdataList=[];
+  final ServiceApi api;
+  List<MothData> monthDataList = [];
 
-  MonthPlanCubit(this.api) : super(MonthPlanInitial()){
+  MonthPlanCubit(this.api) : super(MonthPlanInitial()) {
     getMonthPlan();
   }
-  getMonthPlan() async {
 
+  getMonthPlan() async {
     final response = await api.getMonthPlans();
     response.fold(
-
-          (error) =>   {
-
-          },
-          (response) {
-
-        if(response.code==200){
-
-          monthdataList=response.data!;
-
+      (error) => {},
+      (response) {
+        if (response.code == 200) {
+          monthDataList = response.data!;
           emit(MonthPlanupdate());
-         // Navigator.pushNamed(context, Routes.examRegisterRoute,arguments: data);
         }
-        else{
-
-        }
-        //data = response.data;
-        //  emit(NotificationPageLoaded());
       },
     );
   }
-
 }

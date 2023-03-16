@@ -99,7 +99,11 @@
  "study": "Study",
  "lecture_exam": "Lecture And Exams",
  "guide": "Guide",
- "sources_references": "Sources And References"
+ "sources_references": "Sources And References",
+ "hello": "Hello  ",
+ "no_date": "No Data",
+ "no_internet_connection": "No Internet Connection !!!",
+ "internet_connection": "Connect to Internet Successfully"
 
 
 

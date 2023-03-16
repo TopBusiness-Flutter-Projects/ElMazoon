@@ -3,7 +3,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/widgets/my_svg_widget.dart';
 import 'package:elmazoon/feature/mainscreens/profilePage/screens/profile_page.dart';
+import 'package:elmazoon/feature/navigation_bottom/cubit/navigation_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils/assets_manager.dart';
 import '../../mainscreens/guide_page/screens/guide_page.dart';
@@ -30,7 +32,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
+        toolbarHeight: 90,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
           child: appbar(),
@@ -180,10 +182,34 @@ class _NavigatorBarState extends State<NavigatorBar> {
         ],
       );
     } else if (_page == 2) {
-      return Column(
+      return BlocBuilder<NavigationCubit, NavigationState>(
+  builder: (context, state) {
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Row(
+            children: [
+              Text(
+                'hello'.tr(),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: AppColors.white,
+                ),
+              ),
+              SizedBox(width: 8),
+              Text(
+                context.read<NavigationCubit>().userModel != null
+                    ? context.read<NavigationCubit>().userModel!.data!.name
+                    : '',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
           SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Text(
@@ -198,6 +224,8 @@ class _NavigatorBarState extends State<NavigatorBar> {
           ),
         ],
       );
+  },
+);
     } else if (_page == 3) {
       return Column(
         children: [

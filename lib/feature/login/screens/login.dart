@@ -333,9 +333,9 @@ class _userScreenState extends State<LoginScreen> {
 
   getCommunicationTab(String type, LoginCubit cubit) async {
     if (type == 'facebook') {
-      await launchUrl(Uri.parse(cubit.communicationData.facebookLink));
+      await launchUrl(Uri.parse(cubit.communicationData!.facebookLink));
     } else if (type == 'youtube') {
-      await launchUrl(Uri.parse(cubit.communicationData.youtubeLink));
+      await launchUrl(Uri.parse(cubit.communicationData!.youtubeLink));
     } else {
       showDialog(
         barrierDismissible: false,
@@ -365,11 +365,11 @@ class _userScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 25),
                 ...List.generate(
-                  cubit.communicationData.phones.length,
+                  cubit.communicationData!.phones.length,
                   (index) => InkWell(
                     onTap: () {
                       phoneCallMethod(
-                        cubit.communicationData.phones[index].phone,
+                        cubit.communicationData!.phones[index].phone,
                       );
                     },
                     child: Padding(
@@ -389,8 +389,8 @@ class _userScreenState extends State<LoginScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(cubit
-                                    .communicationData.phones[index].phone),
-                                Text(cubit.communicationData.phones[index].note)
+                                    .communicationData!.phones[index].phone),
+                                Text(cubit.communicationData!.phones[index].note)
                               ],
                             ),
                           )
