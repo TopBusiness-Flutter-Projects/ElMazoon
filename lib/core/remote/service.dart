@@ -15,6 +15,7 @@ import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
 import '../models/comments_model.dart';
+import '../models/degree_detials_model.dart';
 import '../models/exam_answer_model.dart';
 import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
@@ -538,4 +539,30 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+  Future<Either<Failure, DegreeDetails>> getDegreeDetails(
+      {required int exam_id, required String exam_type}) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+
+    try {
+      final response = await dio.get(
+        EndPoints.degreeDetialsUrl ,
+        queryParameters: {
+          'exam_type': exam_type,
+          'id':exam_id
+        },
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(DegreeDetails.fromJson(response));
+    } on ServerException {
+      print(DioErrorType.response);
+      return Left(ServerFailure());
+    }
+  }
+
 }

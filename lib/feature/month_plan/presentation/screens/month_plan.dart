@@ -19,10 +19,22 @@ class MonthPage extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 80,
         titleSpacing: 0,
-        title: CustomAppBar(
+        title:Row( children: [CustomAppBar(
           title: 'month_plan'.tr(),
           subtitle: 'month_course'.tr(),
         ),
+        Expanded(child: Container()),
+         InkWell(
+           onTap: () {
+             context.read<MonthPlanCubit>().getMonthPlan();
+           },
+           child: Icon (
+              Icons.refresh,
+             color: AppColors.white,
+
+            ),
+         )
+        ],),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -35,8 +47,10 @@ class MonthPage extends StatelessWidget {
       body: BlocBuilder<MonthPlanCubit, MonthPlanState>(
         builder: (context, state) {
           return SfCalendar(
+
             view: CalendarView.month,
             dataSource: PlansDataSource(_getDataSource(context)),
+
             onTap: (calendarTapDetails) {
               List<Plans>? plans =
                   calendarTapDetails.appointments!.cast<Plans>();

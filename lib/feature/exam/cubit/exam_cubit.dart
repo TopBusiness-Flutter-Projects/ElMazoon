@@ -41,6 +41,7 @@ class ExamCubit extends Cubit<ExamState> {
     questionesDataModel = QuestionData();
     audioPath = [];
     imagePath = [];
+    pendinglist = [];
     answerExamModel = AnswerExamModel(answer: [], audio: [], image: []);
     answerController = TextEditingController();
     index = 0;
@@ -144,6 +145,9 @@ class ExamCubit extends Cubit<ExamState> {
   }
 
   void answerQuestion(int index, String type) {
+    if (pendinglist.contains(questionesDataModel!.questions[index].id)) {
+      pendinglist.remove(questionesDataModel!.questions[index].id);
+    }
     if (type == 'choice') {
       List<Answers>? answers = questionesDataModel!.questions[index].answers;
       for (int i = 0; i < answers!.length; i++) {
@@ -219,6 +223,8 @@ class ExamCubit extends Cubit<ExamState> {
           print(r.code);
           Preferences.instance
               .setexam(new ExamAnswerListModel(answers: null, id: 0, time: ''));
+          Navigator.pushNamed(context, Routes.examdegreeDetialsRoute,
+              arguments: r);
           // Navigator.pushNamed(
           //     context,
           //     Routes.confirmexamRegisterRoute,
@@ -238,6 +244,7 @@ class ExamCubit extends Cubit<ExamState> {
 
   Future<void> endExamtime(int time, BuildContext context, String type) async {
     createProgressDialog(context, 'wait'.tr());
+
     var response = await api.updateAcessTime(
         time: time, type: type, exam_id: questionesDataModel!.id!);
     response.fold(
@@ -282,6 +289,9 @@ class ExamCubit extends Cubit<ExamState> {
   Future<void> getexamDataFromPrefrence() async {
     ExamAnswerListModel examAnswerListModel =
         await Preferences.instance.getExamModel();
+    print('dlkdkddkk');
+    print(examAnswerListModel.id);
+    print(questionesDataModel!.id);
     if (examAnswerListModel.id == questionesDataModel!.id) {
       print('dlkdkddkk');
       print(examAnswerListModel.answers!.answer);
@@ -295,6 +305,10 @@ class ExamCubit extends Cubit<ExamState> {
         List<Answers>? answers = questionesDataModel!.questions[i].answers;
         if (answers!.length > 0) {
           for (int j = 0; j < answers.length; j++) {
+            print('dlkssssdkddkk');
+            print(answerExamModel!.answer.elementAt(i));
+            print('dlkdkddksseeek');
+            print(answers.elementAt(j).id.toString());
             if (answerExamModel!.answer.elementAt(i) ==
                 answers.elementAt(j).id.toString()) {
               answers.elementAt(j).status = "select";
@@ -314,16 +328,19 @@ class ExamCubit extends Cubit<ExamState> {
         }
       }
     }
-    Preferences.instance
-        .setexam(new ExamAnswerListModel(answers: null, id: 0, time: ''));
 
     emit(Questionupdate());
   }
 
-  void saveExam(String s) {
-    ExamAnswerListModel examAnswerListModel = ExamAnswerListModel(
-        answers: answerExamModel, id: questionesDataModel!.id!, time: s);
-    Preferences.instance.setexam(examAnswerListModel);
+  Future<void> saveExam(String s) async {
+    print("ooi999");
+    ExamAnswerListModel examAnswerListModel =
+        await Preferences.instance.getExamModel();
+    if (examAnswerListModel.id == 0) {
+      ExamAnswerListModel examAnswerListModel = ExamAnswerListModel(
+          answers: answerExamModel, id: questionesDataModel!.id!, time: s);
+      Preferences.instance.setexam(examAnswerListModel);
+    }
   }
 
   void updateTime() {

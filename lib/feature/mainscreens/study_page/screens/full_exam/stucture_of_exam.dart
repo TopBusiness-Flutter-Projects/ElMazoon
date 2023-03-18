@@ -28,7 +28,7 @@ class ExamInstruction extends StatelessWidget {
             child: SingleChildScrollView(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -50,7 +50,10 @@ class ExamInstruction extends StatelessWidget {
                     ),
                     SizedBox(height: 25),
                     Container(
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
                       padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
@@ -80,7 +83,8 @@ class ExamInstruction extends StatelessWidget {
                     ),
                     SizedBox(height: 25),
                     Text(
-                      '${'try_numbers'.tr()} :     ${examInstruction.tryingNumber}',
+                      '${'try_numbers'.tr()} :     ${examInstruction
+                          .tryingNumber}',
                       style: TextStyle(
                         color: AppColors.secondPrimary,
                         fontWeight: FontWeight.bold,
@@ -89,7 +93,8 @@ class ExamInstruction extends StatelessWidget {
                     ),
                     SizedBox(height: 12),
                     Text(
-                      '${'number_of_question'.tr()} :    ${examInstruction.numberOfQuestion}',
+                      '${'number_of_question'.tr()} :    ${examInstruction
+                          .numberOfQuestion}',
                       style: TextStyle(
                         color: AppColors.secondPrimary,
                         fontWeight: FontWeight.bold,
@@ -98,7 +103,8 @@ class ExamInstruction extends StatelessWidget {
                     ),
                     SizedBox(height: 12),
                     Text(
-                      '${'quiz_minute'.tr()} :    ${examInstruction.quizMinute}  ${'min'.tr()}',
+                      '${'quiz_minute'.tr()} :    ${examInstruction
+                          .quizMinute}  ${'min'.tr()}',
                       style: TextStyle(
                         color: AppColors.secondPrimary,
                         fontWeight: FontWeight.bold,
@@ -115,28 +121,39 @@ class ExamInstruction extends StatelessWidget {
             color: AppColors.primary,
             onClick: () async {
               if (context
-                      .read<ExamCubit>()
-                      .questionesDataModel!
-                      .questions
-                      .length >
+                  .read<ExamCubit>()
+                  .questionesDataModel!
+                  .questions
+                  .length >
                   0) {
                 context
                     .read<ExamCubit>()
                     .getExam(examInstruction.id, examInstruction.exam_type);
-                context.read<ExamCubit>().answerController!.text = '';
-                context.read<ExamCubit>().questionesDataModel = QuestionData();
-                context.read<ExamCubit>().index = 0;
+                context
+                    .read<ExamCubit>()
+                    .answerController!
+                    .text = '';
+                context
+                    .read<ExamCubit>()
+                    .questionesDataModel = QuestionData();
+                context
+                    .read<ExamCubit>()
+                    .index = 0;
               }
 
               if (examInstruction.tryingNumber > 0) {
                 ExamAnswerListModel examAnswerListModel =
-                    await Preferences.instance.getExamModel();
+                await Preferences.instance.getExamModel();
+                print("lldld");
+                print(examInstruction.all_exam_id);
+                print(examInstruction.online_exam_id);
+
                 if (examAnswerListModel.id != 0 &&
                     ((examInstruction.all_exam_id != 0 &&
-                            examInstruction.all_exam_id !=
-                                examAnswerListModel.id) ||
+                        examInstruction.all_exam_id !=
+                            examAnswerListModel.id) ||
                         (examInstruction.online_exam_id != 0 &&
-                            examInstruction.online_exam_id ==
+                            examInstruction.online_exam_id !=
                                 examAnswerListModel.id))) {
                   toastMessage(
                     "please_complete_other_exam".tr() +

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:core';
 import 'dart:core';
 import 'dart:io';
+import '../../../../core/models/exam_answer_list_model.dart';
+import '../../../../core/preferences/preferences.dart';
 import '../../../../core/widgets/audio_player_widget.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -447,6 +449,7 @@ class _ExamScreenState extends State<ExamScreen> {
   void dispose() {
     super.dispose();
     stopTimer();
+
   }
 
   void checkInternet(ExamCubit cubit) async {
@@ -455,6 +458,11 @@ class _ExamScreenState extends State<ExamScreen> {
     print(result);
     if (result == false) {
       cubit.saveExam(minutes + ":" + seconds);
+    }
+    else{
+       //  Preferences.instance
+         //  .setexam(new ExamAnswerListModel(answers: null, id: 0, time: ''));
+
     }
   }
 }

@@ -47,7 +47,7 @@ class ExamDataModel {
 
   factory ExamDataModel.fromJson(Map<String, dynamic> json) => ExamDataModel(
     id: json["id"],
-    name: json["name"],
+    name: json["name"]??'',
     note: json["note"],
     seasonId: json["season_id"],
     termId: json["term_id"],

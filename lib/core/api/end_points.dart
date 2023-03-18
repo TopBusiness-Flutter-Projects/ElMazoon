@@ -11,6 +11,7 @@ class EndPoints {
   static const String suggestUrl = '${baseUrl}auth/add-suggest';
   static const String monthplanUrl = '${baseUrl}plans/all';
   static const String registerExamUrl = '${baseUrl}auth/papel-sheet-exam/user/';
+  static const String degreeDetialsUrl = '${baseUrl}exam-degree/details';
   static const String commentByLessonUrl = '${baseUrl}lesson/video/comments/';
   static const String addCommentUrl = '${baseUrl}lesson/video/add-comment/';
   static const String deleteCommentUrl = '${baseUrl}video/comment/delete/';

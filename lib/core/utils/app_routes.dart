@@ -1,5 +1,6 @@
 import 'package:elmazoon/core/models/times_model.dart';
 import 'package:elmazoon/feature/exam/presentation/screens/exam_page.dart';
+import 'package:elmazoon/feature/exam_degree_detials/presentation/screens/exam_degree_detials.dart';
 import 'package:elmazoon/feature/login/screens/login.dart';
 import 'package:elmazoon/feature/examRegister/presentation/screens/exam_register.dart';
 import 'package:elmazoon/feature/month_plan/presentation/screens/month_plan.dart';
@@ -12,6 +13,7 @@ import '../../feature/mainscreens/profilePage/screens/suggest_screen.dart';
 import '../../feature/monthplandetials/presentation/screens/month_plan_detials.dart';
 import '../../feature/mydegree/screens/mydegree.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
+import '../models/exam_answer_model.dart';
 import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
 import '../models/month_plan_model.dart';
@@ -26,6 +28,7 @@ class Routes {
   static const String paymentRoute = '/paymentRoute';
   static const String suggestRoute = '/suggestRoute';
   static const String examRoute = '/examRoute';
+  static const String examdegreeDetialsRoute = '/examdegreeDetialsRoute';
   static const String monthplansRoute = '/monthplansRoute';
   static const String monthplanDetialsRoute = '/monthplandetialsRoute';
   static const String confirmexamRegisterRoute = '/confirmexamregister';
@@ -54,6 +57,12 @@ class AppRoutes {
 
         return MaterialPageRoute(
           builder: (context) => ExmRegisterPage(timeDataModel: timeDataModel),
+        );
+        case Routes.examdegreeDetialsRoute:
+          ExamAnswerModel examAnswerModel = settings.arguments as ExamAnswerModel;
+
+        return MaterialPageRoute(
+          builder: (context) => ExamDegreePage(examAnswerModel: examAnswerModel),
         );
         case Routes.examRoute:
           Instruction examInstruction = settings.arguments as Instruction;
