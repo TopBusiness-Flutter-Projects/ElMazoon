@@ -60,8 +60,8 @@ class _RecordWidgetState extends State<RecordWidget> {
                     if (kDebugMode) print('Recorded file path: $path');
                     setState(() {
                       audioPath = path;
-                      cubit.audioPath = path;
-                      cubit.imagePath='';
+                      cubit.audioPath[cubit.index] = path;
+                      cubit.imagePath[cubit.index]='';
                       showPlayer = true;
                     });
                   },
@@ -102,7 +102,7 @@ class _RecordWidgetState extends State<RecordWidget> {
                     ? Image.asset(ImageAssets.noImage)
                     : Image.file(
                   File(
-                    cubit.imagePath,
+                    cubit.imagePath[cubit.index],
                   ),
                   width: 140.0,
                   height: 140.0,
@@ -155,7 +155,7 @@ class _RecordWidgetState extends State<RecordWidget> {
                           : SizedBox(width: 12),
                       TextButton(
                         onPressed: () {
-                          cubit.imagePath = '';
+                          cubit.imagePath[cubit.index] = '';
                           Navigator.pop(context);
                         },
                         child: Text('cancel'.tr()),

@@ -104,6 +104,9 @@
   "no_date": "لا يوجد بيانات",
   "no_internet_connection": "تم قطع الاتصال بالانترنت !!!",
   "internet_connection": "انت متصل بالانترنت"
+  "sources_references": "مصادر ومراجع",
+  "you_dont_open_this_exam": "لا يمكنك فتح هذا الاختبار",
+  "please_complete_other_exam": "من فضلك اكمل الامتحان رقم : "
 
 
 

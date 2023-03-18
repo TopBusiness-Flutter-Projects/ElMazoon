@@ -36,6 +36,9 @@ class AddAnswerWidget extends StatelessWidget {
                     minLines: 30,
                     maxLines: 45,
                     controller: cubit.answerController,
+                    onChanged:(value) {
+                      cubit.addtextanswer();
+                    },
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 14, horizontal: 14),
@@ -175,19 +178,19 @@ class AddAnswerWidget extends StatelessWidget {
                     keyboardType: TextInputType.text,
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    if (cubit.formKey.currentState!.validate()) {
-                      print('object');
-                      print(cubit.answerController.text);
-                      cubit.addtextanswer();
-                    }
-                  },
-                  icon: Icon(
-                    Icons.send,
-                    color: AppColors.secondPrimary,
-                  ),
-                ),
+                // IconButton(
+                //   onPressed: () {
+                //     if (cubit.formKey.currentState!.validate()) {
+                //       print('object');
+                //       print(cubit.answerController!.text);
+                //
+                //     }
+                //   },
+                //   icon: Icon(
+                //     Icons.send,
+                //     color: AppColors.secondPrimary,
+                //   ),
+                // ),
               ],
             ),
           ),
