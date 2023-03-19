@@ -39,10 +39,10 @@ dependencies:
   equatable: ^2.0.5
   shared_preferences: ^2.0.18
   cached_network_image: ^3.2.3
-  firebase_messaging: ^14.2.6
+  firebase_messaging: ^14.3.0
   flutter_launcher_icons: ^0.12.0
-  firebase_auth: ^4.2.10
-  firebase_core: ^2.7.1
+  firebase_auth: ^4.3.0
+  firebase_core: ^2.8.0
   flutter_animation_progress_bar: ^2.3.1
   syncfusion_flutter_calendar: ^20.4.54
   flutter_local_notifications: ^13.0.0
@@ -56,7 +56,7 @@ dependencies:
   url_launcher: ^6.1.10
   calendar_view: ^1.0.2
   flutter_colorpicker: ^1.0.3
-  flutter_pdfview: ^1.2.6
+  flutter_pdfview: ^1.2.9
   http: ^0.13.5
   path_provider: any
   permission_handler: ^10.2.0
@@ -70,8 +70,10 @@ dependencies:
   carousel_slider: ^4.2.1
   lottie: ^2.3.0
   connectivity_plus: ^3.0.3
+  syncfusion_flutter_charts: ^20.4.54
 
-
+  # Used for launching a WEB URL, by Google flutter.dev.
+  # https://pub.dev/packages/url_launcher
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5

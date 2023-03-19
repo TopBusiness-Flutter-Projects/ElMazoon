@@ -12,6 +12,7 @@ import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/call_method.dart';
 import '../../../../core/utils/restart_app_class.dart';
 import '../../../../core/utils/show_dialog.dart';
+import '../../../exam_hero/screens/exam_hero.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -51,10 +52,20 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: 'mygards_rate'.tr(),
                       subTitle: 'grades_performance'.tr())),
               const SizedBox(height: 30),
-              ProfileItemWidget(
-                image: ImageAssets.cupIcon,
-                title: 'exam_hero'.tr(),
-                subTitle: 'first_exams'.tr(),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ExamHero(),
+                    ),
+                  );
+                },
+                child: ProfileItemWidget(
+                  image: ImageAssets.cupIcon,
+                  title: 'exam_hero'.tr(),
+                  subTitle: 'first_exams'.tr(),
+                ),
               ),
               const SizedBox(height: 30),
               InkWell(

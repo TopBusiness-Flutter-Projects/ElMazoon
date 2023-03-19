@@ -16,6 +16,7 @@ class MyDegreeCubit extends Cubit<MyDegreeState> {
   List<ExamDetailsModel> partialExams = [];
   List<ExamDetailsModel> allExams = [];
   List<ExamDetailsModel> exams = [];
+  List<ExamDetailsModel> papelSheet = [];
 
   getMyDegree() async {
     emit(MyDegreeLoading());
@@ -26,6 +27,7 @@ class MyDegreeCubit extends Cubit<MyDegreeState> {
         partialExams = r.myDegreeModelData!.partialExams!;
         allExams = r.myDegreeModelData!.allExams!;
         exams = r.myDegreeModelData!.exams!;
+        papelSheet = r.myDegreeModelData!.papelSheet!;
         emit(MyDegreeLoaded());
       },
     );

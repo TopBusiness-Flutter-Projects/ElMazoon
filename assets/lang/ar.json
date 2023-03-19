@@ -105,7 +105,15 @@
   "no_internet_connection": "تم قطع الاتصال بالانترنت !!!",
   "internet_connection": "انت متصل بالانترنت",
   "you_dont_open_this_exam": "لا يمكنك فتح هذا الاختبار",
-  "please_complete_other_exam": "من فضلك اكمل الامتحان رقم : "
+  "please_complete_other_exam": "من فضلك اكمل الامتحان رقم : ",
+  "papel_sheet_exam": "الامتحان الورقى",
+  "payment": "الاشتراكات",
+  "payment_online": "الدفع اونلاين",
+  "payment_cash": " الدفع كاش",
+  "pay": "دفع",
+  "day": "يوم",
+  "week": "أسبوع",
+  "month": "شهر"
 
 
 

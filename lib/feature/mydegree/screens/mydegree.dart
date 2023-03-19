@@ -26,7 +26,7 @@ class _MyDegreePageState extends State<MyDegreePage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     _tabController.addListener(() {
       _tabController.index != _tabController.previousIndex
           ? setState(() {})
@@ -142,6 +142,31 @@ class _MyDegreePageState extends State<MyDegreePage>
                           ),
                         )
                       ],
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          ImageAssets.studyTap2Icon,
+                          height: 32,
+                          width: 32,
+                          colorFilter: ColorFilter.mode(
+                            _tabController.index == 2
+                                ? AppColors.secondPrimary
+                                : AppColors.unselectedTab,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        Text(
+                          'papel_sheet_exam'.tr(),
+                          style: TextStyle(
+                            color: _tabController.index == 3
+                                ? AppColors.secondPrimary
+                                : AppColors.unselectedTab,
+                          ),
+                        )
+                      ],
                     )
                     // Put Tabs here
                   ],
@@ -170,6 +195,11 @@ class _MyDegreePageState extends State<MyDegreePage>
                             : cubit.allExams.isEmpty
                                 ? NoExamWidget()
                                 : PartialExams(examList: cubit.allExams),
+                        state is MyDegreeLoading
+                            ? ShowLoadingIndicator()
+                            : cubit.papelSheet.isEmpty
+                                ? NoExamWidget()
+                                : PartialExams(examList: cubit.papelSheet),
                       ],
                     ),
                   );

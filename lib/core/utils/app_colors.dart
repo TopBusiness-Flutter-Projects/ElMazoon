@@ -15,6 +15,7 @@ class AppColors {
   static Color gray1 = HexColor('#404040');
   static Color unselectedTab = HexColor('#D9D9D9');
   static Color commentBackground = HexColor('#F3F2F2');
+  static Color paymentContainer = HexColor('#F0D3AB');
 
 
   static Color blueColor1 = HexColor('#6A85B6');

@@ -36,11 +36,13 @@ class MyDegreeModelData {
     this.partialExams,
     this.allExams,
     this.exams,
+    this.papelSheet,
   });
 
   List<ExamDetailsModel>? partialExams;
   List<ExamDetailsModel>? allExams;
   List<ExamDetailsModel>? exams;
+  List<ExamDetailsModel>? papelSheet;
 
   factory MyDegreeModelData.fromJson(Map<String, dynamic> json) =>
       MyDegreeModelData(
@@ -56,6 +58,10 @@ class MyDegreeModelData {
             ? []
             : List<ExamDetailsModel>.from(json["subject_classes"]!
                 .map((x) => ExamDetailsModel.fromJson(x))),
+        papelSheet: json["papel_sheet"] == null
+            ? []
+            : List<ExamDetailsModel>.from(json["papel_sheet"]!
+                .map((x) => ExamDetailsModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -68,6 +74,9 @@ class MyDegreeModelData {
         "subject_classes": exams == null
             ? []
             : List<dynamic>.from(exams!.map((x) => x.toJson())),
+        "papel_sheet": papelSheet == null
+            ? []
+            : List<dynamic>.from(papelSheet!.map((x) => x.toJson())),
       };
 }
 
@@ -76,12 +85,14 @@ class ExamDetailsModel {
     this.id,
     this.name,
     this.type,
+    this.status,
     this.degree,
   });
 
   int? id;
   String? name;
   String? type;
+  String? status;
   String? degree;
 
   factory ExamDetailsModel.fromJson(Map<String, dynamic> json) =>
@@ -89,6 +100,7 @@ class ExamDetailsModel {
         id: json["id"],
         name: json["name"],
         type: json["type"],
+        status: json["status"],
         degree: json["degree"],
       );
 
@@ -96,6 +108,7 @@ class ExamDetailsModel {
         "id": id,
         "name": name,
         "type": type,
+        "status": status,
         "degree": degree,
       };
 }

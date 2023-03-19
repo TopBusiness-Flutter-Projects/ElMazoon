@@ -9,7 +9,7 @@ class EndPoints {
   static const String questionsUrl = '${baseUrl}show_exam/questions/';
   static const String communicationUrl = '${baseUrl}auth/communication';
   static const String suggestUrl = '${baseUrl}auth/add-suggest';
-  static const String monthplanUrl = '${baseUrl}plans/all';
+  static const String monthPlanUrl = '${baseUrl}plans/all';
   static const String registerExamUrl = '${baseUrl}auth/papel-sheet-exam/user/';
   static const String degreeDetialsUrl = '${baseUrl}exam-degree/details';
   static const String commentByLessonUrl = '${baseUrl}lesson/video/comments/';
@@ -20,11 +20,14 @@ class EndPoints {
   static const String openFirstVideoUrl = '${baseUrl}lesson/';
   static const String openNextVideoUrl = '${baseUrl}lesson/access-next-video/';
   static const String updateProfileUrl = '${baseUrl}auth/update-profile';
-  static const String updateaccesstimeUrl = '${baseUrl}access-end-time/exam/';
+  static const String updateAccessTimeUrl = '${baseUrl}access-end-time/exam/';
   static const String answerExamUrl = '${baseUrl}onlineExam/exam/';
   static const String homePageUrl = '${baseUrl}auth/home-page';
   static const String myDegreeUrl = '${baseUrl}degrees/all-exams-degrees';
   static const String guideUrl = '${baseUrl}guide/all';
+  static const String adsUrl = '${baseUrl}ads';
+  static const String subscribesUrl = '${baseUrl}auth/all-subscribes';
+  static const String examHeroUrl = '${baseUrl}exam-degree/heroes';
 
 
 

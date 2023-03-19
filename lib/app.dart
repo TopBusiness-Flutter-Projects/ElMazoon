@@ -19,6 +19,7 @@ import 'package:path/path.dart';
 import 'feature/exam/cubit/exam_cubit.dart';
 import 'feature/examRegister/cubit/exam_register_cubit.dart';
 import 'feature/exam_degree_detials/cubit/exam_degree_cubit.dart';
+import 'feature/exam_hero/cubit/exam_hero_cubit.dart';
 import 'feature/login/cubit/login_cubit.dart';
 import 'feature/mainscreens/guide_page/cubit/guide_cubit.dart';
 import 'feature/mainscreens/homePage/cubit/home_page_cubit.dart';
@@ -28,6 +29,7 @@ import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'feature/month_plan/cubit/month_plan_cubit.dart';
 import 'feature/mydegree/cubit/my_degree_cubit.dart';
 import 'feature/navigation_bottom/cubit/navigation_cubit.dart';
+import 'feature/payment/cubit/payment_cubit.dart';
 
 class Elmazoon extends StatefulWidget {
   const Elmazoon({Key? key}) : super(key: key);
@@ -136,6 +138,12 @@ class _ElmazoonState extends State<Elmazoon> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<ExamDegreeCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<PaymentCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<ExamHeroCubit>(),
         ),
       ],
       child: MaterialApp(

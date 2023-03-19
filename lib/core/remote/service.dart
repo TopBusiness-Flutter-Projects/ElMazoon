@@ -14,9 +14,11 @@ import '../api/base_api_consumer.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
 import '../error/failures.dart';
+import '../models/ads_model.dart';
 import '../models/comments_model.dart';
 import '../models/degree_detials_model.dart';
 import '../models/exam_answer_model.dart';
+import '../models/exam_hero_model.dart';
 import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
 import '../models/month_plan_model.dart';
@@ -25,6 +27,7 @@ import '../models/questiones_data_model.dart';
 import '../models/response_message.dart';
 import '../models/notifications_model.dart';
 import '../models/status_response_model.dart';
+import '../models/subscribes_model.dart';
 import '../models/times_model.dart';
 import '../models/user_model.dart';
 
@@ -327,7 +330,7 @@ class ServiceApi {
     print('lan : $lan');
     try {
       final response = await dio.get(
-        EndPoints.monthplanUrl,
+        EndPoints.monthPlanUrl,
         options: Options(
           headers: {
             'Authorization': userModel.data!.token,
@@ -422,17 +425,15 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, StatusResponse>> updateAcessTime(
-      {required int  exam_id,required int time, required String type}) async {
+      {required int exam_id, required int time, required String type}) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     try {
       final response = await dio.post(
-        EndPoints.updateaccesstimeUrl+exam_id.toString(),
+        EndPoints.updateAccessTimeUrl + exam_id.toString(),
         formDataIsEnabled: false,
-        body: {
-          "type": type,
-          "timer":time
-        },
+        body: {"type": type, "timer": time},
         options: Options(headers: {'Authorization': loginModel.data!.token}),
       );
       return Right(StatusResponse.fromJson(response));
@@ -498,12 +499,7 @@ class ServiceApi {
       required int time,
       required String type}) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
- Map<String, dynamic> fields =
-      {
-        "exam_type": type,
-        "timer":time
-      }
-    ;
+    Map<String, dynamic> fields = {"exam_type": type, "timer": time};
     for (int i = 0; i < questionData.questions.length; i++) {
       fields.addAll(
           {"details[$i][question]": questionData.questions[i].id.toString()});
@@ -520,9 +516,9 @@ class ServiceApi {
         });
         fields.addAll({"details[$i][audio]": ''});
       }
-      if(answerExamModel.answer[i].isNotEmpty){
-      fields.addAll({"details[$i][answer]": answerExamModel.answer[i]});}
-      else{
+      if (answerExamModel.answer[i].isNotEmpty) {
+        fields.addAll({"details[$i][answer]": answerExamModel.answer[i]});
+      } else {
         fields.addAll({"details[$i][answer]": ''});
       }
     }
@@ -535,6 +531,34 @@ class ServiceApi {
           body: fields);
 
       return Right(ExamAnswerModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, AdsModel>> getAppAds() async {
+    try {
+      final response = await dio.get(EndPoints.adsUrl);
+      return Right(AdsModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, SubscribesModel>> getSubscribesPayment() async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.get(
+        EndPoints.subscribesUrl,
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(SubscribesModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
@@ -564,5 +588,26 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
+
+  Future<Either<Failure, ExamHeroModel>> getExamHeroes() async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.get(
+        EndPoints.examHeroUrl,
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(ExamHeroModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
 
 }

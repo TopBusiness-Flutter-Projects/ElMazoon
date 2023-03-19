@@ -16,6 +16,9 @@ class ImageAssets {
   static const String userExamImage = '$imagePath/user_exam.png';
   static const String suggestImage = '$imagePath/suggest.png';
   static const String correctImage = '$imagePath/correct.png';
+  static const String firstImage = '$imagePath/first.png';
+  static const String secondImage = '$imagePath/second.png';
+  static const String thirdImage = '$imagePath/third.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';
@@ -38,6 +41,8 @@ class ImageAssets {
   static const String logoutIcon = '$iconsPath/logout.svg';
   static const String partialExamsIcon = '$iconsPath/partial_exams.svg';
   static const String examsIcon = '$iconsPath/exams.svg';
+  static const String paymentOnlineIcon = '$iconsPath/payment_online.svg';
+  static const String paymentCashIcon = '$iconsPath/payment_cash.svg';
 
 
   //Lottie

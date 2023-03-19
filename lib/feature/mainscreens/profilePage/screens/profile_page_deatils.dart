@@ -10,6 +10,7 @@ import '../../../../core/utils/app_colors.dart';
 import '../../../../core/widgets/custom_appbar_widget.dart';
 import '../../../../core/widgets/network_image.dart';
 import '../../../../core/widgets/show_loading_indicator.dart';
+import '../../../payment/screen/payment_screen.dart';
 import '../widgets/change_profile_photo.dart';
 
 class ProfilePageDetails extends StatelessWidget {
@@ -81,21 +82,23 @@ class ProfilePageDetails extends StatelessWidget {
                                   topRight: Radius.circular(80),
                                 ),
                               ),
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 70),
-                                  Text(
-                                    cubit.userModel!.data!.name,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                      color: AppColors.secondPrimary,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 70),
+                                    Text(
+                                      cubit.userModel!.data!.name,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25,
+                                        color: AppColors.secondPrimary,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
+                                    Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 12),
+                                        horizontal: 25,
+                                        vertical: 12,
+                                      ),
                                       child: Column(
                                         children: [
                                           Row(
@@ -161,8 +164,8 @@ class ProfilePageDetails extends StatelessWidget {
                                                 ),
                                               ),
                                               Text(
-                                                cubit
-                                                    .userModel!.data!.dateEndCode
+                                                cubit.userModel!.data!
+                                                    .dateEndCode
                                                     .toString()
                                                     .split(' ')[0],
                                                 style: TextStyle(
@@ -269,10 +272,10 @@ class ProfilePageDetails extends StatelessWidget {
                                               ),
                                               Text(
                                                 lang == 'ar'
-                                                    ? cubit.userModel!.data!.term
-                                                        .nameAr
-                                                    : cubit.userModel!.data!.term
-                                                        .nameEn,
+                                                    ? cubit.userModel!.data!
+                                                        .term.nameAr
+                                                    : cubit.userModel!.data!
+                                                        .term.nameEn,
                                                 style: TextStyle(
                                                   color: AppColors.primary,
                                                   fontSize: 18,
@@ -282,22 +285,31 @@ class ProfilePageDetails extends StatelessWidget {
                                             ],
                                           ),
                                           SizedBox(height: 18),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 20,
+                                            ),
+                                            child: CustomButton(
+                                              text: 'renew'.tr(),
+                                              color: AppColors.primary,
+                                              onClick: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PaymentScreen(),
+                                                  ),
+                                                );
+                                              },
+                                              paddingHorizontal: 50,
+                                              borderRadius: 18,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 20),
-                                    child: CustomButton(
-                                      text: 'renew'.tr(),
-                                      color: AppColors.primary,
-                                      onClick: () {},
-                                      paddingHorizontal: 50,
-                                      borderRadius: 18,
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -305,66 +317,67 @@ class ProfilePageDetails extends StatelessWidget {
                             top: 0,
                             right: 0,
                             left: 0,
-                            child: Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    ManageNetworkImage(
-                                      imageUrl: cubit.userModel!.data!.image,
-                                      width: 120,
-                                      height: 120,
-                                      borderRadius: 80,
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      right: 0,
-                                      child: InkWell(
-                                        onTap: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (ctx) => AlertDialog(
-                                              title: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 5),
-                                                child:
-                                                    Text('change_photo'.tr()),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      ManageNetworkImage(
+                                        imageUrl: cubit.userModel!.data!.image,
+                                        width: 120,
+                                        height: 120,
+                                        borderRadius: 80,
+                                      ),
+                                      Positioned(
+                                        bottom: 0,
+                                        right: 0,
+                                        child: InkWell(
+                                          onTap: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (ctx) => AlertDialog(
+                                                title: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 5),
+                                                  child:
+                                                      Text('change_photo'.tr()),
+                                                ),
+                                                contentPadding: EdgeInsets.zero,
+                                                content: ChangeProfilePhoto(),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      context
+                                                          .read<ProfileCubit>()
+                                                          .pickImage(
+                                                              type: 'none');
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('cancel'.tr()),
+                                                  )
+                                                ],
                                               ),
-                                              contentPadding: EdgeInsets.zero,
-                                              content: ChangeProfilePhoto(),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    context
-                                                        .read<ProfileCubit>()
-                                                        .pickImage(
-                                                            type: 'none');
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text('cancel'.tr()),
-                                                )
-                                              ],
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 35,
+                                            height: 35,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(28),
+                                              color: AppColors.primary,
                                             ),
-                                          );
-                                        },
-                                        child: Container(
-                                          width: 35,
-                                          height: 35,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(28),
-                                            color: AppColors.primary,
-                                          ),
-                                          child: Icon(
-                                            Icons.camera_alt,
-                                            color: AppColors.white,
+                                            child: Icon(
+                                              Icons.camera_alt,
+                                              color: AppColors.white,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
