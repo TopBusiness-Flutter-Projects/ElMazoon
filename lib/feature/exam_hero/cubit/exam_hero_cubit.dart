@@ -35,7 +35,7 @@ class ExamHeroCubit extends Cubit<ExamHeroState> {
         dayHero.forEach((element) {
           if (element.id == userModel!.data!.id) {
             myOrderInDay = element;
-            // return true;
+            myOrderInDay.isOrdered = true;
           } else {
             // return false;
           }
@@ -45,6 +45,7 @@ class ExamHeroCubit extends Cubit<ExamHeroState> {
         weekHero.forEach((element) {
           if (element.id == userModel!.data!.id) {
             myOrderInWeek = element;
+            myOrderInWeek.isOrdered = true;
           }
         });
 
@@ -52,6 +53,7 @@ class ExamHeroCubit extends Cubit<ExamHeroState> {
         monthHero.forEach((element) {
           if (element.id == userModel!.data!.id) {
             myOrderInMonth = element;
+            myOrderInMonth.isOrdered = true;
           }
         });
         emit(ExamHeroLoaded());

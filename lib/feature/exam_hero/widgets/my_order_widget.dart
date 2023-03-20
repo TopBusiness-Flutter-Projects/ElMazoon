@@ -13,6 +13,7 @@ class MyOrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 80,
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       decoration: BoxDecoration(
         color: AppColors.secondPrimary,
@@ -43,12 +44,12 @@ class MyOrderWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: 80,
-                        height: 80,
+                        width: 60,
+                        height: 60,
                         child: ManageNetworkImage(
                           imageUrl: heroData.image!,
-                          width: 80,
-                          height: 80,
+                          width: 60,
+                          height: 60,
                           borderRadius: 80,
                         ),
                       ),
@@ -69,7 +70,7 @@ class MyOrderWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 0),
                   child: Text(
                     'no_order'.tr(),
                     style: TextStyle(

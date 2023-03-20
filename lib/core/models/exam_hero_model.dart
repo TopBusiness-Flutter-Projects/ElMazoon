@@ -93,7 +93,7 @@ class HeroData {
   final int? ordered;
   final String? image;
   final String? percentage;
-  final bool? isOrdered;
+   bool? isOrdered;
 
   factory HeroData.fromRawJson(String str) =>
       HeroData.fromJson(json.decode(str));

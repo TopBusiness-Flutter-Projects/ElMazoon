@@ -227,6 +227,7 @@ class ExamHeroWidget extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: 85),
           ],
         ),
       ),
