@@ -14,12 +14,6 @@ class ExamHeroWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<ChartData> chartData = [
-      ChartData('David', 60, Color.fromRGBO(5, 90, 50, 1)),
-      // ChartData('Steve', 38, Colors.transparent),
-      // ChartData('Jack', 34, Colors.grey),
-      // ChartData('Others', 52, Colors.orange)
-    ];
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: RefreshIndicator(
@@ -238,12 +232,4 @@ class ExamHeroWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-class ChartData {
-  ChartData(this.x, this.y, [this.color]);
-
-  final String x;
-  final double y;
-  final Color? color;
 }

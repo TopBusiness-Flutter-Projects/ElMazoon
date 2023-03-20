@@ -8,6 +8,7 @@ import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/widgets/custom_app_bar.dart';
 import '../widgets/exam_hero_widget.dart';
+import '../widgets/my_order_widget.dart';
 
 class ExamHero extends StatefulWidget {
   const ExamHero({Key? key}) : super(key: key);
@@ -144,13 +145,49 @@ class _ExamHeroState extends State<ExamHero> with TickerProviderStateMixin {
                     children: [
                       state is ExamHeroLoading
                           ? ShowLoadingIndicator()
-                          : ExamHeroWidget(heroData: cubit.dayHero),
+                          : Stack(
+                              children: [
+                                ExamHeroWidget(heroData: cubit.dayHero),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  left: 0,
+                                  child: MyOrderWidget(
+                                    heroData: cubit.myOrderInDay,
+                                  ),
+                                )
+                              ],
+                            ),
                       state is ExamHeroLoading
                           ? ShowLoadingIndicator()
-                          : ExamHeroWidget(heroData: cubit.weekHero),
+                          : Stack(
+                              children: [
+                                ExamHeroWidget(heroData: cubit.weekHero),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  left: 0,
+                                  child: MyOrderWidget(
+                                    heroData: cubit.myOrderInWeek,
+                                  ),
+                                )
+                              ],
+                            ),
                       state is ExamHeroLoading
                           ? ShowLoadingIndicator()
-                          : ExamHeroWidget(heroData: cubit.monthHero),
+                          : Stack(
+                              children: [
+                                ExamHeroWidget(heroData: cubit.monthHero),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  left: 0,
+                                  child: MyOrderWidget(
+                                    heroData: cubit.myOrderInMonth,
+                                  ),
+                                )
+                              ],
+                            ),
                     ],
                   ),
                 );
