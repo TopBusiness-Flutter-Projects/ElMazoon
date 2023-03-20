@@ -109,7 +109,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     cubit.commentsList[index].user!.id ==
-                                            cubit.userModel.data!.id
+                                            cubit.userModel!.data!.id
                                         ? Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
@@ -282,7 +282,7 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                     ),
                   ),
                 ),
-                cubit.comments.links.next.isNotEmpty
+                cubit.comments!.links.next.isNotEmpty
                     ? state is StudyPageMoreCommentsLessonsLoading
                         ? Padding(
                             padding: EdgeInsets.symmetric(vertical: 12),

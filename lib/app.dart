@@ -16,6 +16,7 @@ import 'package:elmazoon/injector.dart' as injector;
 import 'dart:developer' as developer;
 import 'package:path/path.dart';
 
+import 'feature/downloads_videos/cubit/downloads_videos_cubit.dart';
 import 'feature/exam/cubit/exam_cubit.dart';
 import 'feature/examRegister/cubit/exam_register_cubit.dart';
 import 'feature/exam_degree_detials/cubit/exam_degree_cubit.dart';
@@ -144,6 +145,9 @@ class _ElmazoonState extends State<Elmazoon> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<ExamHeroCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<DownloadsVideosCubit>(),
         ),
       ],
       child: MaterialApp(

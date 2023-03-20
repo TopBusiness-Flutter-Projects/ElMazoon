@@ -267,7 +267,7 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                                               .replies![index]
                                                               .user!
                                                               .id ==
-                                                          cubit.userModel.data!
+                                                          cubit.userModel!.data!
                                                               .id
                                                       ? Row(
                                                           mainAxisAlignment:

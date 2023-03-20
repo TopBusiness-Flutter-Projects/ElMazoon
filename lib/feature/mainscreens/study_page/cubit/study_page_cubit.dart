@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:elmazoon/core/models/user_model.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../core/models/comments_model.dart';
 import '../../../../core/models/lessons_details_model.dart';
@@ -17,12 +22,13 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     getAllClasses().whenComplete(() => getUserData());
   }
 
+  final dio = Dio();
   final ServiceApi api;
 
   AllClassesDatum? allClassesDatum;
-  late LessonsDetailsModel lessonsDetailsModel;
-  late Comments comments;
-  late UserModel userModel;
+  LessonsDetailsModel? lessonsDetailsModel;
+  Comments? comments;
+  UserModel? userModel;
 
   List<CommentDatum> commentsList = [];
   List<CommentDatum> tempCommentsList = [];
@@ -103,7 +109,7 @@ class StudyPageCubit extends Cubit<StudyPageState> {
 
   getMoreCommentsLesson() async {
     emit(StudyPageMoreCommentsLessonsLoading());
-    final response = await api.getMoreComments(comments.links.next);
+    final response = await api.getMoreComments(comments!.links.next);
     response.fold(
       (error) => emit(StudyPageMoreCommentsLessonsError()),
       (response) {
@@ -227,5 +233,44 @@ class StudyPageCubit extends Cubit<StudyPageState> {
         }
       },
     );
+  }
+  void getPermission(String video_url) async {
+    var status = await Permission.storage.status;
+    if (status.isDenied) {
+      var status1=await Permission.storage.request();
+      if(status1.isGranted){
+        downloadVideo(video_url);
+
+      }
+     ;
+      // We didn't ask for permission yet or the permission has been denied before but not permanently.
+    }
+    else{
+      downloadVideo(video_url);
+    }
+
+
+  }
+  downloadVideo(String video_url) async {
+    var dir = await (Platform.isIOS
+        ? getApplicationSupportDirectory()
+        : getApplicationDocumentsDirectory());
+    await   dio.download(video_url,  dir.path+"/videos/"+video_url.split("/")[video_url.split("/").length-1],onReceiveProgress: (count, total) {
+      int percentage = ((count / total) * 100).floor();
+      print("kdkkd");
+
+      print(percentage);
+      // if(percentage==100){
+      //   print("loooooo");
+      //   Directory directory=Directory(dir.path+"/videos/");
+      //   List<FileSystemEntity> files = directory.listSync().toList();
+      //
+      //   print(files.length);
+      //
+      //   print(files.elementAt(0).absolute);
+      // }
+    },);
+
+
   }
 }

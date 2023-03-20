@@ -19,6 +19,7 @@ class AppColors {
   static Color textFormFieldColor = HexColor('#EDEDED');
 
 
+  static Color green = HexColor('#15860B');
   static Color blueColor1 = HexColor('#6A85B6');
   static Color blueColor2 = HexColor('#BAC8E0');
   static Color blueColor3 = HexColor('#1877F2');

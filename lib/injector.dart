@@ -6,6 +6,7 @@ import 'core/api/app_interceptors.dart';
 import 'core/api/base_api_consumer.dart';
 import 'core/api/dio_consumer.dart';
 import 'core/remote/service.dart';
+import 'feature/downloads_videos/cubit/downloads_videos_cubit.dart';
 import 'feature/exam/cubit/exam_cubit.dart';
 import 'feature/examRegister/cubit/exam_register_cubit.dart';
 import 'feature/exam_degree_detials/cubit/exam_degree_cubit.dart';
@@ -63,6 +64,9 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => MyDegreeCubit(serviceLocator()),
+  );
+  serviceLocator.registerFactory(
+    () => DownloadsVideosCubit(),
   );
   serviceLocator.registerFactory(
     () => GuideCubit(serviceLocator()),

@@ -1,4 +1,5 @@
 import 'package:elmazoon/core/models/times_model.dart';
+import 'package:elmazoon/feature/downloads_videos/screens/downloads_video.dart';
 import 'package:elmazoon/feature/exam/presentation/screens/exam_page.dart';
 import 'package:elmazoon/feature/exam_degree_detials/presentation/screens/exam_degree_detials.dart';
 import 'package:elmazoon/feature/login/screens/login.dart';
@@ -13,6 +14,7 @@ import '../../feature/mainscreens/profilePage/screens/suggest_screen.dart';
 import '../../feature/monthplandetials/presentation/screens/month_plan_detials.dart';
 import '../../feature/mydegree/screens/mydegree.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
+import '../../feature/videoPlay/videoPlay.dart';
 import '../models/exam_answer_model.dart';
 import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
@@ -32,6 +34,8 @@ class Routes {
   static const String monthplansRoute = '/monthplansRoute';
   static const String monthplanDetialsRoute = '/monthplandetialsRoute';
   static const String confirmexamRegisterRoute = '/confirmexamregister';
+  static const String downloadsRoute = '/downloads';
+  static const String downloadvideoplayRoute = '/downloadvideoplay';
 }
 
 class AppRoutes {
@@ -51,12 +55,22 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => const MonthPage(),
         );
+        case Routes.downloadsRoute:
+        return MaterialPageRoute(
+          builder: (context) => const DownloadsVideos(),
+        );
 
       case Routes.examRegisterRoute:
         TimeDataModel timeDataModel = settings.arguments as TimeDataModel;
 
         return MaterialPageRoute(
           builder: (context) => ExmRegisterPage(timeDataModel: timeDataModel),
+        );
+        case Routes.downloadvideoplayRoute:
+        String videopath = settings.arguments as String;
+
+        return MaterialPageRoute(
+          builder: (context) => VideoPlay(videopath: videopath),
         );
         case Routes.examdegreeDetialsRoute:
           ExamAnswerModel examAnswerModel = settings.arguments as ExamAnswerModel;

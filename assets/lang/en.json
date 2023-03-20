@@ -114,7 +114,15 @@
  "day": "Day",
  "week": "Week",
  "month": "Month",
+ "time_used": "Time Used",
+ "mistake_num": "Mistake Number",
+ "full_degree": "Full Degree",
+ "my_order": "My Order",
+ "remining_num": "Remining Num",
+ "exam_details": "Exam Details",
+ "exam_repetition": "Exam REPETITON",
  "no_order": "No Order ",
+ "downloads_videos":"Downloads Videos",
  "card_info": "Card Information"
 
 

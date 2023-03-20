@@ -55,6 +55,7 @@ class _VideoWidgetState extends State<VideoWidget> {
       controlsSafeAreaMinimum: EdgeInsets.zero,
       looping: false,
       hideControlsTimer: const Duration(seconds: 3),
+
     );
   }
 
@@ -72,7 +73,30 @@ class _VideoWidgetState extends State<VideoWidget> {
       width: double.infinity,
       child: _chewieController != null &&
               _chewieController!.videoPlayerController.value.isInitialized
-          ? Chewie(controller: _chewieController!)
+          ?
+      Stack(
+          children: [
+
+      Positioned(
+        bottom: 0,
+        right: 0,
+        left: 0,
+      top: 0,
+      child: Chewie(controller: _chewieController!))
+            ,
+            Positioned(
+                top: 0,
+                right: 0,
+
+                child:
+            InkWell(
+                onTap: () {
+                  context.read<StudyPageCubit>().getPermission(widget.videoLink);
+                },
+                child: Icon(Icons.download))
+            )
+      ])
+
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

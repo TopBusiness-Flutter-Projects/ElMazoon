@@ -113,8 +113,16 @@
   "pay": "دفع",
   "day": "يوم",
   "week": "أسبوع",
+  "time_used": "الوقت المستخدم",
+  "mistake_num": "عدد الاخطاء",
+  "full_degree": "الدرجه الكليه",
+  "my_order": "ترتيبى",
+  "remining_num": "المحاولات المتبقيه",
+  "exam_details": "نتيجة الاختبار",
+  "exam_repetition": "اعادة الاختبار",
   "month": "شهر",
   "no_order": "لا يوجد ترتيب",
+  "downloads_videos": "الفيديوهات المحمله",
   "card_info": "بيانات البطاقه"
 
 

@@ -50,38 +50,38 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
           return ListView(
             children: [
               ...List.generate(
-                cubit.lessonsDetailsModel.data.videos.length,
+                cubit.lessonsDetailsModel!.data.videos.length,
                 (index) => InkWell(
                   onTap: () {
-                    if (cubit.lessonsDetailsModel.data.videos[index].status !=
+                    if (cubit.lessonsDetailsModel!.data.videos[index].status !=
                         'lock') {
-                      if (cubit.lessonsDetailsModel.data.videos[index].type ==
+                      if (cubit.lessonsDetailsModel!.data.videos[index].type ==
                           'video') {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => VideoScreen(
                               lessons:
-                                  cubit.lessonsDetailsModel.data.videos[index],
+                                  cubit.lessonsDetailsModel!.data.videos[index],
                             ),
                           ),
                         );
                       } else if (cubit
-                              .lessonsDetailsModel.data.videos[index].type ==
+                              .lessonsDetailsModel!.data.videos[index].type ==
                           'pdf') {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => PdfScreen(
                               pdfLink: cubit
-                                  .lessonsDetailsModel.data.videos[index].link,
+                                  .lessonsDetailsModel!.data.videos[index].link,
                               pdfTitle: cubit
-                                  .lessonsDetailsModel.data.videos[index].name,
+                                  .lessonsDetailsModel!.data.videos[index].name,
                             ),
                           ),
                         );
                       } else if (cubit
-                              .lessonsDetailsModel.data.videos[index].type ==
+                              .lessonsDetailsModel!.data.videos[index].type ==
                           'audio') {
                         showDialog(
                           context: context,
@@ -92,7 +92,7 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
                                 vertical: 5,
                               ),
                               child: Text(
-                                cubit.lessonsDetailsModel.data.videos[index]
+                                cubit.lessonsDetailsModel!.data.videos[index]
                                     .name,
                               ),
                             ),
@@ -103,7 +103,7 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
                                 vertical: 16,
                               ),
                               child: AudioPlayer(
-                                source: cubit.lessonsDetailsModel.data
+                                source: cubit.lessonsDetailsModel!.data
                                     .videos[index].link,
                                 onDelete: () {},
                                 type: 'no',
@@ -129,20 +129,20 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
                     }
                   },
                   child: StructureDetailsWidget(
-                    title: cubit.lessonsDetailsModel.data.videos[index].name,
+                    title: cubit.lessonsDetailsModel!.data.videos[index].name,
                     titleIcon: cubit
-                                .lessonsDetailsModel.data.videos[index].type ==
+                                .lessonsDetailsModel!.data.videos[index].type ==
                             'video'
                         ? Icons.video_collection_rounded
-                        : cubit.lessonsDetailsModel.data.videos[index].type ==
+                        : cubit.lessonsDetailsModel!.data.videos[index].type ==
                                 'pdf'
                             ? Icons.picture_as_pdf
                             : Icons.mic,
-                    color2: cubit.lessonsDetailsModel.data.videos[index].type ==
+                    color2: cubit.lessonsDetailsModel!.data.videos[index].type ==
                             'video'
                         ? AppColors.blueColor1
                         : AppColors.blueLiteColor1,
-                    color1: cubit.lessonsDetailsModel.data.videos[index].type ==
+                    color1: cubit.lessonsDetailsModel!.data.videos[index].type ==
                             'video'
                         ? AppColors.blueColor2
                         : AppColors.blueLiteColor2,
@@ -151,7 +151,7 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
               ),
               SizedBox(height: 25),
               ...List.generate(
-                cubit.lessonsDetailsModel.data.exams.length,
+                cubit.lessonsDetailsModel!.data.exams.length,
                 (index) => InkWell(
                   onTap: () {
                     Navigator.push(
@@ -160,14 +160,14 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
                         builder: (context) =>
                             ExamInstruction(
                               examInstruction:
-                              cubit.lessonsDetailsModel.data.exams[index]
+                              cubit.lessonsDetailsModel!.data.exams[index]
                                   .instruction!,
                             ),
                       ),
                     );
                   },
                   child: StructureDetailsWidget(
-                    title: cubit.lessonsDetailsModel.data.exams[index].name,
+                    title: cubit.lessonsDetailsModel!.data.exams[index].name,
                     titleIcon: Icons.newspaper,
                     color2: AppColors.primary,
                     color1: AppColors.primary.withOpacity(0.5),

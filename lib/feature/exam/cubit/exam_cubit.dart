@@ -4,6 +4,7 @@ import 'package:elmazoon/core/models/answer_model.dart';
 import 'package:elmazoon/core/remote/service.dart';
 import 'package:elmazoon/core/utils/show_dialog.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
@@ -15,6 +16,7 @@ import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_routes.dart';
 import '../../../core/utils/toast_message_method.dart';
+import '../../exam_degree_detials/cubit/exam_degree_cubit.dart';
 import '../models/answer_exam_model.dart';
 
 part 'exam_state.dart';
@@ -72,6 +74,7 @@ class ExamCubit extends Cubit<ExamState> {
   }
 
   getExam(int exam_id, String exam_type) async {
+    emit(ExamInitial());
     audioPath = [];
     imagePath = [];
     final response = await api.getQuestion(exam_id, exam_type);
@@ -220,9 +223,15 @@ class ExamCubit extends Cubit<ExamState> {
         Navigator.of(context).pop();
         if (r.code == 200) {
           print("dflkfkfk");
+          audioPath = [];
+          imagePath = [];
+          pendinglist = [];
+          answerExamModel = AnswerExamModel(answer: [], audio: [], image: []);
           print(r.code);
           Preferences.instance
               .setexam(new ExamAnswerListModel(answers: null, id: 0, time: ''));
+          context..read<ExamDegreeCubit>().examAnswerModel=r;
+          context..read<ExamDegreeCubit>().getExamDetails(r);
           Navigator.pushNamed(context, Routes.examdegreeDetialsRoute,
               arguments: r);
           // Navigator.pushNamed(

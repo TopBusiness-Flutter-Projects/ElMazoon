@@ -42,6 +42,9 @@ class ImageAssets {
   static const String logoutIcon = '$iconsPath/logout.svg';
   static const String partialExamsIcon = '$iconsPath/partial_exams.svg';
   static const String examsIcon = '$iconsPath/exams.svg';
+  static const String mistakeIcon = '$iconsPath/mistake.svg';
+  static const String degreefullIcon = '$iconsPath/degree_full.svg';
+  static const String filterIcon = '$iconsPath/filter.svg';
   static const String paymentOnlineIcon = '$iconsPath/payment_online.svg';
   static const String paymentCashIcon = '$iconsPath/payment_cash.svg';
 
