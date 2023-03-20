@@ -10,6 +10,7 @@ import 'package:elmazoon/feature/mainscreens/study_page/models/all_classes_model
 
 import '../../feature/exam/models/answer_exam_model.dart';
 import '../../feature/login/models/communication_model.dart';
+import '../../feature/payment/model/pay_model.dart';
 import '../api/base_api_consumer.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
@@ -563,6 +564,7 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
+
   Future<Either<Failure, DegreeDetails>> getDegreeDetails(
       {required int exam_id, required String exam_type}) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
@@ -570,11 +572,8 @@ class ServiceApi {
 
     try {
       final response = await dio.get(
-        EndPoints.degreeDetialsUrl ,
-        queryParameters: {
-          'exam_type': exam_type,
-          'id':exam_id
-        },
+        EndPoints.degreeDetialsUrl,
+        queryParameters: {'exam_type': exam_type, 'id': exam_id},
         options: Options(
           headers: {
             'Authorization': loginModel.data!.token,
@@ -588,7 +587,6 @@ class ServiceApi {
       return Left(ServerFailure());
     }
   }
-
 
   Future<Either<Failure, ExamHeroModel>> getExamHeroes() async {
     UserModel loginModel = await Preferences.instance.getUserModel();
@@ -609,5 +607,23 @@ class ServiceApi {
     }
   }
 
-
+  Future<Either<Failure, StatusResponse>> paySubscribes(SendPayModel sendPayModel) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.post(
+        EndPoints.paySubscribesUrl,
+        body: sendPayModel.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

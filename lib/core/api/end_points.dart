@@ -28,6 +28,7 @@ class EndPoints {
   static const String adsUrl = '${baseUrl}ads';
   static const String subscribesUrl = '${baseUrl}auth/all-subscribes';
   static const String examHeroUrl = '${baseUrl}exam-degree/heroes';
+  static const String paySubscribesUrl = '${baseUrl}payments/pay';
 
 
 

@@ -3,6 +3,7 @@ import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/widgets/show_loading_indicator.dart';
 import 'package:elmazoon/feature/payment/cubit/payment_cubit.dart';
 import 'package:elmazoon/feature/payment/cubit/payment_cubit.dart';
+import 'package:elmazoon/feature/payment/screen/pay_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,7 +51,14 @@ class PaymentMonthList extends StatelessWidget {
                     onClick: () {
                       print(cubit.tempSubscribesList.length);
                       print(cubit.totalPayment);
-                      },
+                      print(cubit.paymentList);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PayScreen(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

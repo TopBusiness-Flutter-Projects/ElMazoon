@@ -19,6 +19,7 @@ class ImageAssets {
   static const String firstImage = '$imagePath/first.png';
   static const String secondImage = '$imagePath/second.png';
   static const String thirdImage = '$imagePath/third.png';
+  static const String masterCardImage = '$imagePath/master_card.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';

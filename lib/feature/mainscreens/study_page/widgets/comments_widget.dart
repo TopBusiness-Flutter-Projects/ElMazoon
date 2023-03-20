@@ -130,7 +130,8 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                                 onSelected: (int value) {
                                                   if (value == 1) {
                                                     print(
-                                                        '******** $value *********');
+                                                      '******** $value *********',
+                                                    );
                                                   }
                                                   if (value == 2) {
                                                     createProgressDialog(
@@ -138,10 +139,10 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                                       'wait'.tr(),
                                                     );
                                                     cubit.deleteComment(
-                                                      cubit.commentsList[index]
-                                                          .id!,
-                                                      index
-                                                    );
+                                                        cubit
+                                                            .commentsList[index]
+                                                            .id!,
+                                                        index);
                                                   }
                                                 },
                                                 padding: EdgeInsets.all(0),

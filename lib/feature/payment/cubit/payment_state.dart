@@ -10,3 +10,8 @@ class PaymentMonthLoaded extends PaymentState {}
 class PaymentMonthError extends PaymentState {}
 
 class PaymentChangeList extends PaymentState {}
+
+
+class PayLoading extends PaymentState {}
+class PayLoaded extends PaymentState {}
+class PayError extends PaymentState {}

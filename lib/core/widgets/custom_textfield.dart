@@ -94,7 +94,7 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
 
       String newString = '';
       for (int i = chars.length - 1; i >= 0; i--) {
-        if ((chars.length - 1 - i) % 3 == 0 && i != chars.length - 1)
+        if ((chars.length - 1 - i) % 4 == 0 && i != chars.length - 1)
           newString = separator + newString;
         newString = chars[i] + newString;
       }
@@ -109,5 +109,36 @@ class ThousandsSeparatorInputFormatter extends TextInputFormatter {
 
     // If the new value and old value are the same, just return as-is
     return newValue;
+  }
+}
+
+class CardNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue previousValue,
+      TextEditingValue nextValue,
+      ) {
+    var inputText = nextValue.text;
+
+    if (nextValue.selection.baseOffset == 0) {
+      return nextValue;
+    }
+
+    var bufferString = StringBuffer();
+    for (int i = 0; i < inputText.length; i++) {
+      bufferString.write(inputText[i]);
+      var nonZeroIndexValue = i + 1;
+      if (nonZeroIndexValue % 4 == 0 && nonZeroIndexValue != inputText.length) {
+        bufferString.write(' ');
+      }
+    }
+
+    var string = bufferString.toString();
+    return nextValue.copyWith(
+      text: string,
+      selection: TextSelection.collapsed(
+        offset: string.length,
+      ),
+    );
   }
 }
