@@ -18,15 +18,14 @@ class _VideoWidgetState extends State<VideoWidget> {
   ChewieController? _chewieController;
 
   void checkVideo() {
-    // Implement your calls inside these conditions' bodies :
     if (_videoPlayerController.value.position ==
         Duration(seconds: 0, minutes: 0, hours: 0)) {
       print('video Started');
     }
     if (_videoPlayerController.value.position ==
         _videoPlayerController.value.duration) {
-      context.read<StudyPageCubit>().accessNextVideo(widget.videoId);
-      // print('video Ended');
+      // context.read<StudyPageCubit>().accessNextVideo(widget.videoId);
+      print('video Ended');
     }
   }
 

@@ -165,18 +165,18 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     );
   }
 
-  Future<void> accessFirstVideo(int id) async {
+  Future<void> accessFirstVideo(int id,String type) async {
     emit(StudyPageAccessFirstVideoLoading());
-    final response = await api.openFirstVideo(status: 'open', id: id);
+    final response = await api.openFirstVideo(type: type, id: id);
     response.fold(
       (l) => emit(StudyPageAccessFirstVideoError()),
       (r) => emit(StudyPageAccessFirstVideoLoaded()),
     );
   }
 
-  Future<void> accessNextVideo(int id) async {
+  Future<void> accessNextVideo(int id,String type) async {
     emit(StudyPageAccessFirstVideoLoading());
-    final response = await api.openNextVideo(id: id);
+    final response = await api.openNextVideo(id: id,type: type);
     response.fold(
       (l) => emit(StudyPageAccessFirstVideoError()),
       (r) => emit(StudyPageAccessFirstVideoLoaded()),
@@ -234,6 +234,7 @@ class StudyPageCubit extends Cubit<StudyPageState> {
       },
     );
   }
+
   void getPermission(String video_url) async {
     var status = await Permission.storage.status;
     if (status.isDenied) {

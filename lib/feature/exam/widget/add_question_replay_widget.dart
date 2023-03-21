@@ -37,7 +37,7 @@ class AddAnswerWidget extends StatelessWidget {
                     maxLines: 45,
                     controller: cubit.answerController,
                     onChanged:(value) {
-                      cubit.addtextanswer();
+                      cubit.addTextAnswer();
                     },
                     decoration: InputDecoration(
                       contentPadding:

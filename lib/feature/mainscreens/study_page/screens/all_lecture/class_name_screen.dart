@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/utils/assets_manager.dart';
 import '../../models/all_classes_model.dart';
 import '../../widgets/container_color_title_widget.dart';
+import '../full_exam/stucture_of_exam.dart';
 
 class ClassNameScreen extends StatefulWidget {
   ClassNameScreen({Key? key, required this.model}) : super(key: key);
@@ -67,34 +68,33 @@ class _ClassNameScreenState extends State<ClassNameScreen> {
                           subTitle: widget.model.lessons[index].note,
                           titleBackground: AppColors.primary,
                           color1: AppColors.blueColor2,
-                          color2:  AppColors.blueColor1,
-                          titleIcon:  Icons.video_collection,
+                          color2: AppColors.blueColor1,
+                          titleIcon: Icons.video_collection,
                         ),
                       ),
                     ),
-
                     ...List.generate(
                       widget.model.exams.length,
-                          (index) => InkWell(
+                      (index) => InkWell(
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => StructureDetailsScreen(
-                          //       titleOfPage: widget.model.exams[index].name,
-                          //       model: widget.model.lessons[index],
-                          //     ),
-                          //   ),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ExamInstruction(
+                                examInstruction:
+                                    widget.model.exams[index].instruction!,
+                              ),
+                            ),
+                          );
                         },
                         child: ContainerColorTitleWidget(
                           lesson: widget.model.lessons[index],
                           title: widget.model.exams[index].name,
                           subTitle: widget.model.exams[index].note,
                           titleBackground: AppColors.secondPrimary,
-                          color1:AppColors.primary,
+                          color1: AppColors.primary,
                           color2: AppColors.primary.withOpacity(0.5),
-                          titleIcon:Icons.newspaper,
+                          titleIcon: Icons.newspaper,
                         ),
                       ),
                     ),

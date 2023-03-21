@@ -48,7 +48,7 @@ class _ExamDegreePageState extends State<ExamDegreePage> {
   Widget build(BuildContext context) {
     print("dldkkdk");
     ExamDegreeCubit cubit = context.read<ExamDegreeCubit>();
-    cubit.examAnswerModel=widget.examAnswerModel;
+    cubit.examAnswerModel = widget.examAnswerModel;
     return BlocBuilder<ExamDegreeCubit, ExamDegreeState>(
       builder: (context1, state) {
         if (state is ExamDegreeDetails) {
@@ -473,11 +473,26 @@ class _ExamDegreePageState extends State<ExamDegreePage> {
                             text: 'exam_repetition'.tr(),
                             color: AppColors.primary,
                             onClick: () {
-                              context.read<ExamCubit>().getExam(widget.examAnswerModel.data!.id!,widget.examAnswerModel.data!.instruction!.exam_type);
+                              context.read<ExamCubit>().getExam(
+                                  widget.examAnswerModel.data!.id!,
+                                  widget.examAnswerModel.data!.instruction!
+                                      .exam_type);
                               Navigator.pop(context);
                             },
                           ),
-                        )
+                        ),
+                        Visibility(
+                          visible: cubit.degreeDetails!.tryingNumberAgain! <= 0,
+                          child: CustomButton(
+                            paddingHorizontal: 50,
+                            text: 'done'.tr(),
+                            color: AppColors.primary,
+                            onClick: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),

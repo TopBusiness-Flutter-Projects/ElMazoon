@@ -8,6 +8,7 @@ import '../../../../core/widgets/banner.dart';
 import '../../../../core/widgets/container_with_two_color_widget.dart';
 import '../../../../core/widgets/no_data_widget.dart';
 import '../../../../core/widgets/show_loading_indicator.dart';
+import '../../../exam/cubit/exam_cubit.dart';
 import '../../notificationpage/presentation/screens/widget/notification_details_widget.dart';
 import '../../study_page/screens/all_lecture/class_name_screen.dart';
 
@@ -84,6 +85,10 @@ class HomePage extends StatelessWidget {
                               itemBuilder: (BuildContext context, int index) {
                                 return InkWell(
                                   onTap: () {
+                                    print('index @@@@@@  $index');
+                                    context
+                                        .read<ExamCubit>()
+                                        .examSubjectClassIndex = index;
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

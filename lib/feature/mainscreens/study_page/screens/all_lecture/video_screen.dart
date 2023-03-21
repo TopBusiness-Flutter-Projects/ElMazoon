@@ -6,6 +6,7 @@ import '../../../../../core/models/lessons_details_model.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/widgets/custom_appbar_widget.dart';
 
+import '../../../../exam/cubit/exam_cubit.dart';
 import '../../widgets/add_comment_widget.dart';
 import '../../widgets/comments_widget.dart';
 import '../../widgets/structure_details_widget.dart';
@@ -46,15 +47,15 @@ class VideoScreen extends StatelessWidget {
                                       12,
                                   child: InkWell(
                                     onTap: () {
+                                      context.read<ExamCubit>().examTypeId =
+                                          lessons.id;
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              ExamInstruction(
-                                                examInstruction:
-                                                lessons.exams[index]
-                                                    .instruction!,
-                                              ),
+                                          builder: (context) => ExamInstruction(
+                                            examInstruction: lessons
+                                                .exams[index].instruction!,
+                                          ),
                                         ),
                                       );
                                     },
@@ -63,7 +64,8 @@ class VideoScreen extends StatelessWidget {
                                       isSmall: true,
                                       titleIcon: Icons.newspaper,
                                       color2: AppColors.primary,
-                                      color1: AppColors.primary.withOpacity(0.5),
+                                      color1:
+                                          AppColors.primary.withOpacity(0.5),
                                     ),
                                   ),
                                 ),

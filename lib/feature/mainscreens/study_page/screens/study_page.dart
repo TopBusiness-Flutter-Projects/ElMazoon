@@ -1,5 +1,6 @@
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/widgets/show_loading_indicator.dart';
+import 'package:elmazoon/feature/exam/cubit/exam_cubit.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/screens/all_lecture/class_name_screen.dart';
 import 'package:flutter/material.dart';
@@ -132,6 +133,11 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                                             (BuildContext context, int index) {
                                           return InkWell(
                                             onTap: () {
+                                              print('index @@@@@@  $index');
+                                              context
+                                                      .read<ExamCubit>()
+                                                      .examSubjectClassIndex =
+                                                  index;
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(

@@ -346,13 +346,13 @@ class ServiceApi {
   }
 
   Future<Either<Failure, StatusResponse>> openFirstVideo(
-      {required String status, required int id}) async {
+      {required String type, required int id}) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     try {
       final response = await dio.post(
         '${EndPoints.openFirstVideoUrl}$id',
-        body: {
-          'status': status,
+        queryParameters: {
+          'type': type,
         },
         options: Options(
           headers: {
@@ -367,13 +367,16 @@ class ServiceApi {
   }
 
   Future<Either<Failure, StatusResponse>> openNextVideo(
-      {required int id}) async {
+      {required String type,required int id}) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     try {
       final response = await dio.post(
         '${EndPoints.openNextVideoUrl}$id',
         body: {
           'status': 'watched',
+        },
+        queryParameters: {
+          'type': type,
         },
         options: Options(
           headers: {
@@ -526,10 +529,11 @@ class ServiceApi {
 
     try {
       final response = await dio.post(
-          EndPoints.answerExamUrl + questionData.id.toString(),
-          formDataIsEnabled: true,
-          options: Options(headers: {'Authorization': loginModel.data!.token}),
-          body: fields);
+        EndPoints.answerExamUrl + questionData.id.toString(),
+        formDataIsEnabled: true,
+        options: Options(headers: {'Authorization': loginModel.data!.token}),
+        body: fields,
+      );
 
       return Right(ExamAnswerModel.fromJson(response));
     } on ServerException {
@@ -607,7 +611,8 @@ class ServiceApi {
     }
   }
 
-  Future<Either<Failure, StatusResponse>> paySubscribes(SendPayModel sendPayModel) async {
+  Future<Either<Failure, StatusResponse>> paySubscribes(
+      SendPayModel sendPayModel) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
     try {

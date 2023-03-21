@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/widgets/audio_player_widget.dart';
 import '../../../../../core/widgets/custom_appbar_widget.dart';
 import '../../../../../core/widgets/show_loading_indicator.dart';
+import '../../../../exam/cubit/exam_cubit.dart';
 import '../../models/all_classes_model.dart';
 import '../../widgets/structure_details_widget.dart';
 import '../full_exam/stucture_of_exam.dart';
@@ -29,7 +30,7 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<StudyPageCubit>().accessFirstVideo(widget.model.id);
+    context.read<StudyPageCubit>().accessFirstVideo(widget.model.id,'video');
   }
 
   @override
@@ -57,6 +58,7 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
                         'lock') {
                       if (cubit.lessonsDetailsModel!.data.videos[index].type ==
                           'video') {
+                        context.read<ExamCubit>().examVideoIndex=index;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -154,6 +156,8 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
                 cubit.lessonsDetailsModel!.data.exams.length,
                 (index) => InkWell(
                   onTap: () {
+                    print('ooooooooo=> ${widget.model.id}');
+                    context.read<ExamCubit>().examTypeId=widget.model.id;
                     Navigator.push(
                       context,
                       MaterialPageRoute(

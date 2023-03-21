@@ -29,6 +29,7 @@ class ExamDataModel {
     this.id,
     this.name,
     this.note,
+    this.depends,
     this.seasonId,
     this.termId,
     this.createdAt,
@@ -39,6 +40,7 @@ class ExamDataModel {
   int? id;
   String? name;
   String? note;
+  String? depends;
   int? seasonId;
   int? termId;
   DateTime? createdAt;
@@ -49,6 +51,7 @@ class ExamDataModel {
     id: json["id"],
     name: json["name"]??'',
     note: json["note"],
+    depends: json["depends"],
     seasonId: json["season_id"],
     termId: json["term_id"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
@@ -60,6 +63,7 @@ class ExamDataModel {
     "id": id,
     "name": name,
     "note": note,
+    "depends": depends,
     "season_id": seasonId,
     "term_id": termId,
     "created_at": "${createdAt!.year.toString().padLeft(4, '0')}-${createdAt!.month.toString().padLeft(2, '0')}-${createdAt!.day.toString().padLeft(2, '0')}",

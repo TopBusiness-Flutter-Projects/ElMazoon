@@ -36,7 +36,7 @@ class UpdateComment extends StatelessWidget {
                           radius: 40,
                           backgroundColor: AppColors.transparent,
                           child: ManageNetworkImage(
-                            imageUrl: cubit.userModel.data!.image,
+                            imageUrl: cubit.userModel!.data!.image,
                             width: 40,
                             height: 40,
                             borderRadius: 40,

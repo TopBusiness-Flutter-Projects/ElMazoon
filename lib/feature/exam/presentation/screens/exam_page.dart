@@ -78,9 +78,10 @@ class _ExamScreenState extends State<ExamScreen> {
       final seconds = myDuration!.inSeconds - reduceSecondsBy;
       if (seconds < 0) {
         countdownTimer!.cancel();
-        context.read<ExamCubit>().endExamtime(    widget.examInstruction.quizMinute -
-            int.parse(minutes), context,widget.examInstruction.exam_type);
-
+        context.read<ExamCubit>().endExamTime(
+            widget.examInstruction.quizMinute - int.parse(minutes),
+            context,
+            widget.examInstruction.exam_type);
       } else {
         myDuration = Duration(seconds: seconds);
       }
@@ -316,22 +317,23 @@ class _ExamScreenState extends State<ExamScreen> {
                                   ),
                                 ),
                           Visibility(
-                              visible: cubit.imagePath[cubit.index].isNotEmpty ||
-                                  cubit.audioPath[cubit.index].isNotEmpty,
-                              child: cubit.imagePath.isNotEmpty
-                                  ? Image.file(
-                                      File(
-                                        cubit.imagePath[cubit.index],
-                                      ),
-                                      width: 140.0,
-                                      height: 140.0,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : AudioPlayer(
-                                      source:cubit.audioPath[cubit.index],
-                                      onDelete: () {},
-                                      type: 'onlyShow',
-                                    )),
+                            visible: cubit.imagePath[cubit.index].isNotEmpty ||
+                                cubit.audioPath[cubit.index].isNotEmpty,
+                            child: cubit.imagePath.isNotEmpty
+                                ? Image.file(
+                                    File(
+                                      cubit.imagePath[cubit.index],
+                                    ),
+                                    width: 140.0,
+                                    height: 140.0,
+                                    fit: BoxFit.cover,
+                                  )
+                                : AudioPlayer(
+                                    source: cubit.audioPath[cubit.index],
+                                    onDelete: () {},
+                                    type: 'onlyShow',
+                                  ),
+                          ),
                           Visibility(
                             visible: cubit.pendinglist.isNotEmpty,
                             child: Padding(
@@ -442,14 +444,12 @@ class _ExamScreenState extends State<ExamScreen> {
     );
   }
 
-  void onEnd() {
-  }
+  void onEnd() {}
 
   @override
   void dispose() {
     super.dispose();
     stopTimer();
-
   }
 
   void checkInternet(ExamCubit cubit) async {
@@ -458,11 +458,9 @@ class _ExamScreenState extends State<ExamScreen> {
     print(result);
     if (result == false) {
       cubit.saveExam(minutes + ":" + seconds);
-    }
-    else{
-       //  Preferences.instance
-         //  .setexam(new ExamAnswerListModel(answers: null, id: 0, time: ''));
-
+    } else {
+      //  Preferences.instance
+      //  .setexam(new ExamAnswerListModel(answers: null, id: 0, time: ''));
     }
   }
 }

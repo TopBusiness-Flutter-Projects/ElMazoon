@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 
 import '../../../core/models/exam_answer_list_model.dart';
+import '../../../core/models/exam_answer_model.dart';
 import '../../../core/models/question_model.dart';
 import '../../../core/models/questiones_data_model.dart';
 import '../../../core/preferences/preferences.dart';
@@ -17,6 +18,7 @@ import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_routes.dart';
 import '../../../core/utils/toast_message_method.dart';
 import '../../exam_degree_detials/cubit/exam_degree_cubit.dart';
+import '../../mainscreens/study_page/cubit/study_page_cubit.dart';
 import '../models/answer_exam_model.dart';
 
 part 'exam_state.dart';
@@ -24,6 +26,9 @@ part 'exam_state.dart';
 class ExamCubit extends Cubit<ExamState> {
   final ServiceApi api;
   int index = 0;
+  int examTypeId = 0;
+  int examVideoIndex = 0;
+  int examSubjectClassIndex = 0;
   List<int> pendinglist = [];
   QuestionData? questionesDataModel;
 
@@ -98,7 +103,7 @@ class ExamCubit extends Cubit<ExamState> {
           ///qu.removeAt(1);
           //qu.insert(1, data);
           //questionesDataModel!.questions=qu;
-          getexamDataFromPrefrence();
+          getExamDataFromPreference();
           // Navigator.pushNamed(context, Routes.examRegisterRoute,arguments: data);
         } else {}
         //data = response.data;
@@ -213,33 +218,78 @@ class ExamCubit extends Cubit<ExamState> {
     print(time);
     createProgressDialog(context, 'wait'.tr());
     var response = await api.answerExam(
-        answerExamModel: answerExamModel!,
-        questionData: questionesDataModel!,
-        time: time,
-        type: type);
+      answerExamModel: answerExamModel!,
+      questionData: questionesDataModel!,
+      time: time,
+      type: type,
+    );
     response.fold(
       (l) => Navigator.of(context).pop(),
       (r) {
         Navigator.of(context).pop();
         if (r.code == 200) {
-          print("dflkfkfk");
           audioPath = [];
           imagePath = [];
           pendinglist = [];
           answerExamModel = AnswerExamModel(answer: [], audio: [], image: []);
-          print(r.code);
           Preferences.instance
               .setexam(new ExamAnswerListModel(answers: null, id: 0, time: ''));
-          context..read<ExamDegreeCubit>().examAnswerModel=r;
-          context..read<ExamDegreeCubit>().getExamDetails(r);
-          Navigator.pushNamed(context, Routes.examdegreeDetialsRoute,
-              arguments: r);
-          // Navigator.pushNamed(
-          //     context,
-          //     Routes.confirmexamRegisterRoute,
-          //
-          //     arguments: r);
-          // //   Navigator.pushNamed(context, Routes.examRegisterRoute,arguments: data);
+
+          if (r.data!.instruction!.exam_type != 'full_exam') {
+            print(
+                '*************************  انا هنااااااااااااا  **********************************');
+            if (r.data!.depends == 'depends') {
+              context
+                ..read<StudyPageCubit>()
+                    .accessNextVideo(
+                  examTypeId,
+                  r.data!.instruction!.exam_type,
+                )
+                    .whenComplete(
+                  () {
+                    context..read<ExamDegreeCubit>().examAnswerModel = r;
+                    context..read<ExamDegreeCubit>().getExamDetails(r);
+                    changeInstructionOfExam(r, context);
+                    Navigator.pushReplacementNamed(
+                      context,
+                      Routes.examdegreeDetialsRoute,
+                      arguments: r,
+                    );
+                  },
+                );
+            } else {
+              changeInstructionOfExam(r, context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+              toastMessage(
+                'لم يتم اعتماد الدرجه',
+                context,
+                color: AppColors.error,
+                duration: 500,
+              );
+            }
+          } else {
+            if (r.data!.depends == 'depends') {
+              context..read<ExamDegreeCubit>().examAnswerModel = r;
+              context..read<ExamDegreeCubit>().getExamDetails(r);
+              changeInstructionOfExam(r, context);
+              Navigator.pushReplacementNamed(
+                context,
+                Routes.examdegreeDetialsRoute,
+                arguments: r,
+              );
+            } else {
+              changeInstructionOfExam(r, context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+              toastMessage(
+                'لم يتم اعتماد الدرجه',
+                context,
+                color: AppColors.error,
+                duration: 500,
+              );
+            }
+          }
         } else {
           toastMessage(
             r.message,
@@ -251,11 +301,47 @@ class ExamCubit extends Cubit<ExamState> {
     );
   }
 
-  Future<void> endExamtime(int time, BuildContext context, String type) async {
+  changeInstructionOfExam(ExamAnswerModel model, context) {
+    if (model.data!.instruction!.exam_type == 'video') {
+      print('###########   video   #########');
+      context
+          .read<StudyPageCubit>()
+          .lessonsDetailsModel!
+          .data
+          .videos[examVideoIndex]
+          .exams
+          .first
+          .instruction = model.data!.instruction;
+    } else if (model.data!.instruction!.exam_type == 'lesson') {
+      print('###########   lesson   #########');
+      context
+          .read<StudyPageCubit>()
+          .lessonsDetailsModel!
+          .data
+          .exams
+          .first
+          .instruction = model.data!.instruction;
+    } else if (model.data!.instruction!.exam_type == 'subject_class') {
+      print('###########   subject_class   #########');
+      print('index @@@@@@  $examSubjectClassIndex');
+      context
+          .read<StudyPageCubit>()
+          .allClassesDatum!
+          .classes[examSubjectClassIndex]
+          .exams
+          .first
+          .instruction = model.data!.instruction;
+    }
+  }
+
+  Future<void> endExamTime(int time, BuildContext context, String type) async {
     createProgressDialog(context, 'wait'.tr());
 
     var response = await api.updateAcessTime(
-        time: time, type: type, exam_id: questionesDataModel!.id!);
+      time: time,
+      type: type,
+      exam_id: questionesDataModel!.id!,
+    );
     response.fold(
       (l) => Navigator.of(context).pop(),
       (r) {
@@ -286,16 +372,12 @@ class ExamCubit extends Cubit<ExamState> {
     );
   }
 
-  void addtextanswer() {
+  void addTextAnswer() {
     questionesDataModel!.questions[index].type = "text";
     questionesDataModel!.questions[index].answer = answerController!.text;
-
-    // print(
-    //     "questionesDataModel!.questions[index].answerquestionesDataModel!.questions[index].answer");
-    // print(questionesDataModel!.questions[index].answer);
   }
 
-  Future<void> getexamDataFromPrefrence() async {
+  Future<void> getExamDataFromPreference() async {
     ExamAnswerListModel examAnswerListModel =
         await Preferences.instance.getExamModel();
     print('dlkdkddkk');
