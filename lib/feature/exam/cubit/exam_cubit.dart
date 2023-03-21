@@ -249,7 +249,7 @@ class ExamCubit extends Cubit<ExamState> {
                   () {
                     context..read<ExamDegreeCubit>().examAnswerModel = r;
                     context..read<ExamDegreeCubit>().getExamDetails(r);
-                    changeInstructionOfExam(r, context);
+                    changeInstructionOfExam(r, context.read<StudyPageCubit>());
                     Navigator.pushReplacementNamed(
                       context,
                       Routes.examdegreeDetialsRoute,
@@ -258,7 +258,7 @@ class ExamCubit extends Cubit<ExamState> {
                   },
                 );
             } else {
-              changeInstructionOfExam(r, context);
+              changeInstructionOfExam(r, context.read<StudyPageCubit>());
               Navigator.pop(context);
               Navigator.pop(context);
               toastMessage(
@@ -272,14 +272,14 @@ class ExamCubit extends Cubit<ExamState> {
             if (r.data!.depends == 'depends') {
               context..read<ExamDegreeCubit>().examAnswerModel = r;
               context..read<ExamDegreeCubit>().getExamDetails(r);
-              changeInstructionOfExam(r, context);
+              changeInstructionOfExam(r, context.read<StudyPageCubit>());
               Navigator.pushReplacementNamed(
                 context,
                 Routes.examdegreeDetialsRoute,
                 arguments: r,
               );
             } else {
-              changeInstructionOfExam(r, context);
+              changeInstructionOfExam(r, context.read<StudyPageCubit>());
               Navigator.pop(context);
               Navigator.pop(context);
               toastMessage(
@@ -301,35 +301,19 @@ class ExamCubit extends Cubit<ExamState> {
     );
   }
 
-  changeInstructionOfExam(ExamAnswerModel model, context) {
+  changeInstructionOfExam(ExamAnswerModel model, StudyPageCubit cubit) {
     if (model.data!.instruction!.exam_type == 'video') {
       print('###########   video   #########');
-      context
-          .read<StudyPageCubit>()
-          .lessonsDetailsModel!
-          .data
-          .videos[examVideoIndex]
-          .exams
-          .first
+      cubit.lessonsDetailsModel!.data.videos[examVideoIndex].exams.first
           .instruction = model.data!.instruction;
     } else if (model.data!.instruction!.exam_type == 'lesson') {
       print('###########   lesson   #########');
-      context
-          .read<StudyPageCubit>()
-          .lessonsDetailsModel!
-          .data
-          .exams
-          .first
-          .instruction = model.data!.instruction;
+      cubit.lessonsDetailsModel!.data.exams.first.instruction =
+          model.data!.instruction;
     } else if (model.data!.instruction!.exam_type == 'subject_class') {
       print('###########   subject_class   #########');
       print('index @@@@@@  $examSubjectClassIndex');
-      context
-          .read<StudyPageCubit>()
-          .allClassesDatum!
-          .classes[examSubjectClassIndex]
-          .exams
-          .first
+      cubit.allClassesDatum!.classes[examSubjectClassIndex].exams.first
           .instruction = model.data!.instruction;
     }
   }
