@@ -18,6 +18,7 @@ import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_routes.dart';
 import '../../../core/utils/toast_message_method.dart';
 import '../../exam_degree_detials/cubit/exam_degree_cubit.dart';
+import '../../mainscreens/homePage/cubit/home_page_cubit.dart';
 import '../../mainscreens/study_page/cubit/study_page_cubit.dart';
 import '../models/answer_exam_model.dart';
 
@@ -26,11 +27,15 @@ part 'exam_state.dart';
 class ExamCubit extends Cubit<ExamState> {
   final ServiceApi api;
   int index = 0;
+  int pendingNumberIndex = 0;
   int examTypeId = 0;
   int examVideoIndex = 0;
   int examSubjectClassIndex = 0;
-  List<int> pendinglist = [];
-  QuestionData? questionesDataModel;
+  List<int> pendingList = [];
+  List<int> pendingListNumber = [];
+  QuestionData? questionsDataModel;
+  var minute = "0";
+  var second = "0";
 
   AnswerExamModel? answerExamModel;
 
@@ -45,10 +50,10 @@ class ExamCubit extends Cubit<ExamState> {
   List<String> audioPath = [];
 
   ExamCubit(this.api) : super(ExamInitial()) {
-    questionesDataModel = QuestionData();
+    questionsDataModel = QuestionData();
     audioPath = [];
     imagePath = [];
-    pendinglist = [];
+    pendingList = [];
     answerExamModel = AnswerExamModel(answer: [], audio: [], image: []);
     answerController = TextEditingController();
     index = 0;
@@ -87,9 +92,9 @@ class ExamCubit extends Cubit<ExamState> {
       (error) => {},
       (response) {
         if (response.code == 200) {
-          questionesDataModel = response.data!;
+          questionsDataModel = response.data!;
           index = 0;
-          for (int i = 0; i < questionesDataModel!.questions.length; i++) {
+          for (int i = 0; i < questionsDataModel!.questions.length; i++) {
             answerExamModel!.answer.add("");
             answerExamModel!.audio.add("");
             answerExamModel!.image.add("");
@@ -112,23 +117,21 @@ class ExamCubit extends Cubit<ExamState> {
     );
   }
 
-  void updateindex(int index) {
-    if (pendinglist.contains(questionesDataModel!.questions[this.index].id!)) {
-      //  pendinglist.add(questionesDataModel!.questions[index].id!);
-      List<Questions> qu = questionesDataModel!.questions;
+  void updateIndex(int index) {
+    if (pendingList.contains(questionsDataModel!.questions[this.index].id!)) {
+      List<Questions> qu = questionsDataModel!.questions;
       Questions data = qu.elementAt(this.index);
       data.status = 'pending';
       qu.removeAt(this.index);
       qu.insert(this.index, data);
-      questionesDataModel!.questions = qu;
+      questionsDataModel!.questions = qu;
     }
-
     this.index = index;
     emit(Questionupdate());
   }
 
-  void updateSelectAnswer(int index, int index2) {
-    List<Answers>? answers = questionesDataModel!.questions[index].answers;
+  void updateSelectAnswer(int index2) {
+    List<Answers>? answers = questionsDataModel!.questions[index].answers;
     for (int i = 0; i < answers!.length; i++) {
       if (index2 == i) {
         answers[i].status = 'select';
@@ -139,25 +142,62 @@ class ExamCubit extends Cubit<ExamState> {
     emit(Questionupdate());
   }
 
-  void postponeQuestion(int index) {
-    if (!pendinglist.contains(questionesDataModel!.questions[index].id!)) {
-      pendinglist.add(questionesDataModel!.questions[index].id!);
+  void postponeQuestion(int index, String type) {
+    questionsDataModel!.questions[index].status = 'pending';
+
+    if (!pendingList.contains(questionsDataModel!.questions[index].id!)) {
+      pendingList.add(questionsDataModel!.questions[index].id!);
+      pendingNumberIndex = index;
+      pendingNumberIndex = pendingNumberIndex + 1;
+      pendingListNumber.add(pendingNumberIndex);
     }
-    List<Questions> qu = questionesDataModel!.questions;
-    Questions data = qu.elementAt(index);
-    data.status = 'pending';
-    qu.removeAt(index);
-    qu.insert(index, data);
-    questionesDataModel!.questions = qu;
+
+    if (type == 'choice') {
+      List<Answers>? answers = questionsDataModel!.questions[index].answers;
+      for (int i = 0; i < answers!.length; i++) {
+        if (answers[i].status == 'select') {
+          answerExamModel!.answer.removeAt(index);
+          answerExamModel!.answer.insert(index, '');
+        }
+      }
+    } else {
+      if (type == 'audio') {
+        answerExamModel!.answer.removeAt(index);
+        answerExamModel!.answer.insert(index, "");
+        answerExamModel!.image.removeAt(index);
+        answerExamModel!.image.insert(index, "");
+        answerExamModel!.audio.removeAt(index);
+        answerExamModel!.audio.insert(index, '');
+      } else if (type == 'image') {
+        answerExamModel!.answer.removeAt(index);
+        answerExamModel!.answer.insert(index, "");
+        answerExamModel!.audio.removeAt(index);
+        answerExamModel!.audio.insert(index, "");
+        answerExamModel!.image.removeAt(index);
+        answerExamModel!.image.insert(index, '');
+      } else {
+        answerExamModel!.audio.removeAt(index);
+        answerExamModel!.audio.insert(index, '');
+        answerExamModel!.image.removeAt(index);
+        answerExamModel!.image.insert(index, '');
+        answerExamModel!.answer.removeAt(index);
+        answerExamModel!.answer.insert(index, '');
+      }
+    }
+
     emit(Questionupdate());
   }
 
   void answerQuestion(int index, String type) {
-    if (pendinglist.contains(questionesDataModel!.questions[index].id)) {
-      pendinglist.remove(questionesDataModel!.questions[index].id);
+    questionsDataModel!.questions[index].status = 'answered';
+    if (pendingList.contains(questionsDataModel!.questions[index].id)) {
+      pendingList.remove(questionsDataModel!.questions[index].id);
+      pendingNumberIndex = index;
+      pendingNumberIndex = pendingNumberIndex + 1;
+      pendingListNumber.remove(pendingNumberIndex);
     }
     if (type == 'choice') {
-      List<Answers>? answers = questionesDataModel!.questions[index].answers;
+      List<Answers>? answers = questionsDataModel!.questions[index].answers;
       for (int i = 0; i < answers!.length; i++) {
         if (answers[i].status == 'select') {
           answerExamModel!.answer.removeAt(index);
@@ -165,49 +205,45 @@ class ExamCubit extends Cubit<ExamState> {
         }
       }
     } else {
-      print('dldldll');
-      print(type);
       if (type == 'audio') {
         answerExamModel!.answer.removeAt(index);
         answerExamModel!.answer.insert(index, "");
         answerExamModel!.image.removeAt(index);
         answerExamModel!.image.insert(index, "");
-
         answerExamModel!.audio.removeAt(index);
         answerExamModel!.audio
-            .insert(index, questionesDataModel!.questions[index].answer);
+            .insert(index, questionsDataModel!.questions[index].answer);
       } else if (type == 'image') {
         answerExamModel!.answer.removeAt(index);
         answerExamModel!.answer.insert(index, "");
         answerExamModel!.audio.removeAt(index);
         answerExamModel!.audio.insert(index, "");
         answerExamModel!.image.removeAt(index);
-
         answerExamModel!.image
-            .insert(index, questionesDataModel!.questions[index].answer);
+            .insert(index, questionsDataModel!.questions[index].answer);
       } else {
         answerExamModel!.audio.removeAt(index);
         answerExamModel!.audio.insert(index, '');
         answerExamModel!.image.removeAt(index);
         answerExamModel!.image.insert(index, '');
         answerExamModel!.answer.removeAt(index);
-
         answerExamModel!.answer
-            .insert(index, questionesDataModel!.questions[index].answer);
+            .insert(index, questionsDataModel!.questions[index].answer);
       }
     }
+    emit(Questionupdate());
   }
 
-  void addanswer(String s) {
+  void addAnswer(String s) {
     answerController!.text = '';
-    questionesDataModel!.questions[index].type = s;
+    questionsDataModel!.questions[index].type = s;
 
     if (s == 'audio') {
       imagePath[index] = "";
-      questionesDataModel!.questions[index].answer = audioPath[index];
+      questionsDataModel!.questions[index].answer = audioPath[index];
     } else {
       audioPath[index] = "";
-      questionesDataModel!.questions[index].answer = imagePath[index];
+      questionsDataModel!.questions[index].answer = imagePath[index];
     }
   }
 
@@ -219,7 +255,7 @@ class ExamCubit extends Cubit<ExamState> {
     createProgressDialog(context, 'wait'.tr());
     var response = await api.answerExam(
       answerExamModel: answerExamModel!,
-      questionData: questionesDataModel!,
+      questionData: questionsDataModel!,
       time: time,
       type: type,
     );
@@ -230,7 +266,7 @@ class ExamCubit extends Cubit<ExamState> {
         if (r.code == 200) {
           audioPath = [];
           imagePath = [];
-          pendinglist = [];
+          pendingList = [];
           answerExamModel = AnswerExamModel(answer: [], audio: [], image: []);
           Preferences.instance
               .setexam(new ExamAnswerListModel(answers: null, id: 0, time: ''));
@@ -244,12 +280,22 @@ class ExamCubit extends Cubit<ExamState> {
                     .accessNextVideo(
                   examTypeId,
                   r.data!.instruction!.exam_type,
+                  context,
                 )
                     .whenComplete(
                   () {
                     context..read<ExamDegreeCubit>().examAnswerModel = r;
                     context..read<ExamDegreeCubit>().getExamDetails(r);
-                    changeInstructionOfExam(r, context.read<StudyPageCubit>());
+                    changeInstructionOfExam(
+                      r,
+                      context.read<StudyPageCubit>(),
+                      context.read<HomePageCubit>(),
+                    );
+                    type == 'lesson'
+                        ? Navigator.pop(context)
+                        : type == 'subject_class'
+                            ? Navigator.pop(context)
+                            : null;
                     Navigator.pushReplacementNamed(
                       context,
                       Routes.examdegreeDetialsRoute,
@@ -258,11 +304,15 @@ class ExamCubit extends Cubit<ExamState> {
                   },
                 );
             } else {
-              changeInstructionOfExam(r, context.read<StudyPageCubit>());
+              changeInstructionOfExam(
+                r,
+                context.read<StudyPageCubit>(),
+                context.read<HomePageCubit>(),
+              );
               Navigator.pop(context);
               Navigator.pop(context);
               toastMessage(
-                'لم يتم اعتماد الدرجه',
+                'not_depended'.tr(),
                 context,
                 color: AppColors.error,
                 duration: 500,
@@ -272,18 +322,26 @@ class ExamCubit extends Cubit<ExamState> {
             if (r.data!.depends == 'depends') {
               context..read<ExamDegreeCubit>().examAnswerModel = r;
               context..read<ExamDegreeCubit>().getExamDetails(r);
-              changeInstructionOfExam(r, context.read<StudyPageCubit>());
+              changeInstructionOfExam(
+                r,
+                context.read<StudyPageCubit>(),
+                context.read<HomePageCubit>(),
+              );
               Navigator.pushReplacementNamed(
                 context,
                 Routes.examdegreeDetialsRoute,
                 arguments: r,
               );
             } else {
-              changeInstructionOfExam(r, context.read<StudyPageCubit>());
+              changeInstructionOfExam(
+                r,
+                context.read<StudyPageCubit>(),
+                context.read<HomePageCubit>(),
+              );
               Navigator.pop(context);
               Navigator.pop(context);
               toastMessage(
-                'لم يتم اعتماد الدرجه',
+                'not_depended'.tr(),
                 context,
                 color: AppColors.error,
                 duration: 500,
@@ -301,7 +359,8 @@ class ExamCubit extends Cubit<ExamState> {
     );
   }
 
-  changeInstructionOfExam(ExamAnswerModel model, StudyPageCubit cubit) {
+  changeInstructionOfExam(
+      ExamAnswerModel model, StudyPageCubit cubit, HomePageCubit homeCubit) {
     if (model.data!.instruction!.exam_type == 'video') {
       print('###########   video   #########');
       cubit.lessonsDetailsModel!.data.videos[examVideoIndex].exams.first
@@ -310,11 +369,16 @@ class ExamCubit extends Cubit<ExamState> {
       print('###########   lesson   #########');
       cubit.lessonsDetailsModel!.data.exams.first.instruction =
           model.data!.instruction;
+      homeCubit.getHomePageData();
+      cubit.getAllClasses();
     } else if (model.data!.instruction!.exam_type == 'subject_class') {
       print('###########   subject_class   #########');
-      print('index @@@@@@  $examSubjectClassIndex');
       cubit.allClassesDatum!.classes[examSubjectClassIndex].exams.first
           .instruction = model.data!.instruction;
+      homeCubit.classes[examSubjectClassIndex].exams.first.instruction =
+          model.data!.instruction;
+      homeCubit.getHomePageData();
+      cubit.getAllClasses();
     }
   }
 
@@ -324,7 +388,7 @@ class ExamCubit extends Cubit<ExamState> {
     var response = await api.updateAcessTime(
       time: time,
       type: type,
-      exam_id: questionesDataModel!.id!,
+      exam_id: questionsDataModel!.id!,
     );
     response.fold(
       (l) => Navigator.of(context).pop(),
@@ -335,16 +399,10 @@ class ExamCubit extends Cubit<ExamState> {
               .setexam(new ExamAnswerListModel(answers: null, id: 0, time: ''));
           Navigator.of(context).pop();
           toastMessage(
-            'لقد نفذ وقت المحاوله فى الامتحان',
+            'time_out'.tr(),
             context,
             color: AppColors.error,
           );
-          // Navigator.pushNamed(
-          //     context,
-          //     Routes.confirmexamRegisterRoute,
-          //
-          //     arguments: r);
-          // //   Navigator.pushNamed(context, Routes.examRegisterRoute,arguments: data);
         } else {
           toastMessage(
             r.message,
@@ -357,8 +415,8 @@ class ExamCubit extends Cubit<ExamState> {
   }
 
   void addTextAnswer() {
-    questionesDataModel!.questions[index].type = "text";
-    questionesDataModel!.questions[index].answer = answerController!.text;
+    questionsDataModel!.questions[index].type = "text";
+    questionsDataModel!.questions[index].answer = answerController!.text;
   }
 
   Future<void> getExamDataFromPreference() async {
@@ -366,8 +424,8 @@ class ExamCubit extends Cubit<ExamState> {
         await Preferences.instance.getExamModel();
     print('dlkdkddkk');
     print(examAnswerListModel.id);
-    print(questionesDataModel!.id);
-    if (examAnswerListModel.id == questionesDataModel!.id) {
+    print(questionsDataModel!.id);
+    if (examAnswerListModel.id == questionsDataModel!.id) {
       print('dlkdkddkk');
       print(examAnswerListModel.answers!.answer);
       answerExamModel = examAnswerListModel.answers;
@@ -376,8 +434,8 @@ class ExamCubit extends Cubit<ExamState> {
       print(minutes);
       print(seconed);
       // questionesDataModel.quizMinute=examAnswerListModel.
-      for (int i = 0; i < questionesDataModel!.questions.length; i++) {
-        List<Answers>? answers = questionesDataModel!.questions[i].answers;
+      for (int i = 0; i < questionsDataModel!.questions.length; i++) {
+        List<Answers>? answers = questionsDataModel!.questions[i].answers;
         if (answers!.length > 0) {
           for (int j = 0; j < answers.length; j++) {
             print('dlkssssdkddkk');
@@ -390,7 +448,7 @@ class ExamCubit extends Cubit<ExamState> {
               index = i;
             }
           }
-          questionesDataModel!.questions[i].answers = answers;
+          questionsDataModel!.questions[i].answers = answers;
         } else {
           audioPath[i] = answerExamModel!.audio.elementAt(i);
           imagePath[i] = answerExamModel!.image.elementAt(i);
@@ -413,7 +471,7 @@ class ExamCubit extends Cubit<ExamState> {
         await Preferences.instance.getExamModel();
     if (examAnswerListModel.id == 0) {
       ExamAnswerListModel examAnswerListModel = ExamAnswerListModel(
-          answers: answerExamModel, id: questionesDataModel!.id!, time: s);
+          answers: answerExamModel, id: questionsDataModel!.id!, time: s);
       Preferences.instance.setexam(examAnswerListModel);
     }
   }

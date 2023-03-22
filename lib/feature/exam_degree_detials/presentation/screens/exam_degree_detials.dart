@@ -62,6 +62,7 @@ class _ExamDegreePageState extends State<ExamDegreePage> {
                 title: 'exam_details'.tr(),
                 subtitle: cubit.degreeDetails!.details!.name!,
               ),
+              leading: SizedBox(),
               flexibleSpace: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/widgets/show_loading_indicator.dart';
 import 'package:elmazoon/feature/exam/cubit/exam_cubit.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/utils/assets_manager.dart';
+import '../../../../core/utils/toast_message_method.dart';
 import '../../../../core/widgets/container_with_two_color_widget.dart';
 import 'full_exam/stucture_of_exam.dart';
 
@@ -133,22 +135,31 @@ class _StudyPageState extends State<StudyPage> with TickerProviderStateMixin {
                                             (BuildContext context, int index) {
                                           return InkWell(
                                             onTap: () {
-                                              print('index @@@@@@  $index');
-                                              context
-                                                      .read<ExamCubit>()
-                                                      .examSubjectClassIndex =
-                                                  index;
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ClassNameScreen(
-                                                    model: cubit
-                                                        .allClassesDatum!
-                                                        .classes[index],
+                                              if (cubit.allClassesDatum!
+                                                      .classes[index].status ==
+                                                  'lock') {
+                                                toastMessage(
+                                                  'open_class'.tr(),
+                                                  context,
+                                                  color: AppColors.error,
+                                                );
+                                              } else {
+                                                context
+                                                        .read<ExamCubit>()
+                                                        .examSubjectClassIndex =
+                                                    index;
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ClassNameScreen(
+                                                      model: cubit
+                                                          .allClassesDatum!
+                                                          .classes[index],
+                                                    ),
                                                   ),
-                                                ),
-                                              );
+                                                );
+                                              }
                                             },
                                             child: ContainerWithTwoColorWidget(
                                               title: cubit.allClassesDatum!

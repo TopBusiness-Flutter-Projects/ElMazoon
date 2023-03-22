@@ -124,7 +124,13 @@
  "no_order": "No Order ",
  "downloads_videos":"Downloads Videos",
  "card_info": "Card Information",
- "done": "Done"
+ "done": "Done",
+ "last_question": "You are in the last Question",
+ "not_depended": "Degree didn't Depended",
+ "time_out": "Time Out",
+ "open_class": "Please End The Previous Class First !!!",
+ "open_lesson": "Please End The Previous Lesson First !!!",
+ "open_video": "Please End The Previous Video First !!!"
 
 
 

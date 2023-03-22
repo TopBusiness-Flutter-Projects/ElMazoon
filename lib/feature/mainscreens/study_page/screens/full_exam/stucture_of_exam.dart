@@ -126,10 +126,10 @@ class ExamInstruction extends StatelessWidget {
   }
 
   void onClickStart(context,ExamCubit cubit) async {
-    if (cubit.questionesDataModel!.questions.length > 0) {
+    if (cubit.questionsDataModel!.questions.length > 0) {
       cubit.getExam(examInstruction.id, examInstruction.exam_type);
       cubit.answerController!.text = '';
-      cubit.questionesDataModel = QuestionData();
+      cubit.questionsDataModel = QuestionData();
       cubit.index = 0;
     }
 

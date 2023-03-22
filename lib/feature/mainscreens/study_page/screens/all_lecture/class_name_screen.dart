@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/widgets/show_loading_indicator.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/utils/assets_manager.dart';
+import '../../../../../core/utils/toast_message_method.dart';
 import '../../models/all_classes_model.dart';
 import '../../widgets/container_color_title_widget.dart';
 import '../full_exam/stucture_of_exam.dart';
@@ -52,15 +54,23 @@ class _ClassNameScreenState extends State<ClassNameScreen> {
                       widget.model.lessons.length,
                       (index) => InkWell(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => StructureDetailsScreen(
-                                titleOfPage: 'lesson',
-                                model: widget.model.lessons[index],
+                          if (widget.model.lessons[index].status == 'lock') {
+                            toastMessage(
+                              'open_lesson'.tr(),
+                              context,
+                              color: AppColors.error,
+                            );
+                          }else{
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StructureDetailsScreen(
+                                  titleOfPage: 'lesson',
+                                  model: widget.model.lessons[index],
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          }
                         },
                         child: ContainerColorTitleWidget(
                           lesson: widget.model.lessons[index],

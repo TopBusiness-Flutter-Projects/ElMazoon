@@ -124,7 +124,7 @@ class _StructureDetailsScreenState extends State<StructureDetailsScreen> {
                       }
                     } else {
                       toastMessage(
-                        'Please Watch The Previous Video First',
+                        'open_video'.tr(),
                         context,
                         color: AppColors.error,
                       );

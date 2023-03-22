@@ -59,6 +59,7 @@ class ClassLessons {
     required this.id,
     required this.name,
     required this.image,
+    required this.status,
     required this.lessons,
     required this.exams,
     required this.createdAt,
@@ -68,6 +69,7 @@ class ClassLessons {
   int id;
   String name;
   String image;
+  String status;
   List<Lesson> lessons;
   List<FullExam> exams;
   DateTime createdAt;
@@ -77,6 +79,7 @@ class ClassLessons {
     id: json["id"],
     name: json["name"],
     image: json["image"],
+    status: json["status"],
     lessons: List<Lesson>.from(json["lessons"].map((x) => Lesson.fromJson(x))),
     exams: List<FullExam>.from(json["exams"].map((x) => FullExam.fromJson(x))),
     createdAt: DateTime.parse(json["created_at"]),
@@ -87,6 +90,7 @@ class ClassLessons {
     "id": id,
     "name": name,
     "image": image,
+    "status": status,
     "lessons": List<dynamic>.from(lessons.map((x) => x.toJson())),
     "exams": List<dynamic>.from(exams.map((x) => x.toJson())),
     "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
@@ -100,6 +104,7 @@ class Lesson {
     required this.id,
     required this.name,
     required this.note,
+    required this.status,
     required this.videosCount,
     required this.videosTime,
     required this.createdAt,
@@ -109,6 +114,7 @@ class Lesson {
   int id;
   String name;
   String note;
+  String status;
   int videosCount;
   int videosTime;
   DateTime createdAt;
@@ -117,6 +123,7 @@ class Lesson {
   factory Lesson.fromJson(Map<String, dynamic> json) => Lesson(
     id: json["id"],
     name: json["name"],
+    status: json["status"],
     note: json["note"],
     videosCount: json["videos_count"],
     videosTime: json["videos_time"],
@@ -128,6 +135,7 @@ class Lesson {
     "id": id,
     "name": name,
     "note": note,
+    "status": status,
     "videos_count": videosCount,
     "videos_time": videosTime,
     "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
@@ -141,6 +149,7 @@ class FullExam {
     required this.name,
     required this.note,
     required this.image,
+    // required this.status,
     required this.createdAt,
     required this.updatedAt,
     this.instruction,
@@ -150,6 +159,7 @@ class FullExam {
   String name;
   String note;
   String image;
+  // String status;/
   DateTime createdAt;
   DateTime updatedAt;
   Instruction? instruction;
@@ -158,6 +168,7 @@ class FullExam {
     id: json["id"],
     name: json["name"],
     note: json["note"],
+    // status: json["status"],
     image: json["image"]??'https://elmazone.topbusiness.io/classes/default/p.png',
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
@@ -169,6 +180,7 @@ class FullExam {
     "name": name,
     "note": note,
     "image": image,
+    // "status": status,
     "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
     "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",
     "instruction": instruction?.toJson(),

@@ -118,6 +118,36 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
+                                                widget.commentDatum.user!.id ==
+                                                    cubit.userModel!.data!.id
+                                                    ? Opacity(
+                                                      opacity: 0,
+                                                      child: Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                                  children: [
+                                                      PopupMenuButton<int>(
+                                                        enabled: false,
+                                                        itemBuilder:
+                                                            (BuildContext context) =>
+                                                        <PopupMenuItem<int>>[
+
+                                                        ],
+                                                        onSelected: (int value) {
+
+                                                        },
+                                                        padding: EdgeInsets.all(0),
+                                                        child: Icon(
+                                                          Icons.more_vert,
+                                                          color:
+                                                          AppColors.secondPrimary,
+                                                        ),
+                                                        splashRadius: 25,
+                                                      ),
+                                                  ],
+                                                ),
+                                                    )
+                                                    : SizedBox(),
                                                 Row(
                                                   children: [
                                                     Expanded(

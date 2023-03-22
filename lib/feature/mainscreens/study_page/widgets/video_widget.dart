@@ -1,4 +1,5 @@
 import 'package:chewie/chewie.dart';
+import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,13 +87,13 @@ class _VideoWidgetState extends State<VideoWidget> {
             Positioned(
                 top: 0,
                 right: 0,
-
+                left: 0,
                 child:
             InkWell(
                 onTap: () {
                   context.read<StudyPageCubit>().getPermission(widget.videoLink);
                 },
-                child: Icon(Icons.download))
+                child: Icon(Icons.download,color: AppColors.white,))
             )
       ])
 

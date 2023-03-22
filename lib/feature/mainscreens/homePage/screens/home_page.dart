@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
+import 'package:elmazoon/core/utils/toast_message_method.dart';
 import 'package:elmazoon/feature/mainscreens/homePage/cubit/home_page_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,28 +82,33 @@ class HomePage extends StatelessWidget {
                                 crossAxisSpacing: 25,
                                 crossAxisCount: 2,
                               ),
-                              itemCount: state.model.data.classes.length,
+                              itemCount: cubit.classes.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return InkWell(
                                   onTap: () {
-                                    print('index @@@@@@  $index');
-                                    context
-                                        .read<ExamCubit>()
-                                        .examSubjectClassIndex = index;
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ClassNameScreen(
-                                          model:
-                                              state.model.data.classes[index],
+                                    if (cubit.classes[index].status == 'lock') {
+                                      toastMessage(
+                                        'open_class'.tr(),
+                                        context,
+                                        color: AppColors.error,
+                                      );
+                                    } else {
+                                      context
+                                          .read<ExamCubit>()
+                                          .examSubjectClassIndex = index;
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ClassNameScreen(
+                                            model: cubit.classes[index],
+                                          ),
                                         ),
-                                      ),
-                                    );
+                                      );
+                                    }
                                   },
                                   child: ContainerWithTwoColorWidget(
-                                    title: state.model.data.classes[index].name,
-                                    imagePath:
-                                        state.model.data.classes[index].image,
+                                    title: cubit.classes[index].name,
+                                    imagePath: cubit.classes[index].image,
                                     color1: AppColors.blueColor1,
                                     color2: AppColors.blueColor2,
                                     textColor: AppColors.secondPrimary,

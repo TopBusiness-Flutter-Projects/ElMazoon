@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:elmazoon/core/models/user_model.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
+import 'package:elmazoon/feature/mainscreens/homePage/cubit/home_page_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -174,12 +175,17 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     );
   }
 
-  Future<void> accessNextVideo(int id,String type) async {
+  Future<void> accessNextVideo(int id,String type,context) async {
     emit(StudyPageAccessFirstVideoLoading());
     final response = await api.openNextVideo(id: id,type: type);
     response.fold(
       (l) => emit(StudyPageAccessFirstVideoError()),
-      (r) => emit(StudyPageAccessFirstVideoLoaded()),
+      (res) {
+        if(type=='lesson'){
+          Navigator.pop(context);
+        }
+        emit(StudyPageAccessFirstVideoLoaded());
+      },
     );
   }
 

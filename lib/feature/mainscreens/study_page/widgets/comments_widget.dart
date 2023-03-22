@@ -3,6 +3,7 @@ import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/utils/toast_message_method.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/widgets/replies_screen.dart';
+import 'package:elmazoon/feature/mainscreens/study_page/widgets/update_comment_widgte.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -131,6 +132,16 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                                   if (value == 1) {
                                                     print(
                                                       '******** $value *********',
+                                                    );
+
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            UpdateComment(
+                                                          type: 'comment',
+                                                        ),
+                                                      ),
                                                     );
                                                   }
                                                   if (value == 2) {

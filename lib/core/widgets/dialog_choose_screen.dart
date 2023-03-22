@@ -76,7 +76,7 @@ class _RecordWidgetState extends State<RecordWidget> {
                           ? TextButton(
                         onPressed: () {
 
-                            cubit.addanswer( 'audio');
+                            cubit.addAnswer( 'audio');
 
                           Navigator.pop(context);
                         },
@@ -146,7 +146,7 @@ class _RecordWidgetState extends State<RecordWidget> {
                           ? TextButton(
                         onPressed: (){
 
-                            cubit.addanswer( 'image');
+                            cubit.addAnswer( 'image');
 
                           Navigator.pop(context);
                         },

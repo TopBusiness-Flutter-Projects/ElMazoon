@@ -49,7 +49,7 @@ class _BannerWidgetState extends State<BannerWidget> {
                       // await launchUrl(Uri.parse(url));
                     },
                     child: ManageNetworkImage(
-                      imageUrl: i.image,
+                      imageUrl: i.file,
                       borderRadius: 0,
                       width: double.infinity,
                     ),
