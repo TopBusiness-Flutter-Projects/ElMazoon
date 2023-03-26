@@ -14,6 +14,8 @@ class EndPoints {
   static const String degreeDetialsUrl = '${baseUrl}exam-degree/details';
   static const String commentByLessonUrl = '${baseUrl}lesson/video/comments/';
   static const String addCommentUrl = '${baseUrl}lesson/video/add-comment/';
+  static const String updateCommentUrl = '${baseUrl}video/comment/update/';
+  static const String updateReplyUrl = '${baseUrl}video/replay/update/';
   static const String deleteCommentUrl = '${baseUrl}video/comment/delete/';
   static const String deleteReplayUrl = '${baseUrl}video/replay/delete/';
   static const String addReplyUrl = '${baseUrl}lesson/comment/add-replay/';

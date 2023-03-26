@@ -6,7 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoWidget extends StatefulWidget {
-  const VideoWidget({Key? key, required this.videoLink, required this.videoId}) : super(key: key);
+  const VideoWidget({Key? key, required this.videoLink, required this.videoId})
+      : super(key: key);
   final String videoLink;
   final int videoId;
 
@@ -55,7 +56,6 @@ class _VideoWidgetState extends State<VideoWidget> {
       controlsSafeAreaMinimum: EdgeInsets.zero,
       looping: false,
       hideControlsTimer: const Duration(seconds: 3),
-
     );
   }
 
@@ -73,30 +73,7 @@ class _VideoWidgetState extends State<VideoWidget> {
       width: double.infinity,
       child: _chewieController != null &&
               _chewieController!.videoPlayerController.value.isInitialized
-          ?
-      Stack(
-          children: [
-
-      Positioned(
-        bottom: 0,
-        right: 0,
-        left: 0,
-      top: 0,
-      child: Chewie(controller: _chewieController!))
-            ,
-            Positioned(
-                top: 0,
-                right: 0,
-                left: 0,
-                child:
-            InkWell(
-                onTap: () {
-                  context.read<StudyPageCubit>().getPermission(widget.videoLink);
-                },
-                child: Icon(Icons.download,color: AppColors.white,))
-            )
-      ])
-
+          ? Chewie(controller: _chewieController!)
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

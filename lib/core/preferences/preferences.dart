@@ -13,15 +13,25 @@ class Preferences {
 
   factory Preferences() => instance;
 
-  Future<void> setFirstInstall() async {
+  Future<void> saveDownloadPaths(String path) async {
+    List<String> paths = await getSavedDownloadPaths();
+    paths.add(path);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('onBoarding', 'Done');
+    prefs.setStringList('savedDownloadPaths', paths);
   }
 
-  Future<String?> getFirstInstall() async {
+  Future<List<String>> getSavedDownloadPaths() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jsonData = prefs.getString('onBoarding');
-    return jsonData;
+    return prefs.getStringList('savedDownloadPaths') ?? [];
+  }
+
+  Future<bool> searchOnSavedDownloadPaths(String path) async {
+    List<String> paths = await getSavedDownloadPaths();
+    if (paths.contains(path) == true) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<void> setUser(UserModel userModel) async {
@@ -48,6 +58,7 @@ class Preferences {
     }
     return userModel;
   }
+
   Future<void> setexam(ExamAnswerListModel examAnswerListModel) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(
@@ -87,5 +98,4 @@ class Preferences {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(AppStrings.locale, local);
   }
-
 }

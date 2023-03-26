@@ -214,6 +214,33 @@ class ServiceApi {
     }
   }
 
+  Future<Either<Failure, OneComment>> updateCommentAndReply(
+    int commentId,
+    String type,
+    String comment,
+  ) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.post(
+        type == 'comment'
+            ? EndPoints.updateCommentUrl + commentId.toString()
+            : EndPoints.updateReplyUrl + commentId.toString(),
+        body: {
+          'type': 'text',
+          'comment': comment,
+        },
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+          },
+        ),
+      );
+      return Right(OneComment.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
   Future<Either<Failure, StatusResponse>> deleteComment(int commentId) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     try {
@@ -367,7 +394,7 @@ class ServiceApi {
   }
 
   Future<Either<Failure, StatusResponse>> openNextVideo(
-      {required String type,required int id}) async {
+      {required String type, required int id}) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     try {
       final response = await dio.post(

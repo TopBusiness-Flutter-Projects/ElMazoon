@@ -43,7 +43,6 @@ class _NavigatorBarState extends State<NavigatorBar> {
             Navigator.pushNamed(context, Routes.downloadsRoute);
           },
           child: Container(
-
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(ImageAssets.appBarImage),
@@ -190,49 +189,49 @@ class _NavigatorBarState extends State<NavigatorBar> {
       );
     } else if (_page == 2) {
       return BlocBuilder<NavigationCubit, NavigationState>(
-  builder: (context, state) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'hello'.tr(),
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppColors.white,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'hello'.tr(),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: AppColors.white,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    context.read<NavigationCubit>().userModel != null
+                        ? context.read<NavigationCubit>().userModel!.data!.name
+                        : '',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: 8),
-              Text(
-                context.read<NavigationCubit>().userModel != null
-                    ? context.read<NavigationCubit>().userModel!.data!.name
-                    : '',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Text(
+                  'home_page'.tr(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-              'home_page'.tr(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
+          );
+        },
       );
-  },
-);
     } else if (_page == 3) {
       return Column(
         children: [

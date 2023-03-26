@@ -363,7 +363,7 @@ class ExamCubit extends Cubit<ExamState> {
       ExamAnswerModel model, StudyPageCubit cubit, HomePageCubit homeCubit) {
     if (model.data!.instruction!.exam_type == 'video') {
       print('###########   video   #########');
-      cubit.lessonsDetailsModel!.data.videos[examVideoIndex].exams.first
+      cubit.lessonsDetailsModel!.data.videos[examVideoIndex].exams!.first
           .instruction = model.data!.instruction;
     } else if (model.data!.instruction!.exam_type == 'lesson') {
       print('###########   lesson   #########');

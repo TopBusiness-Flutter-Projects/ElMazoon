@@ -140,6 +140,10 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                                                         builder: (context) =>
                                                             UpdateComment(
                                                           type: 'comment',
+                                                          comment: cubit
+                                                                  .commentsList[
+                                                              index],
+                                                          commentIndex: index,
                                                         ),
                                                       ),
                                                     );
@@ -293,29 +297,31 @@ class _CommentsWidgetState extends State<CommentsWidget> {
                     ),
                   ),
                 ),
-                cubit.comments!.links.next.isNotEmpty
-                    ? state is StudyPageMoreCommentsLessonsLoading
-                        ? Padding(
-                            padding: EdgeInsets.symmetric(vertical: 12),
-                            child: SizedBox(
-                              width: 25,
-                              height: 25,
-                              child: CircularProgressIndicator(
-                                color: AppColors.secondPrimary,
-                              ),
-                            ),
-                          )
-                        : Align(
-                            alignment: cubit.lan == 'en'
-                                ? Alignment.centerLeft
-                                : Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () {
-                                cubit.getMoreCommentsLesson();
-                              },
-                              child: Text('more_comment'.tr()),
-                            ),
-                          )
+                cubit.comments != null
+                    ? cubit.comments!.links.next.isNotEmpty
+                        ? state is StudyPageMoreCommentsLessonsLoading
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(vertical: 12),
+                                child: SizedBox(
+                                  width: 25,
+                                  height: 25,
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.secondPrimary,
+                                  ),
+                                ),
+                              )
+                            : Align(
+                                alignment: cubit.lan == 'en'
+                                    ? Alignment.centerLeft
+                                    : Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () {
+                                    cubit.getMoreCommentsLesson();
+                                  },
+                                  child: Text('more_comment'.tr()),
+                                ),
+                              )
+                        : SizedBox()
                     : SizedBox(),
               ],
             );

@@ -34,6 +34,17 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               InkWell(
                 onTap: () {
+                  Navigator.pushNamed(context, Routes.downloadsRoute);
+                },
+                child: ProfileItemWidget(
+                  image: ImageAssets.userEditIcon,
+                  title: 'downloads_videos'.tr(),
+                  subTitle: 'downloads_videos'.tr(),
+                ),
+              ),
+              const SizedBox(height: 30),
+              InkWell(
+                onTap: () {
                   context.read<ProfileCubit>().getTimes(context);
                 },
                 child: ProfileItemWidget(

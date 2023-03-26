@@ -36,6 +36,7 @@ class AppColors {
   static Color black = Colors.black;
   static Color gray = Colors.grey;
   static Color grayLite = Colors.grey[700]!;
+  static Color gray4 = HexColor('#C4C4C4');
   static Color opacityWhite = Colors.white.withOpacity(0.5);
   static Color transparent = Colors.transparent;
 

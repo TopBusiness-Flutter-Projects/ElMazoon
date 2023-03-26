@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
+import 'package:elmazoon/feature/mainscreens/study_page/widgets/update_comment_widgte.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,9 +15,12 @@ import '../../../../core/widgets/network_image.dart';
 import 'add_comment_widget.dart';
 
 class RepliesScreen extends StatefulWidget {
-  const RepliesScreen(
-      {Key? key, required this.commentDatum, required this.index})
-      : super(key: key);
+  const RepliesScreen({
+    Key? key,
+    required this.commentDatum,
+    required this.index,
+  }) : super(key: key);
+
   final CommentDatum commentDatum;
   final int index;
 
@@ -119,34 +123,38 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                                       .spaceBetween,
                                               children: [
                                                 widget.commentDatum.user!.id ==
-                                                    cubit.userModel!.data!.id
+                                                        cubit
+                                                            .userModel!.data!.id
                                                     ? Opacity(
-                                                      opacity: 0,
-                                                      child: Row(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                                  children: [
-                                                      PopupMenuButton<int>(
-                                                        enabled: false,
-                                                        itemBuilder:
-                                                            (BuildContext context) =>
-                                                        <PopupMenuItem<int>>[
-
-                                                        ],
-                                                        onSelected: (int value) {
-
-                                                        },
-                                                        padding: EdgeInsets.all(0),
-                                                        child: Icon(
-                                                          Icons.more_vert,
-                                                          color:
-                                                          AppColors.secondPrimary,
+                                                        opacity: 0,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            PopupMenuButton<
+                                                                int>(
+                                                              enabled: false,
+                                                              itemBuilder: (BuildContext
+                                                                      context) =>
+                                                                  <
+                                                                      PopupMenuItem<
+                                                                          int>>[],
+                                                              onSelected: (int
+                                                                  value) {},
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(0),
+                                                              child: Icon(
+                                                                Icons.more_vert,
+                                                                color: AppColors
+                                                                    .secondPrimary,
+                                                              ),
+                                                              splashRadius: 25,
+                                                            ),
+                                                          ],
                                                         ),
-                                                        splashRadius: 25,
-                                                      ),
-                                                  ],
-                                                ),
-                                                    )
+                                                      )
                                                     : SizedBox(),
                                                 Row(
                                                   children: [
@@ -328,30 +336,11 @@ class _RepliesScreenState extends State<RepliesScreen> {
                                                               ],
                                                               onSelected:
                                                                   (int value) {
-                                                                if (value ==
-                                                                    1) {
-                                                                  print(
-                                                                      '******** $value *********');
-                                                                }
-                                                                if (value ==
-                                                                    2) {
-                                                                  createProgressDialog(
-                                                                    context,
-                                                                    'wait'.tr(),
-                                                                  );
-                                                                  cubit
-                                                                      .deleteReply(
-                                                                    cubit
-                                                                        .commentsList[widget
-                                                                            .index]
-                                                                        .replies![
-                                                                            index]
-                                                                        .id!,
-                                                                    widget
-                                                                        .index,
-                                                                    index,
-                                                                  );
-                                                                }
+                                                                onSelectItem(
+                                                                  value,
+                                                                  cubit,
+                                                                  index,
+                                                                );
                                                               },
                                                               padding:
                                                                   EdgeInsets
@@ -487,5 +476,38 @@ class _RepliesScreenState extends State<RepliesScreen> {
         },
       ),
     );
+  }
+
+  onSelectItem(int value, StudyPageCubit cubit, int index) {
+    if (value == 1) {
+      print('******** $value *********');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UpdateComment(
+            type: 'reply',
+            comment: cubit.commentsList[cubit.index].replies![index],
+            commentIndex: index,
+          ),
+        ),
+      );
+
+      // cubit.updateCommentAndReply(
+      //   cubit.commentsList[widget.index].replies![index].id!,
+      //   'reply',
+      //   index,
+      // );
+    }
+    if (value == 2) {
+      createProgressDialog(
+        context,
+        'wait'.tr(),
+      );
+      cubit.deleteReply(
+        cubit.commentsList[widget.index].replies![index].id!,
+        widget.index,
+        index,
+      );
+    }
   }
 }

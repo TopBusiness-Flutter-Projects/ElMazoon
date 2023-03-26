@@ -109,30 +109,32 @@ class Instruction {
 
 class Lessons {
   Lessons({
-    required this.id,
-    required this.name,
-    required this.note,
-    required this.link,
-    required this.type,
-    required this.ordered,
-    required this.status,
-    required this.videoTime,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.exams,
+     this.id,
+     this.name,
+     this.note,
+     this.link,
+     this.type,
+     this.ordered,
+     this.downloadSavedPath,
+     this.status,
+     this.videoTime,
+     this.createdAt,
+     this.updatedAt,
+     this.exams,
   });
 
-  int id;
-  String name;
-  String note;
-  String link;
-  String type;
-  int ordered;
-  String status;
-  int videoTime;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<FullExam> exams;
+  int? id;
+  String? name;
+  String? note;
+  String? link;
+  String? type;
+  String? downloadSavedPath;
+  int? ordered;
+  String? status;
+  int? videoTime;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<FullExam>? exams;
 
   factory Lessons.fromJson(Map<String, dynamic> json) => Lessons(
     id: json["id"],
@@ -157,8 +159,8 @@ class Lessons {
     "ordered": ordered,
     "status": status,
     "video_time": videoTime,
-    "created_at": "${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}",
-    "updated_at": "${updatedAt.year.toString().padLeft(4, '0')}-${updatedAt.month.toString().padLeft(2, '0')}-${updatedAt.day.toString().padLeft(2, '0')}",
-    "exams": List<dynamic>.from(exams.map((x) => x.toJson())),
+    "created_at": "${createdAt!.year.toString().padLeft(4, '0')}-${createdAt!.month.toString().padLeft(2, '0')}-${createdAt!.day.toString().padLeft(2, '0')}",
+    "updated_at": "${updatedAt!.year.toString().padLeft(4, '0')}-${updatedAt!.month.toString().padLeft(2, '0')}-${updatedAt!.day.toString().padLeft(2, '0')}",
+    "exams": List<dynamic>.from(exams!.map((x) => x.toJson())),
   };
 }

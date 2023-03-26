@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:elmazoon/core/models/user_model.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
-import 'package:elmazoon/feature/mainscreens/homePage/cubit/home_page_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +23,10 @@ class StudyPageCubit extends Cubit<StudyPageState> {
   }
 
   final dio = Dio();
+
   final ServiceApi api;
+  final formKey = GlobalKey<FormState>();
+  final replyFormKey = GlobalKey<FormState>();
 
   AllClassesDatum? allClassesDatum;
   LessonsDetailsModel? lessonsDetailsModel;
@@ -33,22 +35,38 @@ class StudyPageCubit extends Cubit<StudyPageState> {
 
   List<CommentDatum> commentsList = [];
   List<CommentDatum> tempCommentsList = [];
-  String lan = 'en';
-  int index = 0;
 
-  bool isCommentFieldEnable = true;
   TextEditingController commentController = TextEditingController();
   TextEditingController replyController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-  final replyFormKey = GlobalKey<FormState>();
+  TextEditingController updateCommentController = TextEditingController();
+  TextEditingController updateReplyController = TextEditingController();
+
   XFile? imageFile;
   String imagePath = '';
   String audioPath = '';
+  bool isCommentFieldEnable = true;
+  bool isValidUpdate = true;
+  bool isDownloaded = false;
+  String lan = 'en';
+  int index = 0;
+  int percentage = 0;
+  var dir;
+
+  getSavedDownloadedPaths(String path) async {
+    emit(SavedDownloadedPathsLoading());
+    isDownloaded = await Preferences.instance.searchOnSavedDownloadPaths(path);
+    emit(SavedDownloadedPathsLoaded());
+  }
 
   getUserData() async {
     userModel = await Preferences.instance.getUserModel();
     lan = await Preferences.instance.getSavedLang();
     emit(StudyPageGetUserModel());
+  }
+
+  changeValidUpdate(bool isValid) {
+    isValidUpdate = isValid;
+    emit(UpdateButtonValid());
   }
 
   pickImage({required String type}) async {
@@ -72,6 +90,9 @@ class StudyPageCubit extends Cubit<StudyPageState> {
   }
 
   Future<void> getAllClasses() async {
+    dir = await (Platform.isIOS
+        ? getApplicationSupportDirectory()
+        : getApplicationDocumentsDirectory());
     emit(StudyPageLoading());
     final response = await api.getAllClasses();
     response.fold(
@@ -89,6 +110,12 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     response.fold(
       (error) => emit(StudyPageLessonsError()),
       (response) {
+        response.data.videos.forEach(
+          (element) {
+            element.downloadSavedPath =
+                dir.path + "/videos/${element.name}/" + element.link!.split("/").toList().last;
+          },
+        );
         lessonsDetailsModel = response;
         emit(StudyPageLessonsLoaded(response));
       },
@@ -144,6 +171,35 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     );
   }
 
+  updateCommentAndReply(int commentId, String type, int commentIndex) async {
+    isCommentFieldEnable = false;
+    emit(StudyPageUpdateCommentLoading());
+    final response = await api.updateCommentAndReply(
+      commentId,
+      type,
+      type == 'comment'
+          ? updateCommentController.text
+          : updateReplyController.text,
+    );
+    response.fold(
+      (l) => emit(StudyPageUpdateCommentError()),
+      (r) {
+        type == 'comment'
+            ? commentsList[commentIndex] = r.oneComment
+            : commentsList[index].replies![commentIndex] = r.oneComment;
+        isCommentFieldEnable = true;
+        type == 'comment'
+            ? updateCommentController.clear()
+            : updateReplyController.clear();
+        isValidUpdate = false;
+        emit(StudyPageUpdateCommentLoaded());
+        Future.delayed(Duration(milliseconds: 700), () {
+          emit(StudyPageInitial());
+        });
+      },
+    );
+  }
+
   addReply(int commentId, String type) async {
     isCommentFieldEnable = false;
     emit(StudyPageAddCommentLoading());
@@ -166,7 +222,7 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     );
   }
 
-  Future<void> accessFirstVideo(int id,String type) async {
+  Future<void> accessFirstVideo(int id, String type) async {
     emit(StudyPageAccessFirstVideoLoading());
     final response = await api.openFirstVideo(type: type, id: id);
     response.fold(
@@ -175,13 +231,13 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     );
   }
 
-  Future<void> accessNextVideo(int id,String type,context) async {
+  Future<void> accessNextVideo(int id, String type, context) async {
     emit(StudyPageAccessFirstVideoLoading());
-    final response = await api.openNextVideo(id: id,type: type);
+    final response = await api.openNextVideo(id: id, type: type);
     response.fold(
       (l) => emit(StudyPageAccessFirstVideoError()),
       (res) {
-        if(type=='lesson'){
+        if (type == 'lesson') {
           Navigator.pop(context);
         }
         emit(StudyPageAccessFirstVideoLoaded());
@@ -241,43 +297,43 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     );
   }
 
-  void getPermission(String video_url) async {
+  void getPermission(String video_url,String video_name) async {
     var status = await Permission.storage.status;
     if (status.isDenied) {
-      var status1=await Permission.storage.request();
-      if(status1.isGranted){
-        downloadVideo(video_url);
-
+      var status1 = await Permission.storage.request();
+      if (status1.isGranted) {
+        downloadVideo(video_url,video_name);
       }
-     ;
+      ;
       // We didn't ask for permission yet or the permission has been denied before but not permanently.
+    } else {
+      downloadVideo(video_url,video_name);
     }
-    else{
-      downloadVideo(video_url);
-    }
-
-
   }
-  downloadVideo(String video_url) async {
+
+  downloadVideo(String video_url,String video_name) async {
     var dir = await (Platform.isIOS
         ? getApplicationSupportDirectory()
         : getApplicationDocumentsDirectory());
-    await   dio.download(video_url,  dir.path+"/videos/"+video_url.split("/")[video_url.split("/").length-1],onReceiveProgress: (count, total) {
-      int percentage = ((count / total) * 100).floor();
-      print("kdkkd");
-
-      print(percentage);
-      // if(percentage==100){
-      //   print("loooooo");
-      //   Directory directory=Directory(dir.path+"/videos/");
-      //   List<FileSystemEntity> files = directory.listSync().toList();
-      //
-      //   print(files.length);
-      //
-      //   print(files.elementAt(0).absolute);
-      // }
-    },);
-
-
+    await dio.download(
+      video_url,
+      dir.path + "/videos/$video_name/" + video_url.split("/").toList().last,
+      onReceiveProgress: (count, total) {
+        percentage = ((count / total) * 100).floor();
+        emit(DownloadVideoPercentage());
+        print(percentage);
+      },
+    ).whenComplete(
+      () => Preferences.instance
+          .saveDownloadPaths(
+        dir.path + "/videos/$video_name/" + video_url.split("/").toList().last,
+      )
+          .whenComplete(() {
+        getSavedDownloadedPaths(
+            dir.path + "/videos/$video_name/" + video_url.split("/").toList().last);
+        percentage = 0;
+        emit(DownloadVideoPercentage());
+      }),
+    );
   }
 }
