@@ -57,7 +57,7 @@ class _ExamScreenState extends State<ExamScreen> {
             title: Column(
               children: [
                 CustomAppBar(
-                  title: 'month_plan'.tr(),
+                  title: cubit.questionsDataModel!.name??' ',
                   subtitle: ''.tr(),
                 ),
                 Container(
@@ -138,6 +138,7 @@ class _ExamScreenState extends State<ExamScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+
                           TimeWidget(examInstruction: widget.examInstruction),
                           Container(
                             width: double.infinity,
@@ -154,6 +155,7 @@ class _ExamScreenState extends State<ExamScreen> {
                               ),
                             ),
                           ),
+
                           cubit.questionsDataModel!.questions[cubit.index]
                                       .answers!.length >
                                   0
@@ -245,7 +247,9 @@ class _ExamScreenState extends State<ExamScreen> {
                                     index: cubit.index,
                                   ),
                                 ),
+
                           SizedBox(height: 50),
+
                           Visibility(
                             visible: cubit.imagePath[cubit.index].isNotEmpty ||
                                 cubit.audioPath[cubit.index].isNotEmpty,
@@ -265,6 +269,7 @@ class _ExamScreenState extends State<ExamScreen> {
                                   ),
                           ),
                           SizedBox(height: 12),
+
                           Visibility(
                             visible: cubit.pendingList.isNotEmpty,
                             child: Padding(

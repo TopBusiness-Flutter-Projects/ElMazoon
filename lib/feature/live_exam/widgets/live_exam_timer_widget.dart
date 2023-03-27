@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-import '../../../core/models/lessons_details_model.dart';
 import '../../../core/utils/app_colors.dart';
-import '../cubit/exam_cubit.dart';
+import '../cubit/live_exam_cubit.dart';
 
-class TimeWidget extends StatefulWidget {
-  const TimeWidget({Key? key, required this.examInstruction}) : super(key: key);
-  final Instruction examInstruction;
+class LiveExamTimerWidget extends StatefulWidget {
+  const LiveExamTimerWidget({Key? key, required this.examTime}) : super(key: key);
 
+  final int examTime;
   @override
-  State<TimeWidget> createState() => _TimeWidgetState();
+  State<LiveExamTimerWidget> createState() => _LiveExamTimerWidgetState();
 }
 
-class _TimeWidgetState extends State<TimeWidget> {
+class _LiveExamTimerWidgetState extends State<LiveExamTimerWidget> {
+
+
   //CountdownTimerController? controller;
   Timer? countdownTimer;
   Duration? myDuration;
@@ -25,7 +26,7 @@ class _TimeWidgetState extends State<TimeWidget> {
   @override
   void initState() {
     super.initState();
-    myDuration = Duration(minutes: widget.examInstruction.quizMinute);
+    myDuration = Duration(minutes: widget.examTime);
     startTimer();
   }
 
@@ -57,27 +58,29 @@ class _TimeWidgetState extends State<TimeWidget> {
       final seconds = myDuration!.inSeconds - reduceSecondsBy;
       if (seconds < 0) {
         countdownTimer!.cancel();
-        context.read<ExamCubit>().endExamTime(
-              widget.examInstruction.quizMinute -
-                  int.parse(context.read<ExamCubit>().minute),
-              context,
-              widget.examInstruction.exam_type,
-            );
+
       } else {
         myDuration = Duration(seconds: seconds);
       }
     });
   }
+  // void checkInternet(LiveExamCubit cubit) async {
+  //   bool result = await InternetConnectionChecker().hasConnection;
+  //   if (result == false) {
+  //     cubit.saveExam(cubit.minute + ":" + cubit.second);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+
     String strDigits(int n) => n.toString().padLeft(2, '0');
-    ExamCubit cubit = context.read<ExamCubit>();
+    LiveExamCubit cubit = context.read<LiveExamCubit>();
     if (cubit.minutes != -1 || cubit.seconed != -1) {
       myDuration = Duration(minutes: cubit.minutes, seconds: cubit.seconed);
       cubit.updateTime();
     }
-    checkInternet(cubit);
+    // checkInternet(cubit);
     cubit.minute = strDigits(myDuration!.inMinutes.remainder(60));
     cubit.second = strDigits(myDuration!.inSeconds.remainder(60));
     return Column(
@@ -106,12 +109,5 @@ class _TimeWidgetState extends State<TimeWidget> {
         ),
       ],
     );
-  }
-
-  void checkInternet(ExamCubit cubit) async {
-    bool result = await InternetConnectionChecker().hasConnection;
-    if (result == false) {
-      cubit.saveExam(cubit.minute + ":" + cubit.second);
-    }
   }
 }

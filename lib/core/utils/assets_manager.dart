@@ -47,6 +47,7 @@ class ImageAssets {
   static const String filterIcon = '$iconsPath/filter.svg';
   static const String paymentOnlineIcon = '$iconsPath/payment_online.svg';
   static const String paymentCashIcon = '$iconsPath/payment_cash.svg';
+  static const String downloadVideoIcon = '$iconsPath/download_video.svg';
 
 
   //Lottie

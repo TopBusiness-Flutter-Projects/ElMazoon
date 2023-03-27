@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 
 class NoDataWidget extends StatelessWidget {
-  const NoDataWidget({Key? key, required this.onclick}) : super(key: key);
+  const NoDataWidget({Key? key, required this.onclick, required this.title}) : super(key: key);
 
   final VoidCallback onclick;
+  final String title;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -16,21 +18,15 @@ class NoDataWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'no_date'.tr(),
+            title.tr(),
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
               color: AppColors.secondPrimary,
             ),
           ),
-          SizedBox(
-            height: 12,
-            width: MediaQuery.of(context).size.width,
-          ),
-          Icon(
-            Icons.refresh,
-            color: AppColors.primary,
-          ),
+          SizedBox(height: 12, width: MediaQuery.of(context).size.width),
+          Icon(Icons.replay_circle_filled_rounded, color: AppColors.primary,size: 35,),
         ],
       ),
     );

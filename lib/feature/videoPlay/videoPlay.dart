@@ -19,11 +19,16 @@ class _VideoPlayState extends State<VideoPlay> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = VideoPlayerController.file(File(""));
 
     getvideo();
+  }
+
+  @override
+  void dispose() {
+    _controller!.dispose();
+    super.dispose();
   }
 
   @override

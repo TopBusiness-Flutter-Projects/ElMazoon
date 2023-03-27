@@ -1,13 +1,13 @@
 import 'package:elmazoon/core/models/question_model.dart';
 
-class QuestionesDataModel {
+class QuestionsDataModel {
   QuestionData? data;
   String? message;
   int? code;
 
-  QuestionesDataModel({this.data, this.message, this.code});
+  QuestionsDataModel({this.data, this.message, this.code});
 
-  QuestionesDataModel.fromJson(Map<String, dynamic> json) {
+  QuestionsDataModel.fromJson(Map<String, dynamic> json) {
     data = json['data'] != null ? new QuestionData.fromJson(json['data']) : null;
     message = json['message'];
     code = json['code'];

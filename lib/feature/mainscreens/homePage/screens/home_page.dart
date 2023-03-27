@@ -125,7 +125,7 @@ class HomePage extends StatelessWidget {
               ),
             );
           } else {
-            return NoDataWidget(onclick: () => cubit.getHomePageData());
+            return NoDataWidget(onclick: () => cubit.getHomePageData(),title: 'no_date',);
           }
         },
       ),

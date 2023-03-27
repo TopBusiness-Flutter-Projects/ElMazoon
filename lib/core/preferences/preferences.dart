@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../feature/downloads_videos/models/save_video_model.dart';
 import '../models/exam_answer_list_model.dart';
 import '../models/user_model.dart';
 import '../utils/app_strings.dart';
@@ -20,9 +21,35 @@ class Preferences {
     prefs.setStringList('savedDownloadPaths', paths);
   }
 
+  Future<void> saveDownloadVideos(SaveVideoModel saveVideoModel) async {
+    SaveVideoModelList videos = await getSavedDownloadVideos();
+    videos.savedList.add(saveVideoModel);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(
+      'savedDownloadVideos',
+      jsonEncode(videos),
+    );
+  }
+
   Future<List<String>> getSavedDownloadPaths() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getStringList('savedDownloadPaths') ?? [];
+  }
+
+  Future<SaveVideoModelList> getSavedDownloadVideos() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jsonData = prefs.getString('savedDownloadVideos');
+    SaveVideoModelList saveVideoModelList;
+    if (jsonData != null) {
+      print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+      print(jsonData);
+      saveVideoModelList = SaveVideoModelList.fromJson(jsonDecode(jsonData));
+      // saveVideoModelList = SaveVideoModelList(savedList: []);
+    } else {
+      print('##########################################');
+      saveVideoModelList = SaveVideoModelList(savedList: []);
+    }
+    return saveVideoModelList;
   }
 
   Future<bool> searchOnSavedDownloadPaths(String path) async {

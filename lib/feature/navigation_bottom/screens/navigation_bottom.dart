@@ -7,7 +7,6 @@ import 'package:elmazoon/feature/navigation_bottom/cubit/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/utils/app_routes.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../mainscreens/guide_page/screens/guide_page.dart';
 import '../../mainscreens/homePage/screens/home_page.dart';
@@ -38,16 +37,11 @@ class _NavigatorBarState extends State<NavigatorBar> {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
           child: appbar(),
         ),
-        flexibleSpace: InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, Routes.downloadsRoute);
-          },
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(ImageAssets.appBarImage),
-                fit: BoxFit.fill,
-              ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(ImageAssets.appBarImage),
+              fit: BoxFit.fill,
             ),
           ),
         ),

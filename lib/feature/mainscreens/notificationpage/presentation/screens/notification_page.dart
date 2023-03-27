@@ -17,7 +17,7 @@ class NotificationScreen extends StatelessWidget {
       body: BlocBuilder<NotificationCubit, NotificationState>(
         builder: (context, state) {
           if (state is NotificationPageError) {
-            return NoDataWidget(onclick: () => cubit.getAllNotification());
+            return NoDataWidget(onclick: () => cubit.getAllNotification(),title: 'no_date',);
           }
           return state is NotificationPageLoading
               ? ShowLoadingIndicator()

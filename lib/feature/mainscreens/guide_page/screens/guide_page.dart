@@ -21,7 +21,7 @@ class GuidePage extends StatelessWidget {
             return ShowLoadingIndicator();
           }
           if (state is GuideError) {
-            return NoDataWidget(onclick: () => cubit.getGuideData());
+            return NoDataWidget(onclick: () => cubit.getGuideData(),title: 'no_date',);
           }
           return RefreshIndicator(
             onRefresh: () async {

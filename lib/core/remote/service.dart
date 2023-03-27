@@ -22,6 +22,7 @@ import '../models/exam_answer_model.dart';
 import '../models/exam_hero_model.dart';
 import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
+import '../models/live_exam_model.dart';
 import '../models/month_plan_model.dart';
 import '../models/one_comment_model.dart';
 import '../models/questiones_data_model.dart';
@@ -330,7 +331,7 @@ class ServiceApi {
     }
   }
 
-  Future<Either<Failure, QuestionesDataModel>> getQuestion(
+  Future<Either<Failure, QuestionsDataModel>> getQuestion(
       int exam_id, String exam_type) async {
     UserModel userModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
@@ -346,7 +347,7 @@ class ServiceApi {
           },
         ),
       );
-      return Right(QuestionesDataModel.fromJson(response));
+      return Right(QuestionsDataModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
@@ -654,6 +655,25 @@ class ServiceApi {
         ),
       );
       return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, LiveExamModel>> getFirstLiveExamQuestion(
+      int examId) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.get(
+          EndPoints.accessFirstLiveExamQuestionUrl + id.toString(),
+          options: Options(
+            headers: {
+              'Authorization': loginModel.data!.token,
+              'Accept-Language': lan
+            },
+          ));
+      return Right(LiveExamModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

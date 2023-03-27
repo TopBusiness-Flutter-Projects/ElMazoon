@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/core/utils/app_routes.dart';
 import 'package:elmazoon/feature/splash/presentation/cubit/splash_cubit.dart';
 import 'package:elmazoon/feature/splash/presentation/screens/pop_ads_screen.dart';
@@ -28,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen>
     _timer = Timer(
       const Duration(seconds: 2),
       () {
+        // Preferences.instance.clearAll();
         _goNext();
       },
     );

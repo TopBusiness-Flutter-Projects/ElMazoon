@@ -34,10 +34,21 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               InkWell(
                 onTap: () {
+                  // Navigator.pushNamed(context, Routes.downloadsRoute);
+                },
+                child: ProfileItemWidget(
+                  image: ImageAssets.downloadVideoIcon,
+                  title: 'live_exam'.tr(),
+                  subTitle: 'live_exam'.tr(),
+                ),
+              ),
+              const SizedBox(height: 30),
+              InkWell(
+                onTap: () {
                   Navigator.pushNamed(context, Routes.downloadsRoute);
                 },
                 child: ProfileItemWidget(
-                  image: ImageAssets.userEditIcon,
+                  image: ImageAssets.downloadVideoIcon,
                   title: 'downloads_videos'.tr(),
                   subTitle: 'downloads_videos'.tr(),
                 ),

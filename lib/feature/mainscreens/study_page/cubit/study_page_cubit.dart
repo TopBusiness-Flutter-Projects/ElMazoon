@@ -13,6 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../core/models/comments_model.dart';
 import '../../../../core/models/lessons_details_model.dart';
 import '../../../../core/remote/service.dart';
+import '../../../downloads_videos/models/save_video_model.dart';
 import '../models/all_classes_model.dart';
 
 part 'study_page_state.dart';
@@ -55,6 +56,7 @@ class StudyPageCubit extends Cubit<StudyPageState> {
   getSavedDownloadedPaths(String path) async {
     emit(SavedDownloadedPathsLoading());
     isDownloaded = await Preferences.instance.searchOnSavedDownloadPaths(path);
+    print('################################  $isDownloaded');
     emit(SavedDownloadedPathsLoaded());
   }
 
@@ -113,7 +115,7 @@ class StudyPageCubit extends Cubit<StudyPageState> {
         response.data.videos.forEach(
           (element) {
             element.downloadSavedPath =
-                dir.path + "/videos/${element.name}/" + element.link!.split("/").toList().last;
+                dir.path + "/videos/" + element.link!.split("/").toList().last;
           },
         );
         lessonsDetailsModel = response;
@@ -297,43 +299,54 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     );
   }
 
-  void getPermission(String video_url,String video_name) async {
+  void getPermission(String video_url, String video_name) async {
     var status = await Permission.storage.status;
     if (status.isDenied) {
       var status1 = await Permission.storage.request();
       if (status1.isGranted) {
-        downloadVideo(video_url,video_name);
+        downloadVideo(video_url, video_name);
       }
       ;
       // We didn't ask for permission yet or the permission has been denied before but not permanently.
     } else {
-      downloadVideo(video_url,video_name);
+      downloadVideo(video_url, video_name);
     }
   }
 
-  downloadVideo(String video_url,String video_name) async {
+  downloadVideo(String video_url, String video_name) async {
     var dir = await (Platform.isIOS
         ? getApplicationSupportDirectory()
         : getApplicationDocumentsDirectory());
     await dio.download(
       video_url,
-      dir.path + "/videos/$video_name/" + video_url.split("/").toList().last,
+      dir.path + "/videos/" + video_url.split("/").toList().last,
       onReceiveProgress: (count, total) {
         percentage = ((count / total) * 100).floor();
         emit(DownloadVideoPercentage());
         print(percentage);
       },
     ).whenComplete(
-      () => Preferences.instance
-          .saveDownloadPaths(
-        dir.path + "/videos/$video_name/" + video_url.split("/").toList().last,
-      )
-          .whenComplete(() {
-        getSavedDownloadedPaths(
-            dir.path + "/videos/$video_name/" + video_url.split("/").toList().last);
-        percentage = 0;
-        emit(DownloadVideoPercentage());
-      }),
+      () {
+        Preferences.instance.saveDownloadVideos(
+          SaveVideoModel(
+            videoName: video_name,
+            videoPath:
+                dir.path + "/videos/" + video_url.split("/").toList().last,
+          ),
+        ).whenComplete(() => print('Doooooooooooooooooooooooooooooone'));
+
+        Preferences.instance
+            .saveDownloadPaths(
+          dir.path + "/videos/" + video_url.split("/").toList().last,
+        )
+            .whenComplete(() {
+          getSavedDownloadedPaths(
+            dir.path + "/videos/" + video_url.split("/").toList().last,
+          );
+          percentage = 0;
+          emit(DownloadVideoPercentage());
+        });
+      },
     );
   }
 }
