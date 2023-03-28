@@ -13,6 +13,7 @@ import '../../../../core/utils/call_method.dart';
 import '../../../../core/utils/restart_app_class.dart';
 import '../../../../core/utils/show_dialog.dart';
 import '../../../exam_hero/screens/exam_hero.dart';
+import '../../../live_exam/screens/live_exam_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -34,7 +35,12 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               InkWell(
                 onTap: () {
-                  // Navigator.pushNamed(context, Routes.downloadsRoute);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LiveExamScreen(),
+                    ),
+                  );
                 },
                 child: ProfileItemWidget(
                   image: ImageAssets.downloadVideoIcon,

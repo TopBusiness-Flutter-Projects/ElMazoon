@@ -21,6 +21,7 @@ import 'feature/exam/cubit/exam_cubit.dart';
 import 'feature/examRegister/cubit/exam_register_cubit.dart';
 import 'feature/exam_degree_detials/cubit/exam_degree_cubit.dart';
 import 'feature/exam_hero/cubit/exam_hero_cubit.dart';
+import 'feature/live_exam/cubit/live_exam_cubit.dart';
 import 'feature/login/cubit/login_cubit.dart';
 import 'feature/mainscreens/guide_page/cubit/guide_cubit.dart';
 import 'feature/mainscreens/homePage/cubit/home_page_cubit.dart';
@@ -148,6 +149,9 @@ class _ElmazoonState extends State<Elmazoon> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<DownloadsVideosCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<LiveExamCubit>(),
         ),
       ],
       child: MaterialApp(

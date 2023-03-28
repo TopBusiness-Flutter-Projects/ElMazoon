@@ -133,7 +133,12 @@
  "open_video": "Please End The Previous Video First !!!",
  "download": "Download",
  "downloaded": "Downloaded",
- "no_video": "No Video"
+ "no_video": "No Video",
+ "please_choose_answer": "Please Choose The Answer First !!!",
+ "live_exam": "Live Exam",
+ "degree": "Degree",
+ "percentage": "Percentage",
+ "completed_live_exam": "Live Exam is Completed"
 
 
 

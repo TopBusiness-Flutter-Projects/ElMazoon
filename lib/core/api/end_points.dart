@@ -32,6 +32,7 @@ class EndPoints {
   static const String examHeroUrl = '${baseUrl}exam-degree/heroes';
   static const String paySubscribesUrl = '${baseUrl}payments/pay';
   static const String accessFirstLiveExamQuestionUrl = '${baseUrl}life-exam/access-first-question/';
+  static const String answerLiveExamQuestionUrl = '${baseUrl}life-exam/add-life-exam/';
 
 
 

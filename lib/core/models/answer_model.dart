@@ -3,17 +3,18 @@ class Answers {
   String? answer;
   String? answerNumber;
   String? answerStatus;
-  String status='';
+  String status = '';
   String? createdAt;
   String? updatedAt;
 
-  Answers(
-      {this.id,
-        this.answer,
-        this.answerNumber,
-        this.answerStatus,
-        this.createdAt,
-        this.updatedAt});
+  Answers({
+    this.id,
+    this.answer,
+    this.answerNumber,
+    this.answerStatus,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   Answers.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -33,5 +34,9 @@ class Answers {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;
+  }
+  @override
+  String toString() {
+    return '\n ## id : ${id} ,status : ${status} ,answer : ${answer} ## \n';
   }
 }

@@ -11,6 +11,7 @@ import 'package:elmazoon/feature/mainscreens/study_page/models/all_classes_model
 import '../../feature/exam/models/answer_exam_model.dart';
 import '../../feature/login/models/communication_model.dart';
 import '../../feature/payment/model/pay_model.dart';
+import '../../feature/payment/model/payment_response_model.dart';
 import '../api/base_api_consumer.dart';
 import '../api/end_points.dart';
 import '../error/exceptions.dart';
@@ -639,7 +640,7 @@ class ServiceApi {
     }
   }
 
-  Future<Either<Failure, StatusResponse>> paySubscribes(
+  Future<Either<Failure, PaymentResponse>> paySubscribes(
       SendPayModel sendPayModel) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
@@ -654,7 +655,7 @@ class ServiceApi {
           },
         ),
       );
-      return Right(StatusResponse.fromJson(response));
+      return Right(PaymentResponse.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
@@ -666,13 +667,40 @@ class ServiceApi {
     String lan = await Preferences.instance.getSavedLang();
     try {
       final response = await dio.get(
-          EndPoints.accessFirstLiveExamQuestionUrl + id.toString(),
+          EndPoints.accessFirstLiveExamQuestionUrl + examId.toString(),
           options: Options(
             headers: {
               'Authorization': loginModel.data!.token,
               'Accept-Language': lan
             },
           ));
+      return Right(LiveExamModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, LiveExamModel>> answerLiveExamQuestion({
+    required int examId,
+    required int questionId,
+    required int answerId,
+  }) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.post(
+        EndPoints.answerLiveExamQuestionUrl + examId.toString(),
+        body: {
+          'question_id': questionId,
+          'answer_id': answerId,
+        },
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
       return Right(LiveExamModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
