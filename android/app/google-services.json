@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "815170067345",
+    "project_id": "elmazon",
+    "storage_bucket": "elmazon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815170067345:android:90e274aa78ea27bf21d830",
+        "android_client_info": {
+          "package_name": "com.topbusiness.elmazoon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815170067345-aaeo846tsj21da2jpvql370l2ikih7pd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsewnFrvnkbaQ00Zxxn6130560Aj28-jE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "815170067345-aaeo846tsj21da2jpvql370l2ikih7pd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
