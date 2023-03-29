@@ -30,6 +30,7 @@ import '../models/questiones_data_model.dart';
 import '../models/response_message.dart';
 import '../models/notifications_model.dart';
 import '../models/status_response_model.dart';
+import '../models/student_report_model.dart';
 import '../models/subscribes_model.dart';
 import '../models/times_model.dart';
 import '../models/user_model.dart';
@@ -702,6 +703,47 @@ class ServiceApi {
         ),
       );
       return Right(LiveExamModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, StudentReportModel>> getStudentReport() async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.get(
+        EndPoints.studentReportUrl,
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(StudentReportModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, StatusResponse>> addDeviceToken(
+      String deviceToken, String deviceType) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.post(
+        EndPoints.addDeviceTokenUrl,
+        body: {
+          'token': deviceToken,
+          'phone_type': deviceType,
+        },
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+          },
+        ),
+      );
+      return Right(StatusResponse.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

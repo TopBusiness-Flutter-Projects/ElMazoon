@@ -33,6 +33,8 @@ class EndPoints {
   static const String paySubscribesUrl = '${baseUrl}payments/pay';
   static const String accessFirstLiveExamQuestionUrl = '${baseUrl}life-exam/access-first-question/';
   static const String answerLiveExamQuestionUrl = '${baseUrl}life-exam/add-life-exam/';
+  static const String studentReportUrl = '${baseUrl}reports/student-report';
+  static const String addDeviceTokenUrl = '${baseUrl}auth/add-device-token';
 
 
 

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/core/remote/service.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/utils/toast_message_method.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/communication_model.dart';
@@ -16,8 +19,9 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   final ServiceApi api;
-   CommunicationData? communicationData;
+  CommunicationData? communicationData;
   bool isCommunicationData = false;
+  String softwareType = '';
 
   TextEditingController codeController = TextEditingController();
 
@@ -42,6 +46,7 @@ class LoginCubit extends Cubit<LoginState> {
           );
           emit(userError());
         } else {
+          getDeviceToken();
           Future.delayed(Duration(seconds: 2), () {
             emit(userInitial());
           });
@@ -60,11 +65,31 @@ class LoginCubit extends Cubit<LoginState> {
       (response) {
         if (response.code == 200) {
           communicationData = response.data;
-          isCommunicationData =true;
+          isCommunicationData = true;
           emit(userCommunicationLoaded());
         } else {
-          isCommunicationData =false;
+          isCommunicationData = false;
           emit(userCommunicationError());
+        }
+      },
+    );
+  }
+
+  getDeviceToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    if (Platform.isAndroid) {
+      softwareType = 'android';
+    } else if (Platform.isIOS) {
+      softwareType = 'ios';
+    }
+    final response = await api.addDeviceToken(token!, softwareType);
+    response.fold(
+      (l) => emit(DeviceTokenError()),
+      (r) {
+        if (r.code == 200) {
+          emit(DeviceTokenSuccess());
+        } else {
+          emit(DeviceTokenError());
         }
       },
     );

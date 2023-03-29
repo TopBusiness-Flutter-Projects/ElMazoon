@@ -13,3 +13,7 @@ class userError extends LoginState {}
 class userCommunicationLoading extends LoginState {}
 class userCommunicationLoaded extends LoginState {}
 class userCommunicationError extends LoginState {}
+
+
+class DeviceTokenSuccess extends LoginState {}
+class DeviceTokenError extends LoginState {}
