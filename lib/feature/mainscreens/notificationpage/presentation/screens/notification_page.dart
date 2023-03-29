@@ -1,3 +1,4 @@
+import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/feature/mainscreens/notificationpage/presentation/screens/widget/notification_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,22 +22,29 @@ class NotificationScreen extends StatelessWidget {
           }
           return state is NotificationPageLoading
               ? ShowLoadingIndicator()
-              : ListView(
+              : RefreshIndicator(
+                onRefresh: () async{
+                  cubit.getAllNotification();
+                },
+            color: AppColors.primary,
+            backgroundColor: AppColors.secondPrimary,
+                child: ListView(
             children: [
-              ...List.generate(
-                cubit.data!=null?cubit.data!.length:0,
-                    (index) => InkWell(
+                ...List.generate(
+                  cubit.data!=null?cubit.data!.length:0,
+                      (index) => InkWell(
 
-                  child:
-                  NotificationDetailsWidget(
-                    notificationModel: cubit.data!.elementAt(index),
+                    child:
+                    NotificationDetailsWidget(
+                      notificationModel: cubit.data!.elementAt(index),
 
+                    ),
                   ),
                 ),
-              ),
 
             ],
-          );
+          ),
+              );
         },
       ),
 

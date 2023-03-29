@@ -8,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../core/models/user_model.dart';
+import '../../../mainscreens/profilePage/screens/profile_page_deatils.dart';
 import '../../../navigation_bottom/screens/navigation_bottom.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,29 +39,43 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _getStoreUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    UserModel userModel = await Preferences.instance.getUserModel();
     if (prefs.getString('user') != null) {
-      if (context.read<SplashCubit>().adsList.isNotEmpty) {
+      if(userModel.data!.dateEndCode.isAfter(DateTime.now())){
         Navigator.pushReplacement(
           context,
           PageTransition(
-            type: PageTransitionType.fade,
-            alignment: Alignment.center,
-            duration: const Duration(milliseconds: 1300),
-            child: PopAdsScreen(
-              adsDatum: context.read<SplashCubit>().adsList.first,
+            type:  PageTransitionType.rightToLeft,
+            alignment: Alignment.centerRight,
+            duration: const Duration(milliseconds: 700),
+            child: ProfilePageDetails(),
+            childCurrent: SplashScreen(),
+          ),
+        );
+      }else{
+        if (context.read<SplashCubit>().adsList.isNotEmpty) {
+          Navigator.pushReplacement(
+            context,
+            PageTransition(
+              type: PageTransitionType.fade,
+              alignment: Alignment.center,
+              duration: const Duration(milliseconds: 1300),
+              child: PopAdsScreen(
+                adsDatum: context.read<SplashCubit>().adsList.first,
+              ),
             ),
-          ),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          PageTransition(
-            type: PageTransitionType.fade,
-            alignment: Alignment.center,
-            duration: const Duration(milliseconds: 1300),
-            child: NavigatorBar(),
-          ),
-        );
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            PageTransition(
+              type: PageTransitionType.fade,
+              alignment: Alignment.center,
+              duration: const Duration(milliseconds: 1300),
+              child: NavigatorBar(),
+            ),
+          );
+        }
       }
     } else {
       Navigator.pushNamedAndRemoveUntil(

@@ -130,8 +130,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   Navigator.push(
                     context,
                     PageTransition(
-                      type: PageTransitionType.bottomToTopJoined,
-                      alignment: Alignment.bottomCenter,
+                      type: lang == 'ar'
+                          ? PageTransitionType.leftToRight
+                          : PageTransitionType.rightToLeft,
+                      alignment: lang == 'ar'
+                          ? Alignment.centerLeft
+                          : Alignment.centerRight,
                       duration: const Duration(milliseconds: 700),
                       child: ProfilePageDetails(),
                       childCurrent: NavigatorBar(),

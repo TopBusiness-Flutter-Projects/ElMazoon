@@ -35,6 +35,8 @@ class NotificationModel {
     this.body,
     this.type,
     this.image,
+    this.updatedAt,
+    this.createdAt,
   });
 
   int? id;
@@ -43,21 +45,23 @@ class NotificationModel {
   String? body;
   String? type;
   String? image;
-  
+  String? createdAt;
+  String? updatedAt;
+
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>
       NotificationModel(
         id: json["id"],
         title: json["title"] != null ? json["title"] : '',
         body: json["body"] != null ? json["body"] : '',
-        type: json["created_at"],
-        image: json["updated_at"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
         "body": body,
-        "type": type,
-        "image": image,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
       };
 }

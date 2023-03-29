@@ -40,7 +40,7 @@ class NotificationDetailsWidget extends StatelessWidget {
                 ),
                 SizedBox(width: 12),
                 Text(
-                  '2022/12/23',
+                  notificationModel.createdAt!,
                   style: TextStyle(
                     color: AppColors.gray1,
                     fontSize: 20,
