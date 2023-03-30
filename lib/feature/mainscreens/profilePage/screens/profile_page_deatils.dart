@@ -31,27 +31,32 @@ class ProfilePageDetails extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        width: 150,
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: AppColors.success,
-                        ),
-                        child: Row(
-                          children: [
-                            MySvgWidget(
-                              path: ImageAssets.reportIcon,
-                              imageColor: AppColors.white,
-                              size: 25,
-                            ),
-                            Spacer(),
-                            Text(
-                              'report'.tr(),
-                              style: TextStyle(color: AppColors.white),
-                            ),
-                            Spacer(),
-                          ],
+                      child: InkWell(
+                        onTap: () {
+                          cubit.getReport(context);
+                        },
+                        child: Container(
+                          width: 150,
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: AppColors.success,
+                          ),
+                          child: Row(
+                            children: [
+                              MySvgWidget(
+                                path: ImageAssets.reportIcon,
+                                imageColor: AppColors.white,
+                                size: 25,
+                              ),
+                              Spacer(),
+                              Text(
+                                'report'.tr(),
+                                style: TextStyle(color: AppColors.white),
+                              ),
+                              Spacer(),
+                            ],
+                          ),
                         ),
                       ),
                     ),

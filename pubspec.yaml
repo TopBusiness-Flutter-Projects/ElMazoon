@@ -64,14 +64,17 @@ dependencies:
   video_player: ^2.6.0
   image_picker: ^0.8.7
   record: ^4.4.4
+  open_filex: ^4.3.2
   audioplayers: ^3.0.1
   image_cropper: ^3.0.1
   syncfusion_flutter_pdfviewer: ^20.4.54
   carousel_slider: ^4.2.1
+  google_fonts: ^4.0.3
   lottie: ^2.3.0
   connectivity_plus: ^3.0.3
   syncfusion_flutter_charts: ^20.4.54
   flutter_credit_card: ^3.0.6
+  pdf: ^3.10.1
   # Used for launching a WEB URL, by Google flutter.dev.
   # https://pub.dev/packages/url_launcher
   # The following adds the Cupertino Icons font to your application.
@@ -116,6 +119,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lottie/
+    - assets/fonts/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -133,6 +137,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: normal
+      fonts:
+        - asset: assets/fonts/font_normal.ttf
+        - asset: assets/fonts/font_bold.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
