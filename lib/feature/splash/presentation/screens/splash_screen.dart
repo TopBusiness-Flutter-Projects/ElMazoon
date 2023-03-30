@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/core/utils/app_routes.dart';
 import 'package:elmazoon/feature/splash/presentation/cubit/splash_cubit.dart';
@@ -9,6 +10,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/models/user_model.dart';
+import '../../../live_exam/screens/live_exam_screen.dart';
 import '../../../mainscreens/profilePage/screens/profile_page_deatils.dart';
 import '../../../navigation_bottom/screens/navigation_bottom.dart';
 
@@ -52,7 +54,35 @@ class _SplashScreenState extends State<SplashScreen>
             childCurrent: SplashScreen(),
           ),
         );
-      }else{
+      }
+      else{
+
+        DateTime now = new DateTime.now();
+        DateTime date1 = new DateTime(now.year,now.month,now.day);
+        DateTime date = new DateTime(now.hour, now.minute, now.second);
+        DateTime dt1 = DateFormat("hh:mm:ss").parse(context.read<SplashCubit>().lifeExam.timeStart!);
+        DateTime dt2 = DateFormat("hh:mm:ss").parse(context.read<SplashCubit>().lifeExam.timeEnd!);
+       print(date.hour);
+
+        if((dt1.isAtSameMomentAs(date)||dt1.isBefore(date))){
+          print("Dd;ldldldl");
+        }
+        if(context.read<SplashCubit>().lifeExam.dateExam!.isAtSameMomentAs(date1)&&
+            (
+
+                (dt1.isAtSameMomentAs(date)||dt1.isBefore(date))&&
+                    date.isBefore(dt2)
+            )
+        ){
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LiveExamScreen(),
+            ),
+          );
+        }
+        else{
         if (context.read<SplashCubit>().adsList.isNotEmpty) {
           Navigator.pushReplacement(
             context,
@@ -65,7 +95,8 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
           );
-        } else {
+        }
+        else {
           Navigator.pushReplacement(
             context,
             PageTransition(
@@ -76,7 +107,7 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           );
         }
-      }
+      }}
     } else {
       Navigator.pushNamedAndRemoveUntil(
         context,

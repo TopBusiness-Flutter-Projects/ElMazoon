@@ -8,11 +8,12 @@ part 'splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit(this.api) : super(SplashInitial()) {
-    // getAdsOfApp();
+     getAdsOfApp();
   }
 
   final ServiceApi api;
   List<AdsModelDatum> adsList = [];
+  LifeExam lifeExam=LifeExam();
 
   Future<void> getAdsOfApp() async {
     emit(SplashLoading());
@@ -20,7 +21,10 @@ class SplashCubit extends Cubit<SplashState> {
     response.fold(
       (error) => emit(SplashError()),
       (res) {
-        adsList = res.data!;
+        adsList = res.data!.ads!;
+        lifeExam=res.data!.lifeExam!;
+        print("ddd");
+        print(res.data!.lifeExam!.timeEnd);
         emit(SplashLoaded());
       },
     );

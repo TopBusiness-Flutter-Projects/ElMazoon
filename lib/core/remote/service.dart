@@ -572,8 +572,17 @@ class ServiceApi {
   }
 
   Future<Either<Failure, AdsModel>> getAppAds() async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
     try {
-      final response = await dio.get(EndPoints.adsUrl);
+      final response = await dio.get(EndPoints.adsUrl,
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+            'Accept-Language': lan
+          },
+        ),
+      );
       return Right(AdsModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
