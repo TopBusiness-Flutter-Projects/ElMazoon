@@ -138,8 +138,9 @@
   "live_exam": "الامتحان اللايف",
   "degree": "الدرجه",
   "percentage": "النسبة",
-  "completed_live_exam": "لقد انتهى الامتحان اللايف"
-
+  "completed_live_exam": "لقد انتهى الامتحان اللايف",
+"app_exam": "امتحانات التطبيق",
+  "paper_exam": "امتحانات ورقية"
 
 
 

@@ -86,8 +86,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileSendSuggestLoading());
     final response = await api.sendSuggest(suggest: suggest.text);
     response.fold(
-      (l) => emit(ProfileSendSuggestError()),
-      (r) {
+          (l) => emit(ProfileSendSuggestError()),
+          (r) {
         Future.delayed(Duration(seconds: 1), () {
           getProfileData();
         });
@@ -101,8 +101,8 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     final response = await api.gettimes();
     response.fold(
-      (error) => Navigator.of(context).pop(),
-      (response) {
+          (error) => Navigator.of(context).pop(),
+          (response) {
         Navigator.of(context).pop();
         TimeDataModel data = response;
         if (data.code == 200) {
@@ -125,8 +125,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     createProgressDialog(context, 'wait'.tr());
     var response = await api.getStudentReport();
     response.fold(
-      (l) => Navigator.of(context).pop(),
-      (r) {
+          (l) => Navigator.of(context).pop(),
+          (r) {
         Navigator.of(context).pop();
         if (r.code == 200) {
           getPermission(r);
@@ -146,10 +146,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileUpdateLoading());
     final response = await api.updateProfile(imagePath: imagePath);
     response.fold(
-      (error) => emit(ProfileSendSuggestError()),
-      (res) {
+          (error) => emit(ProfileSendSuggestError()),
+          (res) {
         Preferences.instance.setUser(res).whenComplete(
-          () {
+              () {
             emit(ProfileSendSuggestLoaded());
             Future.delayed(Duration(milliseconds: 500), () {
               getProfileData(isUpdate: true);
@@ -162,98 +162,401 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> makePdf(StudentReportModel? studentReportModel) async {
     final pdf = pw.Document();
+    String lan = await Preferences.instance.getSavedLang();
 
     final font = await rootBundle.load("assets/fonts/font_normal.ttf");
     final ttf = Font.ttf(font);
     pw.Font? tamilFont = pw.Font.ttf(font);
 
     pdf.addPage(
-
       pw.Page(
+          textDirection:
+          lan == 'ar' ? pw.TextDirection.rtl : pw.TextDirection.ltr,
           pageFormat: PdfPageFormat.a4,
-
           theme: pw.ThemeData(
-
-            defaultTextStyle: pw.TextStyle(font: tamilFont,
-
-        )),
-          build: (pw.Context context) => pw.ListView(
-              children: [
+              defaultTextStyle: pw.TextStyle(
+                font: tamilFont,
+              )),
+          build: (pw.Context context) =>
+              pw.ListView(children: [
                 pw.Center(
-                  child:pw.SizedBox(
-                    child: pw.Text(studentReportModel!.data!.user!.name!,
-                      textDirection: pw.TextDirection.rtl,
-softWrap: true,
-                      tightBounds: true,
-                      overflow: pw.TextOverflow.span,
-                      style: pw.TextStyle(
-                        font: ttf,
-                        fontSize: 40,
-                          fontBold: tamilFont,
-
-
-                      )),
-                )),
+                    child: pw.SizedBox(
+                      child: pw.Text(studentReportModel!.data!.user!.name!,
+                          textDirection: pw.TextDirection.rtl,
+                          softWrap: true,
+                          tightBounds: true,
+                          overflow: pw.TextOverflow.span,
+                          style: pw.TextStyle(
+                            font: ttf,
+                            fontSize: 40,
+                            fontBold: tamilFont,
+                          )),
+                    )),
                 pw.Center(
                   child: pw.Text(studentReportModel.data!.user!.phone!,
                       textDirection: pw.TextDirection.rtl,
-                      style: pw.TextStyle(
-                        font: ttf,
-                        fontSize: 14,
-                          fontBold: ttf
-
-                      )),
+                      style:
+                      pw.TextStyle(font: ttf, fontSize: 14, fontBold: ttf)),
                 ),
+                pw.SizedBox(height: 20),
+                pw.Center(
+                    child: pw.SizedBox(
+                      child: pw.Text('app_exam'.tr(),
+                          textDirection: lan == 'ar' ? pw.TextDirection.rtl : pw
+                              .TextDirection.ltr,
+                          softWrap: true,
+                          tightBounds: true,
+                          overflow: pw.TextOverflow.span,
+                          style: pw.TextStyle(
+                            font: ttf,
+                            fontSize: 40,
+                            fontBold: tamilFont,
+                          )),
+                    )),
+                pw.SizedBox(height: 2),
                 pw.Table(
-                    children: List.generate(
+                    children:
+                    lan == 'ar' ?
+                    List.generate(
+
                         studentReportModel.data!.exams!.length, (index) {
-                  return pw.TableRow(children: [
-                    pw.Text(studentReportModel.data!.exams![index].exam!,
-                        textDirection: pw.TextDirection.rtl,
+                      return pw.TableRow(children: [
+                        pw.Expanded(
+                            child: pw.Container(
+                                child: pw.Center(child: pw.Text(
+                                    studentReportModel.data!.exams![index].per!,
+                                    style: pw.TextStyle(
+                                      font: ttf,
+                                      fontSize: 14,
+                                    ))),
+                                decoration: pw.BoxDecoration(
+                                    shape: pw.BoxShape.rectangle,
+                                    border: pw.Border(
+                                        top: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        bottom:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        right:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        left: pw.BorderSide(
+                                            color: PdfColors.black))
+                                ),
+                                height: 50
+                            )
+                        ),
+                        pw.Expanded(
 
-                        style: pw.TextStyle(
-                          font: ttf,
-                          fontSize: 14,
-                            fontBold: ttf
+                            child: pw.Container(
 
-                        )),
-                    pw.Text(studentReportModel.data!.exams![index].fullDegree!,
-                        textDirection: pw.TextDirection.rtl,
-                        style: pw.TextStyle(
-                          font: ttf,
-                          fontSize: 14,
-                            fontBold: ttf
+                                child: pw.Center(child: pw.Text(
+                                    studentReportModel
+                                        .data!.exams![index].fullDegree!,
+                                    textDirection: pw.TextDirection.rtl,
+                                    style: pw.TextStyle(
+                                        font: ttf,
+                                        fontSize: 14,
+                                        fontBold: ttf)),
+                                ),
+                                decoration: pw.BoxDecoration(
+                                    shape: pw.BoxShape.rectangle,
+                                    border: pw.Border(
+                                        top: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        bottom:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        right:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        left: pw.BorderSide(
+                                            color: PdfColors.black))
+                                ),
+                                height: 50
+                            )),
 
-                        )),
-                    pw.Paragraph(
-                        text:
-                        studentReportModel.data!.exams![index].per!,
-                        style: pw.TextStyle(
-                          font: ttf,
-                          fontSize: 14,
+                        pw.Expanded(
 
-                        )),
-                  ]);
-                })),
+                            child:
+                            pw.Container(
+                                child: pw.Center(child: pw.Text(
+                                    studentReportModel.data!.exams![index]
+                                        .exam!,
+                                    textDirection: pw.TextDirection.rtl,
+                                    style: pw.TextStyle(
+                                        font: ttf,
+                                        fontSize: 14,
+                                        fontBold: ttf))),
+                                decoration: pw.BoxDecoration(
+                                    shape: pw.BoxShape.rectangle,
+                                    border: pw.Border(
+                                        top: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        bottom:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        right:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        left:
+                                        pw.BorderSide(color: PdfColors.black))),
+                                height: 50),
+                            flex: 2),
+                      ]);
+                    }) :
+                    List.generate(
+                        studentReportModel.data!.exams!.length, (index) {
+                      return pw.TableRow(children: [
+                        pw.Expanded(
+
+                            child: pw.Container(
+                                child: pw.Center(child: pw.Text(
+                                    studentReportModel.data!.exams![index]
+                                        .exam!,
+                                    textDirection: pw.TextDirection.rtl,
+                                    style: pw.TextStyle(
+                                        font: ttf,
+                                        fontSize: 14,
+                                        fontBold: ttf))),
+                                decoration: pw.BoxDecoration(
+                                    shape: pw.BoxShape.rectangle,
+                                    border: pw.Border(
+                                        top: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        bottom:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        right:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        left:
+                                        pw.BorderSide(color: PdfColors.black))),
+                                height: 50),
+                            flex: 2),
+                        pw.Expanded(
+                            child: pw.Container(
+                                child: pw.Center(child: pw.Text(
+                                    studentReportModel
+                                        .data!.exams![index].fullDegree!,
+                                    textDirection: pw.TextDirection.rtl,
+                                    style: pw.TextStyle(
+                                        font: ttf,
+                                        fontSize: 14,
+                                        fontBold: ttf)),
+                                ),
+                                decoration: pw.BoxDecoration(
+                                    shape: pw.BoxShape.rectangle,
+                                    border: pw.Border(
+                                        top: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        bottom:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        right:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        left: pw.BorderSide(
+                                            color: PdfColors.black))
+                                ),
+                                height: 50)),
+                        pw.Expanded(
+                            child: pw.Container(
+                                child: pw.Center(child: pw.Text(
+                                    studentReportModel.data!.exams![index].per!,
+                                    style: pw.TextStyle(
+                                      font: ttf,
+                                      fontSize: 14,
+                                    ))),
+                                decoration: pw.BoxDecoration(
+                                    shape: pw.BoxShape.rectangle,
+                                    border: pw.Border(
+                                        top: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        bottom:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        right:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        left: pw.BorderSide(
+                                            color: PdfColors.black))),
+                                height: 50
+                            )
+                        ),
+                      ]);
+                    })),
+                pw.SizedBox(height: 20),
+                pw.Center(
+                    child: pw.SizedBox(
+                      child: pw.Text('paper_exam'.tr(),
+                          textDirection: lan == 'ar' ? pw.TextDirection.rtl : pw
+                              .TextDirection.ltr,
+                          softWrap: true,
+                          tightBounds: true,
+                          overflow: pw.TextOverflow.span,
+                          style: pw.TextStyle(
+                            font: ttf,
+                            fontSize: 40,
+                            fontBold: tamilFont,
+                          )),
+                    )),
+                pw.SizedBox(height: 2),
                 pw.Table(
-                    children: List.generate(
+                    children:
+                    lan == 'ar' ?
+                    List.generate(
                         studentReportModel.data!.papelSheet!.length, (index) {
-                  return pw.TableRow(children: [
-                    pw.Text(studentReportModel.data!.papelSheet![index].exam!,
-                        textDirection: pw.TextDirection.rtl,
-                        style: pw.TextStyle(
-                          font: ttf,
-                          fontSize: 14,
-                             fontBold: ttf
-                        )),
-                    pw.Text(studentReportModel
-                        .data!.papelSheet![index].fullDegree!),
-                    pw.Text(studentReportModel.data!.papelSheet![index].per!,
-                        textDirection: pw.TextDirection.rtl,
-                        style: pw.TextStyle(
-                            font: ttf, fontSize: 14, fontBold: ttf)),
-                  ]);
-                })),
+                      return pw.TableRow(children: [
+                        pw.Expanded(
+                          child: pw.Container(
+                              child: pw.Center(child: pw.Text(
+                                  studentReportModel
+                                      .data!.papelSheet![index].per!,
+                                  textDirection: pw.TextDirection.rtl,
+                                  style: pw.TextStyle(
+                                      font: ttf,
+                                      fontSize: 14,
+                                      fontBold: ttf))),
+                              decoration: pw.BoxDecoration(
+                                  shape: pw.BoxShape.rectangle,
+                                  border: pw.Border(
+                                      top: pw.BorderSide(
+                                          color: PdfColors.black),
+                                      bottom:
+                                      pw.BorderSide(color: PdfColors.black),
+                                      right:
+                                      pw.BorderSide(color: PdfColors.black),
+                                      left: pw.BorderSide(
+                                          color: PdfColors.black))),
+                              height: 50
+                          ),
+
+                        ),
+                        pw.Expanded(
+
+                            child: pw.Container(
+                                child:
+                                pw.Center(child: pw.Text(
+                                    studentReportModel
+                                        .data!.papelSheet![index].fullDegree!,
+                                    textDirection: pw.TextDirection.rtl,
+                                    style: pw.TextStyle(
+                                        font: ttf,
+                                        fontSize: 14,
+                                        fontBold: ttf))),
+                                decoration: pw.BoxDecoration(
+                                    shape: pw.BoxShape.rectangle,
+                                    border: pw.Border(
+                                        top: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        bottom:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        right:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        left: pw.BorderSide(
+                                            color: PdfColors.black))
+                                ),
+                                height: 50
+                            )
+                        ),
+
+                        pw.Expanded(
+                            child: pw.Container(
+                                child: pw.Center(child: pw.Text(
+                                    studentReportModel.data!.papelSheet![index]
+                                        .exam!,
+                                    textDirection: pw.TextDirection.rtl,
+                                    style: pw.TextStyle(
+                                        font: ttf,
+                                        fontSize: 14,
+                                        fontBold: ttf))),
+                                decoration: pw.BoxDecoration(
+                                    shape: pw.BoxShape.rectangle,
+                                    border: pw.Border(
+                                        top: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        bottom: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        right: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        left: pw.BorderSide(
+                                            color: PdfColors.black))),
+                                height: 50
+                            ),
+                            flex: 2
+                        ),
+
+                      ]);
+                    }) :
+                    List.generate(
+                        studentReportModel.data!.papelSheet!.length, (index) {
+                      return pw.TableRow(children: [
+                        pw.Expanded(
+                            child: pw.Container(
+                                child: pw.Center(child: pw.Text(
+                                    studentReportModel.data!.papelSheet![index]
+                                        .exam!,
+                                    textDirection: pw.TextDirection.rtl,
+                                    style: pw.TextStyle(
+                                        font: ttf,
+                                        fontSize: 14,
+                                        fontBold: ttf))),
+                                decoration: pw.BoxDecoration(
+                                    shape: pw.BoxShape.rectangle,
+                                    border: pw.Border(
+                                        top: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        bottom: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        right: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        left: pw.BorderSide(
+                                            color: PdfColors.black))),
+                                height: 50
+
+                            ),
+                            flex: 2),
+                        pw.Expanded(
+
+                          child: pw.Container(
+                              child:
+                              pw.Center(child: pw.Text(
+                                  studentReportModel
+                                      .data!.papelSheet![index].fullDegree!,
+                                  textDirection: pw.TextDirection.rtl,
+                                  style: pw.TextStyle(
+                                      font: ttf, fontSize: 14, fontBold: ttf))),
+                              decoration: pw.BoxDecoration(
+                                  shape: pw.BoxShape.rectangle,
+                                  border: pw.Border(
+                                      top: pw.BorderSide(
+                                          color: PdfColors.black),
+                                      bottom:
+                                      pw.BorderSide(color: PdfColors.black),
+                                      right:
+                                      pw.BorderSide(color: PdfColors.black),
+                                      left: pw.BorderSide(
+                                          color: PdfColors.black))),
+                              height: 50
+                          )
+                          ,
+                        ),
+                        pw.Expanded(
+                            child: pw.Container(
+
+                                child: pw.Center(child: pw.Text(
+                                    studentReportModel
+                                        .data!.papelSheet![index].per!,
+                                    textDirection: pw.TextDirection.rtl,
+                                    style: pw.TextStyle(
+                                        font: ttf,
+                                        fontSize: 14,
+                                        fontBold: ttf))),
+                                decoration: pw.BoxDecoration(
+                                    shape: pw.BoxShape.rectangle,
+                                    border: pw.Border(
+                                        top: pw.BorderSide(
+                                            color: PdfColors.black),
+                                        bottom:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        right:
+                                        pw.BorderSide(color: PdfColors.black),
+                                        left: pw.BorderSide(
+                                            color: PdfColors.black))),
+                                height: 50
+
+                            )),
+                      ]);
+                    })),
               ])),
     );
     var dir = await (Platform.isIOS

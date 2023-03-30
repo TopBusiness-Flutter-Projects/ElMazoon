@@ -138,7 +138,9 @@
  "live_exam": "Live Exam",
  "degree": "Degree",
  "percentage": "Percentage",
- "completed_live_exam": "Live Exam is Completed"
+ "completed_live_exam": "Live Exam is Completed",
+ "app_exam": "App Exam",
+ "paper_exam": "Paper Exam"
 
 
 
