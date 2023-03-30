@@ -9,6 +9,7 @@ import 'package:elmazoon/core/utils/toast_message_method.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../../core/models/user_model.dart';
 import '../models/communication_model.dart';
 
 part 'login_state.dart';
@@ -51,7 +52,7 @@ class LoginCubit extends Cubit<LoginState> {
             emit(userInitial());
           });
           Preferences.instance.setUser(response);
-          emit(userLoaded());
+          emit(userLoaded(response));
         }
       },
     );

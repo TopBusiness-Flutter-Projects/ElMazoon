@@ -6,7 +6,11 @@ abstract class LoginState {}
 class userInitial extends LoginState {}
 
 class userLoading extends LoginState {}
-class userLoaded extends LoginState {}
+class userLoaded extends LoginState {
+  final UserModel userModel;
+
+  userLoaded(this.userModel);
+}
 class userError extends LoginState {}
 
 

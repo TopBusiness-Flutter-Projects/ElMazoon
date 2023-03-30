@@ -12,6 +12,7 @@ import '../../../../../core/utils/assets_manager.dart';
 import '../../../../../core/widgets/circle_image_widget.dart';
 import '../../../core/utils/call_method.dart';
 import '../../../core/utils/show_dialog.dart';
+import '../../mainscreens/profilePage/screens/profile_page_deatils.dart';
 import '../../navigation_bottom/screens/navigation_bottom.dart';
 import '../cubit/login_cubit.dart';
 
@@ -79,17 +80,30 @@ class _userScreenState extends State<LoginScreen> {
                                 );
                               },
                             );
-                            Navigator.pushAndRemoveUntil(
+                            if (state.userModel.data!.dateEndCode
+                                .isBefore(DateTime.now())) {
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 PageTransition(
                                   type: PageTransitionType.fade,
                                   alignment: Alignment.center,
                                   duration: const Duration(milliseconds: 1300),
-                                  child: NavigatorBar(
-                                      // userDataModel: userDataModel,
-                                      ),
+                                  child: ProfilePageDetails(),
                                 ),
-                                (route) => false);
+                                (route) => false,
+                              );
+                            } else {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  alignment: Alignment.center,
+                                  duration: const Duration(milliseconds: 1300),
+                                  child: NavigatorBar(),
+                                ),
+                                (route) => false,
+                              );
+                            }
                           },
                         );
                       }
@@ -390,7 +404,8 @@ class _userScreenState extends State<LoginScreen> {
                               children: [
                                 Text(cubit
                                     .communicationData!.phones[index].phone),
-                                Text(cubit.communicationData!.phones[index].note)
+                                Text(
+                                    cubit.communicationData!.phones[index].note)
                               ],
                             ),
                           )
