@@ -15,6 +15,8 @@ class PageError extends ProfileState {}
 
 class PickImageSuccess extends ProfileState {}
 
+class MonthTestSuccess extends ProfileState {}
+
 class ProfileUpdateLoading extends ProfileState {}
 class ProfileUpdateLoaded extends ProfileState {}
 class ProfileUpdateError extends ProfileState {}

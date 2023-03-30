@@ -18,7 +18,9 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
  await PushNotificationService.instance.initialise();
+
   print('ooooooooooooooooooo');
   print("Handling a background message:");
 
@@ -34,7 +36,8 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await PushNotificationService().initialise();
+  await PushNotificationService.instance.initialise();
+
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,

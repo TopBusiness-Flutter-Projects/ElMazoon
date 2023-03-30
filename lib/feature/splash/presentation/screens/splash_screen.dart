@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen>
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserModel userModel = await Preferences.instance.getUserModel();
     if (prefs.getString('user') != null) {
-      if(userModel.data!.dateEndCode.isAfter(DateTime.now())){
+      if(userModel.data!.dateEndCode.isBefore(DateTime.now())){
         Navigator.pushReplacement(
           context,
           PageTransition(
@@ -53,6 +53,7 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         );
       }else{
+
         if (context.read<SplashCubit>().adsList.isNotEmpty) {
           Navigator.pushReplacement(
             context,
@@ -76,6 +77,7 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           );
         }
+
       }
     } else {
       Navigator.pushNamedAndRemoveUntil(

@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
+import 'package:elmazoon/core/utils/toast_message_method.dart';
 import 'package:elmazoon/core/widgets/show_loading_indicator.dart';
 import 'package:elmazoon/feature/payment/cubit/payment_cubit.dart';
 import 'package:elmazoon/feature/payment/cubit/payment_cubit.dart';
@@ -16,6 +17,8 @@ class PaymentMonthList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String lang = EasyLocalization.of(context)!.locale.languageCode;
+
     return Scaffold(
       appBar: CustomAppBarWidget(appBarTitle: 'payment_online'.tr()),
       body: BlocBuilder<PaymentCubit, PaymentState>(
@@ -52,12 +55,9 @@ class PaymentMonthList extends StatelessWidget {
                       print(cubit.tempSubscribesList.length);
                       print(cubit.totalPayment);
                       print(cubit.paymentList);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PayScreen(),
-                        ),
-                      );
+                      print(cubit.monthNumber);
+                      cubit.testMonth(context,lang);
+
                     },
                   ),
                 ],
