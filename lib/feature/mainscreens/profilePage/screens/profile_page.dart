@@ -14,9 +14,11 @@ import '../../../../core/utils/restart_app_class.dart';
 import '../../../../core/utils/show_dialog.dart';
 import '../../../exam_hero/screens/exam_hero.dart';
 import '../../../live_exam/screens/live_exam_screen.dart';
+import '../widgets/customAppbar.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({Key? key, this.isAppBar = false}) : super(key: key);
+  final bool? isAppBar;
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -27,28 +29,43 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     String lang = EasyLocalization.of(context)!.locale.languageCode;
     return Scaffold(
+      appBar: widget.isAppBar!?AppBar(
+        toolbarHeight: 90,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+          child: CustomAppBar(),
+        ),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(ImageAssets.appBarImage),
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
+      ):null,
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
           child: Column(
             children: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LiveExamScreen(),
-                    ),
-                  );
-                },
-                child: ProfileItemWidget(
-                  image: ImageAssets.downloadVideoIcon,
-                  title: 'live_exam'.tr(),
-                  subTitle: 'live_exam'.tr(),
-                ),
-              ),
-              const SizedBox(height: 30),
+              // InkWell(
+              //   onTap: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => LiveExamScreen(),
+              //       ),
+              //     );
+              //   },
+              //   child: ProfileItemWidget(
+              //     image: ImageAssets.downloadVideoIcon,
+              //     title: 'live_exam'.tr(),
+              //     subTitle: 'live_exam'.tr(),
+              //   ),
+              // ),
+              // const SizedBox(height: 30),
               InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, Routes.downloadsRoute);
@@ -59,8 +76,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   subTitle: 'downloads_videos'.tr(),
                 ),
               ),
-              const SizedBox(height: 30),
-              InkWell(
+            widget.isAppBar!? SizedBox():  const SizedBox(height: 30),
+              widget.isAppBar!? SizedBox():InkWell(
                 onTap: () {
                   context.read<ProfileCubit>().getTimes(context);
                 },
@@ -246,22 +263,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   subTitle: 'contact_us'.tr(),
                 ),
               ),
-              const SizedBox(height: 30),
-              InkWell(
-                onTap: () {
-                  lang == 'ar'
-                      ? EasyLocalization.of(context)!
-                          .setLocale(const Locale('en'))
-                      : EasyLocalization.of(context)!
-                          .setLocale(const Locale('ar'));
-                  HotRestartController.performHotRestart(context);
-                },
-                child: ProfileItemWidget(
-                  image: ImageAssets.languageIcon,
-                  title: 'language'.tr(),
-                  subTitle: 'language_type'.tr(),
-                ),
-              ),
+              // const SizedBox(height: 30),
+              // InkWell(
+              //   onTap: () {
+              //     lang == 'ar'
+              //         ? EasyLocalization.of(context)!
+              //             .setLocale(const Locale('en'))
+              //         : EasyLocalization.of(context)!
+              //             .setLocale(const Locale('ar'));
+              //     HotRestartController.performHotRestart(context);
+              //   },
+              //   child: ProfileItemWidget(
+              //     image: ImageAssets.languageIcon,
+              //     title: 'language'.tr(),
+              //     subTitle: 'language_type'.tr(),
+              //   ),
+              // ),
               const SizedBox(height: 30),
               InkWell(
                 onTap: () {

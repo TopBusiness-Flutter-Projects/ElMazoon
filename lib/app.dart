@@ -47,17 +47,17 @@ class _ElmazoonState extends State<Elmazoon> {
 
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-  late ScreenshotCallback screenshotCallback;
-  final _noScreenshot = NoScreenshot.instance;
-  screenshotsOff() async{
-    await _noScreenshot.screenshotOff();
-
-    // print('screenshots Off');
-  }
-  String text = "Ready..";
+  // late ScreenshotCallback screenshotCallback;
+  // final _noScreenshot = NoScreenshot.instance;
+  // screenshotsOff() async{
+  //   await _noScreenshot.screenshotOff();
+  //
+  //   // print('screenshots Off');
+  // }
+  // String text = "Ready..";
   @override
   void initState() {
-    screenshotsOff();
+    // screenshotsOff();
     super.initState();
 
     initConnectivity();
@@ -79,34 +79,34 @@ class _ElmazoonState extends State<Elmazoon> {
       }
       _updateConnectionStatus(event);
     });
-    init();
+    // init();
   }
 
-  void init() async {
-    await initScreenshotCallback();
-  }
-
-  //It must be created after permission is granted.
-  Future<void> initScreenshotCallback() async {
-    screenshotCallback = ScreenshotCallback();
-screenshotCallback.initialize();
-
-print("D;d;lelekle");
-    screenshotCallback.addListener(() {
-      setState(() {
-        text = "Screenshot callback Fired!";
-      });
-    });
-
-    screenshotCallback.addListener(() {
-      print("We can add multiple listeners ");
-    });
-  }
+//   void init() async {
+//     await initScreenshotCallback();
+//   }
+//
+//   //It must be created after permission is granted.
+//   Future<void> initScreenshotCallback() async {
+//     screenshotCallback = ScreenshotCallback();
+// screenshotCallback.initialize();
+//
+// print("D;d;lelekle");
+//     screenshotCallback.addListener(() {
+//       setState(() {
+//         text = "Screenshot callback Fired!";
+//       });
+//     });
+//
+//     screenshotCallback.addListener(() {
+//       print("We can add multiple listeners ");
+//     });
+//   }
 
 
   @override
   void dispose() {
-    screenshotCallback.dispose();
+    // screenshotCallback.dispose();
     _connectivitySubscription.cancel();
     super.dispose();
   }
@@ -133,7 +133,7 @@ print("D;d;lelekle");
 
   @override
   Widget build(BuildContext context) {
-    print(text);
+    // print(text);
 
     Preferences.instance.savedLang(
       EasyLocalization.of(context)!.locale.languageCode,
@@ -195,6 +195,7 @@ print("D;d;lelekle");
       child: MaterialApp(
         supportedLocales: context.supportedLocales,
         locale: context.locale,
+        theme: ThemeData(fontFamily: 'Cairo'),
         localizationsDelegates: context.localizationDelegates,
         debugShowCheckedModeBanner: false,
         title: AppStrings.appName,

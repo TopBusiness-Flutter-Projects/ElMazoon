@@ -96,7 +96,7 @@ class PushNotificationService {
 
       checkData(message);
     });
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
 
   }

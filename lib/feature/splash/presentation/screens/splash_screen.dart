@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/models/user_model.dart';
 import '../../../live_exam/screens/live_exam_screen.dart';
+import '../../../mainscreens/profilePage/screens/profile_page.dart';
 import '../../../mainscreens/profilePage/screens/profile_page_deatils.dart';
 import '../../../navigation_bottom/screens/navigation_bottom.dart';
 
@@ -43,14 +44,14 @@ class _SplashScreenState extends State<SplashScreen>
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserModel userModel = await Preferences.instance.getUserModel();
     if (prefs.getString('user') != null) {
-      if(userModel.data!.dateEndCode.isAfter(DateTime.now())){
+      if(userModel.data!.dateEndCode.isBefore(DateTime.now())){
         Navigator.pushReplacement(
           context,
           PageTransition(
             type:  PageTransitionType.rightToLeft,
             alignment: Alignment.centerRight,
             duration: const Duration(milliseconds: 700),
-            child: ProfilePageDetails(),
+            child: ProfilePage(isAppBar: true),
             childCurrent: SplashScreen(),
           ),
         );
