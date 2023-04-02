@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:screenshot_callback/screenshot_callback.dart';
 
 import 'core/preferences/preferences.dart';
 import 'core/utils/app_colors.dart';
@@ -15,6 +16,7 @@ import 'core/utils/app_strings.dart';
 import 'package:elmazoon/injector.dart' as injector;
 import 'dart:developer' as developer;
 import 'package:path/path.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 
 import 'feature/downloads_videos/cubit/downloads_videos_cubit.dart';
 import 'feature/exam/cubit/exam_cubit.dart';
@@ -42,12 +44,22 @@ class Elmazoon extends StatefulWidget {
 
 class _ElmazoonState extends State<Elmazoon> {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
+
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  late ScreenshotCallback screenshotCallback;
+  final _noScreenshot = NoScreenshot.instance;
+  screenshotsOff() async{
+    await _noScreenshot.screenshotOff();
 
+    // print('screenshots Off');
+  }
+  String text = "Ready..";
   @override
   void initState() {
+    screenshotsOff();
     super.initState();
+
     initConnectivity();
 
     _connectivitySubscription =
@@ -67,10 +79,34 @@ class _ElmazoonState extends State<Elmazoon> {
       }
       _updateConnectionStatus(event);
     });
+    init();
   }
+
+  void init() async {
+    await initScreenshotCallback();
+  }
+
+  //It must be created after permission is granted.
+  Future<void> initScreenshotCallback() async {
+    screenshotCallback = ScreenshotCallback();
+screenshotCallback.initialize();
+
+print("D;d;lelekle");
+    screenshotCallback.addListener(() {
+      setState(() {
+        text = "Screenshot callback Fired!";
+      });
+    });
+
+    screenshotCallback.addListener(() {
+      print("We can add multiple listeners ");
+    });
+  }
+
 
   @override
   void dispose() {
+    screenshotCallback.dispose();
     _connectivitySubscription.cancel();
     super.dispose();
   }
@@ -97,6 +133,8 @@ class _ElmazoonState extends State<Elmazoon> {
 
   @override
   Widget build(BuildContext context) {
+    print(text);
+
     Preferences.instance.savedLang(
       EasyLocalization.of(context)!.locale.languageCode,
     );

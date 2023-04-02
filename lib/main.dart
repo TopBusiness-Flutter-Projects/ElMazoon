@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:elmazoon/injector.dart' as injector;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:screen_capture_event/screen_capture_event.dart';
 import 'dart:async';
 
 import 'app.dart';
@@ -31,12 +33,15 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await PushNotificationService.instance.initialise();
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -57,4 +62,9 @@ Future<void> main() async {
       child: HotRestartController(child: const Elmazoon()),
     ),
   );
+
+
 }
+
+
+
