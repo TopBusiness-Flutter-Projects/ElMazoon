@@ -44,6 +44,29 @@ class _SplashScreenState extends State<SplashScreen>
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserModel userModel = await Preferences.instance.getUserModel();
     if (prefs.getString('user') != null) {
+      if (userModel.data!.dateEndCode.isBefore(DateTime.now())) {
+        DateTime now = new DateTime.now();
+
+        DateTime timeStart = DateTime.parse(
+            '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeStart}');
+        DateTime timeEnd = DateTime.parse(
+            '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeEnd}');
+
+        print('##################################');
+        print(now);
+        print(userModel.data!.dateEndCode);
+        print(timeStart);
+        print(timeEnd);
+        print('##################################');
+
+        if (now.compareTo(timeStart) < 0) {
+          print("DT1 is before DT2");
+        }
+
+        if (now.compareTo(timeEnd) > 0) {
+          print("DT1 is after DT2");
+        }
+
       if(userModel.data!.dateEndCode.isBefore(DateTime.now())){
         Navigator.pushReplacement(
           context,
@@ -55,35 +78,7 @@ class _SplashScreenState extends State<SplashScreen>
             childCurrent: SplashScreen(),
           ),
         );
-      }
-      else{
-
-        DateTime now = new DateTime.now();
-        DateTime date1 = new DateTime(now.year,now.month,now.day);
-        DateTime date = new DateTime(now.hour, now.minute, now.second);
-        DateTime dt1 = DateFormat("hh:mm:ss").parse(context.read<SplashCubit>().lifeExam.timeStart!);
-        DateTime dt2 = DateFormat("hh:mm:ss").parse(context.read<SplashCubit>().lifeExam.timeEnd!);
-       print(date.hour);
-
-        if((dt1.isAtSameMomentAs(date)||dt1.isBefore(date))){
-          print("Dd;ldldldl");
-        }
-        if(context.read<SplashCubit>().lifeExam.dateExam!.isAtSameMomentAs(date1)&&
-            (
-
-                (dt1.isAtSameMomentAs(date)||dt1.isBefore(date))&&
-                    date.isBefore(dt2)
-            )
-        ){
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LiveExamScreen(),
-            ),
-          );
-        }
-        else{
+      } else {
         if (context.read<SplashCubit>().adsList.isNotEmpty) {
           Navigator.pushReplacement(
             context,
@@ -96,8 +91,7 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
           );
-        }
-        else {
+        } else {
           Navigator.pushReplacement(
             context,
             PageTransition(
@@ -108,7 +102,31 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           );
         }
-      }}
+        // DateTime now = new DateTime.now();
+        // DateTime timeStart = DateTime.parse(
+        //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeStart}');
+        // DateTime timeEnd = DateTime.parse(
+        //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeEnd}');
+        //
+        // if (now.isAtSameMomentAs(timeStart) ||
+        //     now.isAtSameMomentAs(timeEnd) ||
+        //     now.isAfter(timeStart) ) {
+        //
+        //   print(now.isAtSameMomentAs(timeStart));
+        //   print(now.isAtSameMomentAs(timeEnd));
+        //   // print(now.isBefore(timeEnd));
+        //   print(now.isBefore(timeEnd));
+        //   // print(now.isBefore(timeStart));
+        //   print(now.isAfter(timeStart));
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => LiveExamScreen()
+        //     ),
+        //   );
+        // } else {
+        // }
+      }
     } else {
       Navigator.pushNamedAndRemoveUntil(
         context,
