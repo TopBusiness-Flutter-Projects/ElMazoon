@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/preferences/preferences.dart';
 import 'package:elmazoon/core/utils/app_routes.dart';
 import 'package:elmazoon/feature/splash/presentation/cubit/splash_cubit.dart';
@@ -10,9 +9,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/models/user_model.dart';
-import '../../../live_exam/screens/live_exam_screen.dart';
 import '../../../mainscreens/profilePage/screens/profile_page.dart';
-import '../../../mainscreens/profilePage/screens/profile_page_deatils.dart';
 import '../../../navigation_bottom/screens/navigation_bottom.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -46,7 +43,6 @@ class _SplashScreenState extends State<SplashScreen>
     if (prefs.getString('user') != null) {
       if (userModel.data!.dateEndCode.isBefore(DateTime.now())) {
         DateTime now = new DateTime.now();
-
         DateTime timeStart = DateTime.parse(
             '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeStart}');
         DateTime timeEnd = DateTime.parse(
@@ -67,74 +63,75 @@ class _SplashScreenState extends State<SplashScreen>
           print("DT1 is after DT2");
         }
 
-      if(userModel.data!.dateEndCode.isBefore(DateTime.now())){
-        Navigator.pushReplacement(
-          context,
-          PageTransition(
-            type:  PageTransitionType.rightToLeft,
-            alignment: Alignment.centerRight,
-            duration: const Duration(milliseconds: 700),
-            child: ProfilePage(isAppBar: true),
-            childCurrent: SplashScreen(),
-          ),
-        );
-      } else {
-        if (context.read<SplashCubit>().adsList.isNotEmpty) {
+        if (userModel.data!.dateEndCode.isBefore(DateTime.now())) {
           Navigator.pushReplacement(
             context,
             PageTransition(
-              type: PageTransitionType.fade,
-              alignment: Alignment.center,
-              duration: const Duration(milliseconds: 1300),
-              child: PopAdsScreen(
-                adsDatum: context.read<SplashCubit>().adsList.first,
-              ),
+              type: PageTransitionType.rightToLeft,
+              alignment: Alignment.centerRight,
+              duration: const Duration(milliseconds: 700),
+              child: ProfilePage(isAppBar: true),
+              childCurrent: SplashScreen(),
             ),
           );
         } else {
-          Navigator.pushReplacement(
-            context,
-            PageTransition(
-              type: PageTransitionType.fade,
-              alignment: Alignment.center,
-              duration: const Duration(milliseconds: 1300),
-              child: NavigatorBar(),
-            ),
-          );
+          if (context.read<SplashCubit>().adsList.isNotEmpty) {
+            Navigator.pushReplacement(
+              context,
+              PageTransition(
+                type: PageTransitionType.fade,
+                alignment: Alignment.center,
+                duration: const Duration(milliseconds: 1300),
+                child: PopAdsScreen(
+                  adsDatum: context.read<SplashCubit>().adsList.first,
+                ),
+              ),
+            );
+          } else {
+            Navigator.pushReplacement(
+              context,
+              PageTransition(
+                type: PageTransitionType.fade,
+                alignment: Alignment.center,
+                duration: const Duration(milliseconds: 1300),
+                child: NavigatorBar(),
+              ),
+            );
+          }
+          // DateTime now = new DateTime.now();
+          // DateTime timeStart = DateTime.parse(
+          //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeStart}');
+          // DateTime timeEnd = DateTime.parse(
+          //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeEnd}');
+          //
+          // if (now.isAtSameMomentAs(timeStart) ||
+          //     now.isAtSameMomentAs(timeEnd) ||
+          //     now.isAfter(timeStart) ) {
+          //
+          //   print(now.isAtSameMomentAs(timeStart));
+          //   print(now.isAtSameMomentAs(timeEnd));
+          //   // print(now.isBefore(timeEnd));
+          //   print(now.isBefore(timeEnd));
+          //   // print(now.isBefore(timeStart));
+          //   print(now.isAfter(timeStart));
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => LiveExamScreen()
+          //     ),
+          //   );
+          // } else {
+          // }
         }
-        // DateTime now = new DateTime.now();
-        // DateTime timeStart = DateTime.parse(
-        //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeStart}');
-        // DateTime timeEnd = DateTime.parse(
-        //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeEnd}');
-        //
-        // if (now.isAtSameMomentAs(timeStart) ||
-        //     now.isAtSameMomentAs(timeEnd) ||
-        //     now.isAfter(timeStart) ) {
-        //
-        //   print(now.isAtSameMomentAs(timeStart));
-        //   print(now.isAtSameMomentAs(timeEnd));
-        //   // print(now.isBefore(timeEnd));
-        //   print(now.isBefore(timeEnd));
-        //   // print(now.isBefore(timeStart));
-        //   print(now.isAfter(timeStart));
-        //   Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => LiveExamScreen()
-        //     ),
-        //   );
-        // } else {
-        // }
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          Routes.loginRoute,
+          ModalRoute.withName(
+            Routes.initialRoute,
+          ),
+        );
       }
-    } else {
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        Routes.loginRoute,
-        ModalRoute.withName(
-          Routes.initialRoute,
-        ),
-      );
     }
   }
 
