@@ -40,6 +40,7 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _getStoreUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserModel userModel = await Preferences.instance.getUserModel();
+
     if (prefs.getString('user') != null) {
       if (userModel.data!.dateEndCode.isBefore(DateTime.now())) {
         DateTime now = new DateTime.now();
@@ -62,76 +63,73 @@ class _SplashScreenState extends State<SplashScreen>
         if (now.compareTo(timeEnd) > 0) {
           print("DT1 is after DT2");
         }
-
-        if (userModel.data!.dateEndCode.isBefore(DateTime.now())) {
+        Navigator.pushReplacement(
+          context,
+          PageTransition(
+            type: PageTransitionType.rightToLeft,
+            alignment: Alignment.centerRight,
+            duration: const Duration(milliseconds: 700),
+            child: ProfilePage(isAppBar: true),
+            childCurrent: SplashScreen(),
+          ),
+        );
+      } else {
+        if (context.read<SplashCubit>().adsList.isNotEmpty) {
           Navigator.pushReplacement(
             context,
             PageTransition(
-              type: PageTransitionType.rightToLeft,
-              alignment: Alignment.centerRight,
-              duration: const Duration(milliseconds: 700),
-              child: ProfilePage(isAppBar: true),
-              childCurrent: SplashScreen(),
+              type: PageTransitionType.fade,
+              alignment: Alignment.center,
+              duration: const Duration(milliseconds: 1300),
+              child: PopAdsScreen(
+                adsDatum: context.read<SplashCubit>().adsList.first,
+              ),
             ),
           );
         } else {
-          if (context.read<SplashCubit>().adsList.isNotEmpty) {
-            Navigator.pushReplacement(
-              context,
-              PageTransition(
-                type: PageTransitionType.fade,
-                alignment: Alignment.center,
-                duration: const Duration(milliseconds: 1300),
-                child: PopAdsScreen(
-                  adsDatum: context.read<SplashCubit>().adsList.first,
-                ),
-              ),
-            );
-          } else {
-            Navigator.pushReplacement(
-              context,
-              PageTransition(
-                type: PageTransitionType.fade,
-                alignment: Alignment.center,
-                duration: const Duration(milliseconds: 1300),
-                child: NavigatorBar(),
-              ),
-            );
-          }
-          // DateTime now = new DateTime.now();
-          // DateTime timeStart = DateTime.parse(
-          //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeStart}');
-          // DateTime timeEnd = DateTime.parse(
-          //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeEnd}');
-          //
-          // if (now.isAtSameMomentAs(timeStart) ||
-          //     now.isAtSameMomentAs(timeEnd) ||
-          //     now.isAfter(timeStart) ) {
-          //
-          //   print(now.isAtSameMomentAs(timeStart));
-          //   print(now.isAtSameMomentAs(timeEnd));
-          //   // print(now.isBefore(timeEnd));
-          //   print(now.isBefore(timeEnd));
-          //   // print(now.isBefore(timeStart));
-          //   print(now.isAfter(timeStart));
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => LiveExamScreen()
-          //     ),
-          //   );
-          // } else {
-          // }
+          Navigator.pushReplacement(
+            context,
+            PageTransition(
+              type: PageTransitionType.fade,
+              alignment: Alignment.center,
+              duration: const Duration(milliseconds: 1300),
+              child: NavigatorBar(),
+            ),
+          );
         }
-      } else {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          Routes.loginRoute,
-          ModalRoute.withName(
-            Routes.initialRoute,
-          ),
-        );
+        // DateTime now = new DateTime.now();
+        // DateTime timeStart = DateTime.parse(
+        //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeStart}');
+        // DateTime timeEnd = DateTime.parse(
+        //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeEnd}');
+        //
+        // if (now.isAtSameMomentAs(timeStart) ||
+        //     now.isAtSameMomentAs(timeEnd) ||
+        //     now.isAfter(timeStart) ) {
+        //
+        //   print(now.isAtSameMomentAs(timeStart));
+        //   print(now.isAtSameMomentAs(timeEnd));
+        //   // print(now.isBefore(timeEnd));
+        //   print(now.isBefore(timeEnd));
+        //   // print(now.isBefore(timeStart));
+        //   print(now.isAfter(timeStart));
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => LiveExamScreen()
+        //     ),
+        //   );
+        // } else {
+        // }
       }
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        Routes.loginRoute,
+        ModalRoute.withName(
+          Routes.initialRoute,
+        ),
+      );
     }
   }
 

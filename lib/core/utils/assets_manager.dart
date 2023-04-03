@@ -48,10 +48,13 @@ class ImageAssets {
   static const String paymentOnlineIcon = '$iconsPath/payment_online.svg';
   static const String paymentCashIcon = '$iconsPath/payment_cash.svg';
   static const String downloadVideoIcon = '$iconsPath/download_video.svg';
+  static const String likeIcon = '$iconsPath/like.svg';
+  static const String dislikeIcon = '$iconsPath/dislike.svg';
 
 
   //Lottie
-  static const String noUser = '$lottiePath/no_item.json';
+  static const String noItems = '$lottiePath/no_item.json';
   static const String noExam = '$lottiePath/no_exam.json';
+  static const String noLessons = '$lottiePath/no_lessons.json';
 
 }

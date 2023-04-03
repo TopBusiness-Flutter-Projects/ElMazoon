@@ -189,25 +189,38 @@ class _NavigatorBarState extends State<NavigatorBar> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'hello'.tr(),
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: AppColors.white,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'hello'.tr(),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: AppColors.white,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Text(
+                        context.read<NavigationCubit>().userModel != null
+                            ? context
+                                .read<NavigationCubit>()
+                                .userModel!
+                                .data!
+                                .name
+                            : '',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 8),
                   Text(
-                    context.read<NavigationCubit>().userModel != null
-                        ? context.read<NavigationCubit>().userModel!.data!.name
-                        : '',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
-                    ),
-                  ),
+                    monthSeason(),
+                    style: TextStyle(fontSize: 14),
+                  )
                 ],
               ),
               SizedBox(
@@ -248,6 +261,15 @@ class _NavigatorBarState extends State<NavigatorBar> {
       );
     } else {
       return const CustomAppBar();
+    }
+  }
+
+  String monthSeason() {
+    int nowMonth = DateTime.now().month;
+    if (nowMonth >= DateTime.august) {
+      return '${DateTime.now().year}/${DateTime.now().year + 1}';
+    } else {
+      return '${DateTime.now().year - 1}/${DateTime.now().year}';
     }
   }
 }

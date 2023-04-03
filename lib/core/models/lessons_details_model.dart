@@ -117,6 +117,9 @@ class Lessons {
      this.ordered,
      this.downloadSavedPath,
      this.status,
+     this.rate,
+     this.likeCount,
+     this.dislikeCount,
      this.videoTime,
      this.createdAt,
      this.updatedAt,
@@ -131,6 +134,9 @@ class Lessons {
   String? downloadSavedPath;
   int? ordered;
   String? status;
+  String? rate;
+  int? likeCount;
+  int? dislikeCount;
   int? videoTime;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -144,6 +150,9 @@ class Lessons {
     type: json["type"],
     ordered: json["ordered"],
     status: json["status"],
+    rate: json["rate"],
+    likeCount: json["like_count"],
+    dislikeCount: json["dislike_count"],
     videoTime: json["video_time"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
@@ -158,6 +167,9 @@ class Lessons {
     "type": type,
     "ordered": ordered,
     "status": status,
+    "rate": rate,
+    "like_count": likeCount,
+    "dislike_count": dislikeCount,
     "video_time": videoTime,
     "created_at": "${createdAt!.year.toString().padLeft(4, '0')}-${createdAt!.month.toString().padLeft(2, '0')}-${createdAt!.day.toString().padLeft(2, '0')}",
     "updated_at": "${updatedAt!.year.toString().padLeft(4, '0')}-${updatedAt!.month.toString().padLeft(2, '0')}-${updatedAt!.day.toString().padLeft(2, '0')}",

@@ -140,7 +140,9 @@
  "percentage": "Percentage",
  "completed_live_exam": "Live Exam is Completed",
  "app_exam": "App Exam",
- "paper_exam": "Paper Exam"
+ "paper_exam": "Paper Exam",
+ "no_lessons": "Lessons have not yet been uploaded",
+ "no_lessons_data": "Data of Lessons have not yet been uploaded"
 
 
 
