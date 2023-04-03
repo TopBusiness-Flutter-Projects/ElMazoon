@@ -60,8 +60,9 @@ class _VideoScreenState extends State<VideoScreen> {
                           LikeButton(
                             size: 40,
                             circleColor: CircleColor(
-                                start: Color(0xff2e7dea),
-                                end: Color(0xff2e7dea)),
+                              start: Color(0xff2e7dea),
+                              end: Color(0xff2e7dea),
+                            ),
                             bubblesColor: BubblesColor(
                               dotPrimaryColor: Color(0xff2e7dea),
                               dotSecondaryColor: Color(0xff2e7dea),
@@ -99,11 +100,9 @@ class _VideoScreenState extends State<VideoScreen> {
                                             : widget.lessons.likeCount! + 1;
 
                                 widget.lessons.dislikeCount =
-                                widget.lessons.rate == 'dislike'
-                                    ? null
-                                    : widget.lessons.rate == 'no_rate'
-                                    ? widget.lessons.likeCount! - 1
-                                    : widget.lessons.likeCount! + 1;
+                                    widget.lessons.rate == 'dislike'
+                                        ? widget.lessons.dislikeCount! - 1
+                                        : null;
                               });
 
                               return !isLike;
@@ -127,8 +126,75 @@ class _VideoScreenState extends State<VideoScreen> {
                           LikeButton(
                             size: 40,
                             circleColor: CircleColor(
-                                start: Color(0xffff2c2c),
-                                end: Color(0xffff2c2c)),
+                              start: Color(0xffff2c2c),
+                              end: Color(0xffff2c2c),
+                            ),
+                            bubblesColor: BubblesColor(
+                              dotPrimaryColor: Color(0xffff2c2c),
+                              dotSecondaryColor: Color(0xffff2c2c),
+                            ),
+                            likeBuilder: (bool isLiked) {
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  MySvgWidget(
+                                    path: ImageAssets.dislikeIcon,
+                                    size: 30,
+                                    imageColor: isLiked
+                                        ? Color(0xffff2c2c)
+                                        : Colors.grey,
+                                  ),
+                                ],
+                              );
+                            },
+                            isLiked:
+                            widget.lessons.rate == 'like' ? true : false,
+                            onTap: (isLike) async {
+                              widget.lessons.rate =
+                              (widget.lessons.rate == 'no_rate' ||
+                                  widget.lessons.rate == 'dislike')
+                                  ? 'like'
+                                  : 'no_rate';
+                              setState(() {
+                                widget.lessons.likeCount =
+                                widget.lessons.rate == 'dislike'
+                                    ? null
+                                    : widget.lessons.rate == 'no_rate'
+                                    ? widget.lessons.likeCount! - 1
+                                    : widget.lessons.likeCount! + 1;
+
+                                widget.lessons.dislikeCount =
+                                widget.lessons.rate == 'dislike'
+                                    ? widget.lessons.dislikeCount! - 1
+                                    : null;
+                              });
+
+                              return !isLike;
+                            },
+                            likeCount: widget.lessons.likeCount,
+                            countBuilder:
+                                (int? count, bool isLiked, String text) {
+                              var color =
+                              isLiked ? Color(0xffff2c2c) : Colors.grey;
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Text(
+                                  text,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: color),
+                                ),
+                              );
+                            },
+                          ),
+
+                          LikeButton(
+                            size: 40,
+                            circleColor: CircleColor(
+                              start: Color(0xffff2c2c),
+                              end: Color(0xffff2c2c),
+                            ),
                             bubblesColor: BubblesColor(
                               dotPrimaryColor: Color(0xffff2c2c),
                               dotSecondaryColor: Color(0xffff2c2c),
@@ -164,6 +230,10 @@ class _VideoScreenState extends State<VideoScreen> {
                                 widget.lessons.rate == 'dislike' ? true : false,
                             countBuilder:
                                 (int? count, bool isLiked, String text) {
+                              print('--------- $text ----------');
+                              print('--------- $count ----------');
+                              print('--------- $isLiked ----------');
+
                               var color =
                                   isLiked ? Color(0xffff2c2c) : Colors.grey;
                               return Padding(

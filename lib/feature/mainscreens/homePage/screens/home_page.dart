@@ -112,6 +112,7 @@ class HomePage extends StatelessWidget {
                                     color1: AppColors.blueColor1,
                                     color2: AppColors.blueColor2,
                                     textColor: AppColors.secondPrimary,
+                                    isHome: true,
                                   ),
                                 );
                               },
