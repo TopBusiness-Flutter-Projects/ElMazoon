@@ -12,6 +12,7 @@ import '../../../../../core/utils/assets_manager.dart';
 import '../../../../../core/widgets/circle_image_widget.dart';
 import '../../../core/utils/call_method.dart';
 import '../../../core/utils/show_dialog.dart';
+import '../../mainscreens/profilePage/screens/profile_page.dart';
 import '../../mainscreens/profilePage/screens/profile_page_deatils.dart';
 import '../../navigation_bottom/screens/navigation_bottom.dart';
 import '../cubit/login_cubit.dart';
@@ -88,7 +89,7 @@ class _userScreenState extends State<LoginScreen> {
                                   type: PageTransitionType.fade,
                                   alignment: Alignment.center,
                                   duration: const Duration(milliseconds: 1300),
-                                  child: ProfilePageDetails(),
+                                  child: ProfilePage(isAppBar: true),
                                 ),
                                 (route) => false,
                               );

@@ -1,7 +1,4 @@
-import 'dart:js';
-
 import 'package:elmazoon/core/utils/app_colors.dart';
-import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'package:elmazoon/feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +9,7 @@ import '../../../../core/utils/assets_manager.dart';
 import '../../../../core/widgets/my_svg_widget.dart';
 
 class LikeButtonWidget extends StatelessWidget {
-  const LikeButtonWidget(
+  LikeButtonWidget(
       {Key? key,
       required this.lessons,
       required this.iconColor,
@@ -22,11 +19,13 @@ class LikeButtonWidget extends StatelessWidget {
   final Color iconColor;
   final String kind;
 
+  bool isLiked = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<StudyPageCubit, StudyPageState>(
       builder: (context, state) {
-        StudyPageCubit cubit =context.read<StudyPageCubit>();
+        StudyPageCubit cubit = context.read<StudyPageCubit>();
         return LikeButton(
           size: 25,
           circleColor: CircleColor(
@@ -61,14 +60,25 @@ class LikeButtonWidget extends StatelessWidget {
           likeCount: likeCount(),
           countBuilder: (int? count, bool isLiked, String text) {
             var color = isLiked ? iconColor : AppColors.gray;
-            return Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text(
-                text,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: color),
-              ),
-            );
+            return state is StudyPageRateVideosLoading
+                ? Padding(
+                    padding:
+                        const EdgeInsets.only(top: 10.0, right: 8, left: 8),
+                    child: SizedBox(
+                        width: 25,
+                        height: 25,
+                        child: CircularProgressIndicator(
+                            color: AppColors.primary)),
+                  )
+                : Padding(
+                    padding:
+                        const EdgeInsets.only(top: 10.0, right: 8, left: 8),
+                    child: Text(
+                      text,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: color),
+                    ),
+                  );
           },
         );
       },
@@ -93,10 +103,22 @@ class LikeButtonWidget extends StatelessWidget {
 
   onTapLikeIcon(StudyPageCubit cubit) {
     if (kind == 'like') {
+      if (lessons.rate == 'no_rate') {
+        cubit.likeDislikeRateVideos(lessons.id!, 'like');
+        lessons.likeCount = lessons.likeCount! + 1;
+      } else if (lessons.rate == 'like') {
+        cubit.likeDislikeRateVideos(lessons.id!, 'no_rate');
+        lessons.likeCount = lessons.likeCount! - 1;
+      } else if (lessons.rate == 'dislike') {
+        cubit.likeDislikeRateVideos(lessons.id!, 'like');
+        lessons.likeCount = lessons.likeCount! + 1;
+        lessons.dislikeCount = lessons.dislikeCount! - 1;
+      }
       lessons.rate = (lessons.rate == 'no_rate' || lessons.rate == 'dislike')
           ? 'like'
           : 'no_rate';
       cubit.changeLikeType('like');
+
       // lessons.likeCount = lessons.rate == 'dislike'
       //     ? null
       //     : lessons.rate == 'no_rate'
@@ -107,6 +129,17 @@ class LikeButtonWidget extends StatelessWidget {
       //     ? lessons.dislikeCount! - 1
       //     : lessons.dislikeCount;
     } else {
+      if (lessons.rate == 'no_rate') {
+        cubit.likeDislikeRateVideos(lessons.id!, 'dislike');
+        lessons.dislikeCount = lessons.dislikeCount! + 1;
+      } else if (lessons.rate == 'dislike') {
+        cubit.likeDislikeRateVideos(lessons.id!, 'no_rate');
+        lessons.dislikeCount = lessons.dislikeCount! - 1;
+      } else if (lessons.rate == 'like') {
+        cubit.likeDislikeRateVideos(lessons.id!, 'dislike');
+        lessons.dislikeCount = lessons.dislikeCount! + 1;
+        lessons.likeCount = lessons.likeCount! - 1;
+      }
       lessons.rate = (lessons.rate == 'no_rate' || lessons.rate == 'like')
           ? 'dislike'
           : 'no_rate';

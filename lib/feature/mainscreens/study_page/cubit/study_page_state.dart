@@ -10,6 +10,12 @@ class StudyPageGetUserModel extends StudyPageState {}
 
 class ChangeLikeType extends StudyPageState {}
 
+class StudyPageRateVideosLoading extends StudyPageState {}
+class StudyPageRateVideosLoaded extends StudyPageState {}
+class StudyPageRateVideosError extends StudyPageState {}
+
+
+
 class SavedDownloadedPathsLoading extends StudyPageState {}
 class SavedDownloadedPathsLoaded extends StudyPageState {}
 

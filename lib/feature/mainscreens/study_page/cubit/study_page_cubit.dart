@@ -59,6 +59,20 @@ class StudyPageCubit extends Cubit<StudyPageState> {
     emit(ChangeLikeType());
   }
 
+  likeDislikeRateVideos(int videoId,String kind) async {
+    emit(StudyPageRateVideosLoading());
+    final response = await api.rateVideos(kind,videoId);
+    response.fold(
+      (l) => emit(StudyPageRateVideosError()),
+      (r) {
+        if(r.code==200){
+          emit(StudyPageRateVideosLoaded());
+        }else{
+          emit(StudyPageRateVideosError());}
+      },
+    );
+  }
+
   getSavedDownloadedPaths(String path) async {
     emit(SavedDownloadedPathsLoading());
     isDownloaded = await Preferences.instance.searchOnSavedDownloadPaths(path);

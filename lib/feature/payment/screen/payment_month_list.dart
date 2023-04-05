@@ -27,10 +27,12 @@ class PaymentMonthList extends StatelessWidget {
           if (state is PaymentMonthLoading) {
             return ShowLoadingIndicator();
           }
+          // print(cubit.subscribesList[3].plans!.toList());
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: RefreshIndicator(
               onRefresh: () async {
+                // print(cubit.subscribesList[3].mothData!.toList());
                 cubit.getPaymentMonth();
               },
               backgroundColor: AppColors.secondPrimary,
@@ -56,10 +58,10 @@ class PaymentMonthList extends StatelessWidget {
                       print(cubit.totalPayment);
                       print(cubit.paymentList);
                       print(cubit.monthNumber);
-                      cubit.testMonth(context,lang);
-
+                      cubit.testMonth(context, lang);
                     },
                   ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),

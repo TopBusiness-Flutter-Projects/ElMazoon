@@ -575,7 +575,8 @@ class ServiceApi {
     UserModel loginModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
     try {
-      final response = await dio.get(EndPoints.adsUrl,
+      final response = await dio.get(
+        EndPoints.adsUrl,
         options: Options(
           headers: {
             'Authorization': loginModel.data!.token,
@@ -745,6 +746,29 @@ class ServiceApi {
         body: {
           'token': deviceToken,
           'phone_type': deviceType,
+        },
+        options: Options(
+          headers: {
+            'Authorization': loginModel.data!.token,
+          },
+        ),
+      );
+      return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, StatusResponse>> rateVideos(
+    String likeType,
+    int videoId,
+  ) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    try {
+      final response = await dio.post(
+        EndPoints.rateVideosUrl + videoId.toString(),
+        body: {
+          'action': likeType,
         },
         options: Options(
           headers: {

@@ -20,110 +20,112 @@ class MonthPlanDetails extends StatelessWidget {
     String lang = EasyLocalization.of(context)!.locale.languageCode;
 
     return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 80,
-          titleSpacing: 0,
-          title: CustomAppBar(
-            title: 'month_plan'.tr(),
-            subtitle: 'month_course'.tr(),
-          ),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(ImageAssets.appBarImage),
-                fit: BoxFit.fill,
-              ),
+      appBar: AppBar(
+        toolbarHeight: 80,
+        titleSpacing: 0,
+        title: CustomAppBar(
+          title: 'month_plan'.tr(),
+          subtitle: 'month_course'.tr(),
+        ),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(ImageAssets.appBarImage),
+              fit: BoxFit.fill,
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Container(
-
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-
-                    children: [
-                      Center(
-                        child: Text(DateFormat('EEEE',lang).format(dateTime),
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,
-                        color: AppColors.gray1
-                        ),
-
-                        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(
+                        DateFormat('EEEE', lang).format(dateTime),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: AppColors.gray1),
                       ),
-                      Center(
-                        child: Text(dateTime.day.toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,
-                              color: AppColors.gray1
-                          ),
-
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                    Center(
+                      child: Text(
+                        dateTime.day.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            color: AppColors.gray1),
+                      ),
+                    )
+                  ],
                 ),
               ),
-              SizedBox(width: 5,),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: plans.length,
-                  itemBuilder: (context, index) {
-                   return Padding(
-                     padding: const EdgeInsets.all(8.0),
-                     child: Container(
-                       // width: MediaQuery.of(context).size.width - 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18),
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              AppColors.blueLiteColor1,
-                              AppColors.blueLiteColor2,
-                            ],
-                          ),
-                        ),
-                        child: Padding(
-                          padding:  EdgeInsets.all(10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                              'title'.tr(),
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.secondPrimary),
-                              ),
-                              SizedBox(
-                                height: 1,
-                              ),
-                              Text(
-                                plans.elementAt(index).title!,
-                                style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.secondPrimary),
-                              ),
-                              SizedBox(
-                                height: 1,
-                              ),
-
-
-                            ],
-                          ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: plans.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      // width: MediaQuery.of(context).size.width - 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            AppColors.blueLiteColor1,
+                            AppColors.blueLiteColor2,
+                          ],
                         ),
                       ),
-                   );
-                },),
-              )
-            ],
-          ),
-        ));
+                      child: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'title'.tr(),
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.secondPrimary),
+                            ),
+                            SizedBox(
+                              height: 1,
+                            ),
+                            Text(
+                              plans.elementAt(index).title!,
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.secondPrimary),
+                            ),
+                            SizedBox(
+                              height: 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

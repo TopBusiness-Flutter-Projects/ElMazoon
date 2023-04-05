@@ -35,6 +35,7 @@ class EndPoints {
   static const String answerLiveExamQuestionUrl = '${baseUrl}life-exam/add-life-exam/';
   static const String studentReportUrl = '${baseUrl}reports/student-report';
   static const String addDeviceTokenUrl = '${baseUrl}auth/add-device-token';
+  static const String rateVideosUrl = '${baseUrl}user-rate-video/';
 
 
 
