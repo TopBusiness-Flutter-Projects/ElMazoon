@@ -187,8 +187,10 @@ class _userScreenState extends State<LoginScreen> {
                                       height: 30,
                                     ),
                                     CustomButton(
+
                                       text: 'user'.tr(),
-                                      color: AppColors.secondPrimary,
+                                      textcolor: AppColors.primary,
+                                      color: AppColors.white,
                                       onClick: () {
                                         if (keyForm.currentState!.validate()) {
                                           context
@@ -196,7 +198,7 @@ class _userScreenState extends State<LoginScreen> {
                                               .userWithCode(context);
                                         }
                                       },
-                                      paddingHorizontal: 60,
+                                      paddingHorizontal: 10,
                                       borderRadius: 10,
                                     ),
                                     const SizedBox(

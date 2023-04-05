@@ -1,3 +1,4 @@
+import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -8,9 +9,11 @@ class CustomButton extends StatelessWidget {
     required this.onClick,
     this.paddingHorizontal = 0,
     this.borderRadius = 8,
+    this.textcolor=Colors.white
   }) : super(key: key);
   final String text;
   final Color color;
+  final Color textcolor;
   final double paddingHorizontal;
   final double? borderRadius;
   final VoidCallback onClick;
@@ -29,7 +32,8 @@ class CustomButton extends StatelessWidget {
           minimumSize: const Size(double.infinity, 60),
           backgroundColor: color,
         ),
-        child: Text(text),
+        child: Text(text,
+        style: TextStyle(color:textcolor ),),
       ),
     );
   }

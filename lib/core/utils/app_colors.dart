@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'hex_color.dart';
 
 class AppColors {
-  static Color primary = HexColor('##00B3DC');
-  static Color secondPrimary = HexColor('#171560');
-
+  static Color primary = HexColor('#00B3DC');
+  static Color secondPrimary = HexColor('#4455D7');
   static Color scaffoldBackground = HexColor('#FDF5E8');
   static Color buttonBackground = HexColor('#594339');
   static Color textBackground = HexColor('#92603F');
@@ -17,17 +16,12 @@ class AppColors {
   static Color commentBackground = HexColor('#F3F2F2');
   static Color paymentContainer = HexColor('#F0D3AB');
   static Color textFormFieldColor = HexColor('#EDEDED');
-
-
   static Color green = HexColor('#15860B');
   static Color blueColor1 = HexColor('#6A85B6');
   static Color blueColor2 = HexColor('#BAC8E0');
   static Color blueColor3 = HexColor('#1877F2');
-
   static Color blueLiteColor1 = HexColor('#429993');
   static Color blueLiteColor2 = HexColor('#7CD4CC');
-
-
   static Color hint = Colors.grey;
   static Color blackLite = Colors.black12;
   static Color error = Colors.red;
@@ -39,5 +33,4 @@ class AppColors {
   static Color gray4 = HexColor('#C4C4C4');
   static Color opacityWhite = Colors.white.withOpacity(0.5);
   static Color transparent = Colors.transparent;
-
 }
