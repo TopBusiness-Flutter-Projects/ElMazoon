@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                     child: Text(
                       'start_study'.tr(),
                       style: TextStyle(
-                        color: AppColors.secondPrimary,
+                        // color: AppColors.secondPrimary,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),

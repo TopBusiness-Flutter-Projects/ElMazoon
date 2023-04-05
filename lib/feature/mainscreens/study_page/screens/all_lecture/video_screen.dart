@@ -13,6 +13,7 @@ import '../../../../../core/widgets/my_svg_widget.dart';
 import '../../../../exam/cubit/exam_cubit.dart';
 import '../../widgets/add_comment_widget.dart';
 import '../../widgets/comments_widget.dart';
+import '../../widgets/like_button_widgte.dart';
 import '../../widgets/structure_details_widget.dart';
 import '../../widgets/video_widget.dart';
 import '../full_exam/stucture_of_exam.dart';
@@ -57,198 +58,148 @@ class _VideoScreenState extends State<VideoScreen> {
                       ),
                       Row(
                         children: [
-                          LikeButton(
-                            size: 40,
-                            circleColor: CircleColor(
-                              start: Color(0xff2e7dea),
-                              end: Color(0xff2e7dea),
-                            ),
-                            bubblesColor: BubblesColor(
-                              dotPrimaryColor: Color(0xff2e7dea),
-                              dotSecondaryColor: Color(0xff2e7dea),
-                            ),
-                            likeBuilder: (bool isLiked) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  MySvgWidget(
-                                    path: ImageAssets.likeIcon,
-                                    size: 30,
-                                    imageColor: isLiked
-                                        ? Color(0xff2e7dea)
-                                        : Colors.grey,
-                                  ),
-                                ],
-                              );
-                            },
-                            isLiked:
-                                widget.lessons.rate == 'like' ? true : false,
-                            onTap: (isLike) async {
-                              widget.lessons.rate =
-                                  (widget.lessons.rate == 'no_rate' ||
-                                          widget.lessons.rate == 'dislike')
-                                      ? 'like'
-                                      : 'no_rate';
-                              setState(() {
-                                widget.lessons.likeCount =
-                                    widget.lessons.rate == 'dislike'
-                                        ? null
-                                        : widget.lessons.rate == 'no_rate'
-                                            ? widget.lessons.likeCount! - 1
-                                            : widget.lessons.likeCount! + 1;
-
-                                widget.lessons.dislikeCount =
-                                    widget.lessons.rate == 'dislike'
-                                        ? widget.lessons.dislikeCount! - 1
-                                        : null;
-                              });
-
-                              return !isLike;
-                            },
-                            likeCount: widget.lessons.likeCount,
-                            countBuilder:
-                                (int? count, bool isLiked, String text) {
-                              var color =
-                                  isLiked ? Color(0xff2e7dea) : Colors.grey;
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  text,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: color),
-                                ),
-                              );
-                            },
+                          LikeButtonWidget(
+                            lessons: widget.lessons,
+                            iconColor: AppColors.blueLikeColor,
+                            kind: 'like',
                           ),
+                          // LikeButton(
+                          //   size: 40,
+                          //   circleColor: CircleColor(
+                          //     start: Color(0xff2e7dea),
+                          //     end: Color(0xff2e7dea),
+                          //   ),
+                          //   bubblesColor: BubblesColor(
+                          //     dotPrimaryColor: Color(0xff2e7dea),
+                          //     dotSecondaryColor: Color(0xff2e7dea),
+                          //   ),
+                          //   likeBuilder: (bool isLiked) {
+                          //     return Column(
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       crossAxisAlignment: CrossAxisAlignment.center,
+                          //       mainAxisSize: MainAxisSize.min,
+                          //       children: [
+                          //         MySvgWidget(
+                          //           path: ImageAssets.likeIcon,
+                          //           size: 30,
+                          //           imageColor: isLiked
+                          //               ? Color(0xff2e7dea)
+                          //               : Colors.grey,
+                          //         ),
+                          //       ],
+                          //     );
+                          //   },
+                          //   isLiked:
+                          //       widget.lessons.rate == 'like' ? true : false,
+                          //   onTap: (isLike) async {
+                          //     widget.lessons.rate =
+                          //         (widget.lessons.rate == 'no_rate' ||
+                          //                 widget.lessons.rate == 'dislike')
+                          //             ? 'like'
+                          //             : 'no_rate';
+                          //     // setState(() {});
+                          //
+                          //     return !isLike;
+                          //   },
+                          //   likeCount: widget.lessons.likeCount,
+                          //   countBuilder:
+                          //       (int? count, bool isLiked, String text) {
+                          //     var color =
+                          //         isLiked ? Color(0xff2e7dea) : Colors.grey;
+                          //     return Padding(
+                          //       padding: const EdgeInsets.only(top: 10.0),
+                          //       child: Text(
+                          //         text,
+                          //         textAlign: TextAlign.center,
+                          //         style: TextStyle(color: color),
+                          //       ),
+                          //     );
+                          //   },
+                          // ),
                           SizedBox(width: 12),
-                          LikeButton(
-                            size: 40,
-                            circleColor: CircleColor(
-                              start: Color(0xffff2c2c),
-                              end: Color(0xffff2c2c),
-                            ),
-                            bubblesColor: BubblesColor(
-                              dotPrimaryColor: Color(0xffff2c2c),
-                              dotSecondaryColor: Color(0xffff2c2c),
-                            ),
-                            likeBuilder: (bool isLiked) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  MySvgWidget(
-                                    path: ImageAssets.dislikeIcon,
-                                    size: 30,
-                                    imageColor: isLiked
-                                        ? Color(0xffff2c2c)
-                                        : Colors.grey,
-                                  ),
-                                ],
-                              );
-                            },
-                            isLiked:
-                            widget.lessons.rate == 'like' ? true : false,
-                            onTap: (isLike) async {
-                              widget.lessons.rate =
-                              (widget.lessons.rate == 'no_rate' ||
-                                  widget.lessons.rate == 'dislike')
-                                  ? 'like'
-                                  : 'no_rate';
-                              setState(() {
-                                widget.lessons.likeCount =
-                                widget.lessons.rate == 'dislike'
-                                    ? null
-                                    : widget.lessons.rate == 'no_rate'
-                                    ? widget.lessons.likeCount! - 1
-                                    : widget.lessons.likeCount! + 1;
-
-                                widget.lessons.dislikeCount =
-                                widget.lessons.rate == 'dislike'
-                                    ? widget.lessons.dislikeCount! - 1
-                                    : null;
-                              });
-
-                              return !isLike;
-                            },
-                            likeCount: widget.lessons.likeCount,
-                            countBuilder:
-                                (int? count, bool isLiked, String text) {
-                              var color =
-                              isLiked ? Color(0xffff2c2c) : Colors.grey;
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  text,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: color),
-                                ),
-                              );
-                            },
+                          LikeButtonWidget(
+                            lessons: widget.lessons,
+                            iconColor: AppColors.redDislikeColor,
+                            kind: 'dislike',
                           ),
-
-                          LikeButton(
-                            size: 40,
-                            circleColor: CircleColor(
-                              start: Color(0xffff2c2c),
-                              end: Color(0xffff2c2c),
-                            ),
-                            bubblesColor: BubblesColor(
-                              dotPrimaryColor: Color(0xffff2c2c),
-                              dotSecondaryColor: Color(0xffff2c2c),
-                            ),
-                            likeBuilder: (bool isLiked) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  MySvgWidget(
-                                    path: ImageAssets.dislikeIcon,
-                                    size: 25,
-                                    imageColor: isLiked
-                                        ? Color(0xffff2c2c)
-                                        : Colors.grey,
-                                  ),
-                                ],
-                              );
-                            },
-                            likeCount: widget.lessons.dislikeCount,
-                            onTap: (isLike) async {
-                              setState(() {
-                                widget.lessons.rate = 'like';
-                                if (widget.lessons.dislikeCount! > 0) {
-                                  widget.lessons.dislikeCount =
-                                      widget.lessons.dislikeCount! - 1;
-                                }
-                              });
-                              return !isLike;
-                            },
-                            isLiked:
-                                widget.lessons.rate == 'dislike' ? true : false,
-                            countBuilder:
-                                (int? count, bool isLiked, String text) {
-                              print('--------- $text ----------');
-                              print('--------- $count ----------');
-                              print('--------- $isLiked ----------');
-
-                              var color =
-                                  isLiked ? Color(0xffff2c2c) : Colors.grey;
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  text,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: color),
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(width: 25),
-                          Text(widget.lessons.note!),
+                          // LikeButton(
+                          //   size: 40,
+                          //   circleColor: CircleColor(
+                          //     start: Color(0xffff2c2c),
+                          //     end: Color(0xffff2c2c),
+                          //   ),
+                          //   bubblesColor: BubblesColor(
+                          //     dotPrimaryColor: Color(0xffff2c2c),
+                          //     dotSecondaryColor: Color(0xffff2c2c),
+                          //   ),
+                          //   likeBuilder: (bool isLiked) {
+                          //     return Column(
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       crossAxisAlignment: CrossAxisAlignment.center,
+                          //       mainAxisSize: MainAxisSize.min,
+                          //       children: [
+                          //         MySvgWidget(
+                          //           path: ImageAssets.dislikeIcon,
+                          //           size: 30,
+                          //           imageColor: isLiked
+                          //               ? Color(0xffff2c2c)
+                          //               : Colors.grey,
+                          //         ),
+                          //       ],
+                          //     );
+                          //   },
+                          //   isLiked:
+                          //       widget.lessons.rate == 'dislike' ? true : false,
+                          //   onTap: (isLike) async {
+                          //     widget.lessons.rate =
+                          //         (widget.lessons.rate == 'no_rate' ||
+                          //                 widget.lessons.rate == 'like')
+                          //             ? 'dislike'
+                          //             : 'no_rate';
+                          //     // setState(() {
+                          //     //   widget.lessons.dislikeCount =
+                          //     //       widget.lessons.rate == 'like'
+                          //     //           ? null
+                          //     //           : widget.lessons.rate == 'no_rate'
+                          //     //               ? widget.lessons.dislikeCount! - 1
+                          //     //               : widget.lessons.dislikeCount! + 1;
+                          //     //
+                          //     //   widget.lessons.likeCount =
+                          //     //       widget.lessons.rate == 'like'
+                          //     //           ? widget.lessons.likeCount! - 1
+                          //     //           : widget.lessons.likeCount;
+                          //     // });
+                          //
+                          //     return !isLike;
+                          //   },
+                          //   likeCount: widget.lessons.dislikeCount,
+                          //   countBuilder:
+                          //       (int? count, bool isLiked, String text) {
+                          //     var color =
+                          //         isLiked ? Color(0xffff2c2c) : Colors.grey;
+                          //     return Padding(
+                          //       padding: const EdgeInsets.only(top: 10.0),
+                          //       child: Text(
+                          //         text,
+                          //         textAlign: TextAlign.center,
+                          //         style: TextStyle(color: color),
+                          //       ),
+                          //     );
+                          //   },
+                          // ),
                         ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: InkWell(
+                            onTap: () {
+                              print(
+                                  '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                              print(widget.lessons.toJson());
+                              print(
+                                  '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                            },
+                            child: Text(widget.lessons.note!)),
                       ),
                       Row(
                         children: [

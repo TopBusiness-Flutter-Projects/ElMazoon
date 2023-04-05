@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../feature/downloads_videos/models/save_video_model.dart';
 import '../models/exam_answer_list_model.dart';
 import '../models/user_model.dart';
+import '../utils/app_colors.dart';
 import '../utils/app_strings.dart';
 
 class Preferences {
@@ -13,6 +15,16 @@ class Preferences {
   Preferences._internal();
 
   factory Preferences() => instance;
+
+  Future<String> getPrimaryColor() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('primaryColor') ?? '#00B3DC';
+  }
+
+  Future<void> setPrimaryColor(String color) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString('primaryColor', color);
+  }
 
   Future<void> saveDownloadPaths(String path) async {
     List<String> paths = await getSavedDownloadPaths();

@@ -52,6 +52,12 @@ class StudyPageCubit extends Cubit<StudyPageState> {
   int index = 0;
   int percentage = 0;
   var dir;
+  String likeType = '';
+
+  changeLikeType(String type) {
+    likeType = type;
+    emit(ChangeLikeType());
+  }
 
   getSavedDownloadedPaths(String path) async {
     emit(SavedDownloadedPathsLoading());
@@ -327,13 +333,15 @@ class StudyPageCubit extends Cubit<StudyPageState> {
       },
     ).whenComplete(
       () {
-        Preferences.instance.saveDownloadVideos(
-          SaveVideoModel(
-            videoName: video_name,
-            videoPath:
-                dir.path + "/videos/" + video_url.split("/").toList().last,
-          ),
-        ).whenComplete(() => print('Doooooooooooooooooooooooooooooone'));
+        Preferences.instance
+            .saveDownloadVideos(
+              SaveVideoModel(
+                videoName: video_name,
+                videoPath:
+                    dir.path + "/videos/" + video_url.split("/").toList().last,
+              ),
+            )
+            .whenComplete(() => print('Doooooooooooooooooooooooooooooone'));
 
         Preferences.instance
             .saveDownloadPaths(

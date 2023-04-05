@@ -8,6 +8,8 @@ class StudyPagePickImageSuccess extends StudyPageState {}
 
 class StudyPageGetUserModel extends StudyPageState {}
 
+class ChangeLikeType extends StudyPageState {}
+
 class SavedDownloadedPathsLoading extends StudyPageState {}
 class SavedDownloadedPathsLoaded extends StudyPageState {}
 

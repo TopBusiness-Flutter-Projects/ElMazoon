@@ -56,7 +56,7 @@ class ContainerWithTwoColorWidget extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: textColor,
+                // color: textColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
               ),

@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:elmazoon/app.dart';
 import 'package:elmazoon/core/utils/app_colors.dart';
 import 'package:elmazoon/core/widgets/my_svg_widget.dart';
 import 'package:elmazoon/feature/mainscreens/profilePage/screens/profile_page.dart';
@@ -7,6 +8,7 @@ import 'package:elmazoon/feature/navigation_bottom/cubit/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/preferences/preferences.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../mainscreens/guide_page/screens/guide_page.dart';
 import '../../mainscreens/homePage/screens/home_page.dart';
@@ -52,61 +54,31 @@ class _NavigatorBarState extends State<NavigatorBar> {
         index: 2,
         height: 60.0,
         items: [
-          _page != 0
-              ? MySvgWidget(
-                  path: ImageAssets.openBookIcon,
-                  size: 25,
-                  imageColor: AppColors.white,
-                )
-              : MySvgWidget(
-                  path: ImageAssets.openBookIcon,
-                  size: 40,
-                  imageColor: AppColors.primary,
-                ),
-          _page != 1
-              ? MySvgWidget(
-                  path: ImageAssets.booksIcon,
-                  size: 25,
-                  imageColor: AppColors.white,
-                )
-              : MySvgWidget(
-                  path: ImageAssets.booksIcon,
-                  size: 40,
-                  imageColor: AppColors.primary,
-                ),
-          _page != 2
-              ? MySvgWidget(
-                  path: ImageAssets.homeIcon,
-                  size: 25,
-                  imageColor: AppColors.white,
-                )
-              : MySvgWidget(
-                  path: ImageAssets.homeIcon,
-                  size: 40,
-                  imageColor: AppColors.primary,
-                ),
-          _page != 3
-              ? MySvgWidget(
-                  path: ImageAssets.notificationIcon,
-                  size: 25,
-                  imageColor: AppColors.white,
-                )
-              : MySvgWidget(
-                  path: ImageAssets.notificationIcon,
-                  size: 40,
-                  imageColor: AppColors.primary,
-                ),
-          _page != 4
-              ? MySvgWidget(
-                  path: ImageAssets.moreIcon,
-                  size: 25,
-                  imageColor: AppColors.white,
-                )
-              : MySvgWidget(
-                  path: ImageAssets.moreIcon,
-                  size: 40,
-                  imageColor: AppColors.primary,
-                ),
+          MySvgWidget(
+            path: ImageAssets.openBookIcon,
+            size: _page != 0 ? 25 : 40,
+            imageColor: _page != 0 ? AppColors.white : AppColors.primary,
+          ),
+          MySvgWidget(
+            path: ImageAssets.booksIcon,
+            size: _page != 1 ? 25 : 40,
+            imageColor: _page != 1 ? AppColors.white : AppColors.primary,
+          ),
+          MySvgWidget(
+            path: ImageAssets.homeIcon,
+            size: _page != 2 ? 25 : 40,
+            imageColor: _page != 2 ? AppColors.white : AppColors.primary,
+          ),
+          MySvgWidget(
+            path: ImageAssets.notificationIcon,
+            size: _page != 3 ? 25 : 40,
+            imageColor: _page != 3 ? AppColors.white : AppColors.primary,
+          ),
+          MySvgWidget(
+            path: ImageAssets.moreIcon,
+            size: _page != 4 ? 25 : 40,
+            imageColor: _page != 4 ? AppColors.white : AppColors.primary,
+          ),
         ],
         color: AppColors.secondPrimary,
         buttonBackgroundColor: AppColors.secondPrimary,
@@ -217,9 +189,28 @@ class _NavigatorBarState extends State<NavigatorBar> {
                       ),
                     ],
                   ),
-                  Text(
-                    monthSeason(),
-                    style: TextStyle(fontSize: 14),
+                  InkWell(
+                    onTap: () {
+                      // setState(() {
+                      //   //15860B
+                      //   //00B3DC
+                      //   Preferences.instance.setPrimaryColor('#00B3DC').then(
+                      //     (value) {
+                      //       return AppColors.getPrimaryColor();
+                      //     },
+                      //   ).then(
+                      //     (value) {
+                      //       _bottomNavigationKey.currentState!.setState(() {
+                      //         _page = 2;
+                      //       });
+                      //     },
+                      //   );
+                      // });
+                    },
+                    child: Text(
+                      monthSeason(),
+                      style: TextStyle(fontSize: 14),
+                    ),
                   )
                 ],
               ),

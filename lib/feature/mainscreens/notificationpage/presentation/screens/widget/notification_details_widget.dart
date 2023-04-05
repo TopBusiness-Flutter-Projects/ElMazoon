@@ -24,14 +24,6 @@ class NotificationDetailsWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              notificationModel.title!,
-              style: TextStyle(
-                color: AppColors.gray1,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
             Row(
               children: [
                 Icon(
@@ -42,7 +34,7 @@ class NotificationDetailsWidget extends StatelessWidget {
                 Text(
                   notificationModel.createdAt!,
                   style: TextStyle(
-                    color: AppColors.gray1,
+                    // color: AppColors.gray1,
                     fontSize: 20,
                     fontWeight: FontWeight.normal,
                   ),
@@ -50,9 +42,17 @@ class NotificationDetailsWidget extends StatelessWidget {
               ],
             ),
             Text(
+              notificationModel.title!,
+              style: TextStyle(
+                // color: AppColors.gray1,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
               notificationModel.body!,
               style: TextStyle(
-                color: AppColors.gray1,
+                // color: AppColors.gray1,
                 fontSize: 20,
                 fontWeight: FontWeight.normal,
               ),

@@ -15,6 +15,7 @@ import 'app_bloc_observer.dart';
 import 'core/models/user_model.dart';
 import 'core/notification/notification.dart';
 import 'core/preferences/preferences.dart';
+import 'core/utils/app_colors.dart';
 import 'core/utils/restart_app_class.dart';
 import 'firebase_options.dart';
 
@@ -36,7 +37,6 @@ import 'firebase_options.dart';
 // }
 
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
@@ -44,33 +44,34 @@ Future<void> main() async {
   );
 
   await PushNotificationService.instance.initialise();
-  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE).then((value) => print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2'));
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   // await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  AppColors.getPrimaryColor();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
+  alert: true,
+  badge: true,
+  sound: true,
   );
   await pushNotificationService!.initialise();
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
+  alert: true,
+  badge: true,
+  sound: true,
   );
   await injector.setup();
   Bloc.observer = AppBlocObserver();
 
   runApp(
-    EasyLocalization(
-      supportedLocales: [Locale('ar', ''), Locale('en', '')],
-      path: 'assets/lang',
-      saveLocale: true,
-      startLocale: Locale('ar', ''),
-      fallbackLocale: Locale('ar', ''),
-      child: HotRestartController(child: const Elmazoon()),
-    ),
+  EasyLocalization(
+  supportedLocales: [Locale('ar', ''), Locale('en', '')],
+  path: 'assets/lang',
+  saveLocale: true,
+  startLocale: Locale('ar', ''),
+  fallbackLocale: Locale('ar', ''),
+  child: HotRestartController(child: const Elmazoon()),
+  ),
   );
 
 
@@ -80,7 +81,7 @@ PushNotificationService? pushNotificationService = PushNotificationService();
 
 final locator = GetIt.instance;
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin();
 
 late AndroidNotificationChannel channel;
 
@@ -91,12 +92,12 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message:");
 
   AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('@mipmap/ic_launcher');
+  AndroidInitializationSettings('@mipmap/ic_launcher');
   final DarwinInitializationSettings initializationSettingsDarwin =
-      DarwinInitializationSettings(
-          onDidReceiveLocalNotification: await ondidnotification);
+  DarwinInitializationSettings(
+      onDidReceiveLocalNotification: await ondidnotification);
   final LinuxInitializationSettings initializationSettingsLinux =
-      LinuxInitializationSettings(defaultActionName: 'Open notification');
+  LinuxInitializationSettings(defaultActionName: 'Open notification');
   final InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
@@ -147,11 +148,10 @@ void checkData(RemoteMessage message) {
   }
 }
 
-Future ondidnotification(
-    int id, String? title, String? body, String? payload) async {
+Future ondidnotification(int id, String? title, String? body,
+    String? payload) async {
   print("object");
-  if (payload!.contains("chat")) {
-  } else if (payload == "service_request") {}
+  if (payload!.contains("chat")) {} else if (payload == "service_request") {}
 }
 
 Future notificationTapBackground(NotificationResponse details) async {
@@ -167,12 +167,13 @@ Future onNotification(String payload) async {
 void _runWhileAppIsTerminated() async {
   await flutterLocalNotificationsPlugin
       .getNotificationAppLaunchDetails()
-      .then((value) => {
-            if (value != null &&
-                value.notificationResponse != null &&
-                value.notificationResponse!.payload!.isNotEmpty)
-              {}
-          });
+      .then((value) =>
+  {
+    if (value != null &&
+        value.notificationResponse != null &&
+        value.notificationResponse!.payload!.isNotEmpty)
+      {}
+  });
 }
 
 

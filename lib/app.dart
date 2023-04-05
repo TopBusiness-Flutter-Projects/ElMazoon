@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:screenshot_callback/screenshot_callback.dart';
 
+import 'config/themes/app_theme.dart';
 import 'core/preferences/preferences.dart';
 import 'core/utils/app_colors.dart';
 import 'core/utils/app_routes.dart';
@@ -55,12 +56,20 @@ class _ElmazoonState extends State<Elmazoon> {
   //   // print('screenshots Off');
   // }
   // String text = "Ready..";
+  bool isThemes = false;
   @override
   void initState() {
     // screenshotsOff();
     super.initState();
 
+    Future.delayed(Duration(seconds: 25),(){
+      setState(() {
+        isThemes= true;
+      });
+    });
+
     initConnectivity();
+
 
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen((event) {
@@ -195,7 +204,7 @@ class _ElmazoonState extends State<Elmazoon> {
       child: MaterialApp(
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        theme: ThemeData(fontFamily: 'Cairo'),
+        theme: appTheme(),
         localizationsDelegates: context.localizationDelegates,
         debugShowCheckedModeBanner: false,
         title: AppStrings.appName,
