@@ -19,22 +19,6 @@ import 'core/utils/app_colors.dart';
 import 'core/utils/restart_app_class.dart';
 import 'firebase_options.dart';
 
-// import 'firebase_options.dart';
-// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
-//
-//   await PushNotificationService.instance.initialise();
-//
-//   print('ooooooooooooooooooo');
-//   print("Handling a background message:");
-//
-//   if (message.data.isNotEmpty) {
-//     PushNotificationService.instance.checkData(message);
-//     print("Handling a background message: ${message.data}");
-//   }
-// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +28,14 @@ Future<void> main() async {
   );
 
   await PushNotificationService.instance.initialise();
-  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE).then((value) {
+
+    print('************************************************');
+    print(value);
+    print('************************************************');
+
+  });
+
   // await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   AppColors.getPrimaryColor();
 

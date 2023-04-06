@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:quick_actions/quick_actions.dart';
 import 'package:screenshot_callback/screenshot_callback.dart';
 
 import 'config/themes/app_theme.dart';
@@ -49,19 +50,17 @@ class _ElmazoonState extends State<Elmazoon> {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool isThemes = false;
+  String shortcut = 'no action set';
+
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(Duration(seconds: 25),(){
-      setState(() {
-        isThemes= true;
-      });
-    });
-
+    // Future.delayed(Duration(seconds: 25),(){
+    //   setState(() {
+    //     isThemes= true;
+    //   });
+    // });
     initConnectivity();
-
-
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen((event) {
       if (event.index == 4) {
@@ -79,9 +78,39 @@ class _ElmazoonState extends State<Elmazoon> {
       }
       _updateConnectionStatus(event);
     });
+
+    const QuickActions quickActions = QuickActions();
+    quickActions.initialize((String shortcutType) {
+      setState(() {
+        if (shortcutType != null) {
+          shortcut = shortcutType;
+        }
+      });
+    });
+
+    quickActions.setShortcutItems(<ShortcutItem>[
+      // NOTE: This first action icon will only work on iOS.
+      // In a real world project keep the same file name for both platforms.
+      const ShortcutItem(
+        type: 'action_one',
+        localizedTitle: 'Action one',
+        icon: 'AppIcon',
+      ),
+      // NOTE: This second action icon will only work on Android.
+      // In a real world project keep the same file name for both platforms.
+      const ShortcutItem(
+        type: 'action_two',
+        localizedTitle: 'Action two',
+        icon: 'ic_launcher',
+      ),
+    ]).then((void _) {
+      setState(() {
+        if (shortcut == 'no action set') {
+          shortcut = 'actions ready';
+        }
+      });
+    });
   }
-
-
 
   @override
   void dispose() {
