@@ -9,12 +9,14 @@ import 'package:flutter/material.dart';
 
 import '../../core/utils/app_strings.dart';
 import '../../feature/confirm_exam_register/presentation/screens/confirm_exam_register.dart';
+import '../../feature/live_exam/screens/live_exam_screen.dart';
 import '../../feature/login/screens/login.dart';
 import '../../feature/mainscreens/profilePage/screens/suggest_screen.dart';
 import '../../feature/monthplandetials/presentation/screens/month_plan_detials.dart';
 import '../../feature/mydegree/screens/mydegree.dart';
 import '../../feature/splash/presentation/screens/splash_screen.dart';
 import '../../feature/videoPlay/videoPlay.dart';
+import '../models/ads_model.dart';
 import '../models/exam_answer_model.dart';
 import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
@@ -36,6 +38,7 @@ class Routes {
   static const String confirmexamRegisterRoute = '/confirmexamregister';
   static const String downloadsRoute = '/downloads';
   static const String downloadvideoplayRoute = '/downloadvideoplay';
+  static const String liveExamRoute = '/liveExamRoute';
 }
 
 class AppRoutes {
@@ -65,6 +68,12 @@ class AppRoutes {
 
         return MaterialPageRoute(
           builder: (context) => ExmRegisterPage(timeDataModel: timeDataModel),
+        );
+        case Routes.liveExamRoute:
+           LifeExam lifeExam= settings.arguments as LifeExam;
+
+        return MaterialPageRoute(
+          builder: (context) => LiveExamScreen(lifeExam: lifeExam),
         );
         case Routes.downloadvideoplayRoute:
         String videopath = settings.arguments as String;

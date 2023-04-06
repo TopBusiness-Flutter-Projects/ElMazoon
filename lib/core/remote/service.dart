@@ -24,6 +24,7 @@ import '../models/exam_hero_model.dart';
 import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
 import '../models/live_exam_model.dart';
+import '../models/live_questiones_data_model.dart';
 import '../models/month_plan_model.dart';
 import '../models/on_boarding_model.dart';
 import '../models/one_comment_model.dart';
@@ -590,8 +591,7 @@ class ServiceApi {
     UserModel loginModel = await Preferences.instance.getUserModel();
     String lan = await Preferences.instance.getSavedLang();
     try {
-      final response = await dio.get(
-        EndPoints.adsUrl,
+      final response = await dio.get(EndPoints.adsUrl,
         options: Options(
           headers: {
             'Authorization': loginModel.data!.token,
@@ -701,6 +701,24 @@ class ServiceApi {
             },
           ));
       return Right(LiveExamModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+  Future<Either<Failure, LiveQuestionsDataModel>> getLiveExamQuestion(
+      int examId) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.get(
+          EndPoints.accessGetLiveExamQuestionUrl + examId.toString(),
+          options: Options(
+            headers: {
+              'Authorization': loginModel.data!.token,
+              'Accept-Language': lan
+            },
+          ));
+      return Right(LiveQuestionsDataModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

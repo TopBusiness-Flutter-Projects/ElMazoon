@@ -6,9 +6,11 @@ import 'package:elmazoon/feature/live_exam/cubit/live_exam_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/models/ads_model.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/assets_manager.dart';
 import '../../../core/utils/restart_app_class.dart';
+import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/widgets/custom_button.dart';
 import '../../exam/widget/add_question_replay_widget.dart';
 import '../../exam/widget/time_widget.dart';
@@ -16,7 +18,8 @@ import '../widgets/completed_live_exam_widget.dart';
 import '../widgets/live_exam_timer_widget.dart';
 
 class LiveExamScreen extends StatefulWidget {
-  const LiveExamScreen({Key? key}) : super(key: key);
+  final LifeExam lifeExam;
+  const LiveExamScreen({Key? key, required this.lifeExam}) : super(key: key);
 
   @override
   State<LiveExamScreen> createState() => _LiveExamScreenState();
@@ -24,119 +27,141 @@ class LiveExamScreen extends StatefulWidget {
 
 class _LiveExamScreenState extends State<LiveExamScreen> {
   @override
-  void initState() {
-    super.initState();
-    context.read<LiveExamCubit>().accessFirstQuestionOfLiveExam(1);
-  }
-
-  @override
   void deactivate() {
     super.deactivate();
-    HotRestartController.performHotRestart(_scaffoldKey.currentContext!);
+    context.read<LiveExamCubit>().pendingList.clear();
+    context.read<LiveExamCubit>().pendingListNumber.clear();
+
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void initState() {
+    super.initState();
+    context.read<LiveExamCubit>().accessQuestionOfLiveExam(widget.lifeExam.id!);
   }
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        toolbarHeight: 60,
-        titleSpacing: 0,
-        title: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Text(
-            'live_exam'.tr(),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(ImageAssets.appBarImage),
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),
-      ),
-      body: BlocBuilder<LiveExamCubit, LiveExamState>(
-        builder: (context, state) {
-          LiveExamCubit cubit = context.read<LiveExamCubit>();
-          if (state is LiveExamQuestionLoading) {
-            return ShowLoadingIndicator();
-          }
-          if (state is LiveExamQuestionError) {
-            return NoDataWidget(onclick: () {}, title: 'no_data');
-          }
+    LiveExamCubit cubit = context.read<LiveExamCubit>();
 
-          return cubit.liveExamModel!.code == 200
-              ? ListView(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: LiveExamTimerWidget(
-                              examTime: cubit
-                                  .liveExamModel!.liveExamDatum!.remainingTime!,
-                            ),
+
+    return BlocBuilder<LiveExamCubit, LiveExamState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 160,
+            titleSpacing: 0,
+            title: Column(
+              children: [
+                CustomAppBar(
+                  title: widget.lifeExam.name??' ',
+                  subtitle: ''.tr(),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: cubit.liveExamModel!.data!.questions!.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Container(
+                          width: 40,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: cubit.liveExamModel!.data!.questions!
+                                .elementAt(index)
+                                .status ==
+                                'pending'
+                                ? AppColors.error
+                                : cubit.liveExamModel!.data!.questions!
+                                .elementAt(index)
+                                .status ==
+                                'answered'
+                                ? AppColors.success
+                                : cubit.index == index
+                                ? AppColors.primary
+                                : AppColors.white,
                           ),
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.primary,
-                            ),
+                          child: InkWell(
+                            onTap: () {
+                              cubit.updateIndex(index);
+                            },
                             child: Center(
-                              child: Text(
-                                cubit.liveExamModel!.liveExamDatum!.degree
-                                    .toString(),
-                                style: TextStyle(
-                                  color: AppColors.white,
-                                  fontWeight: FontWeight.bold,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "${index + 1}",
+                                  style: TextStyle(
+                                    color: cubit.index == index
+                                        ? AppColors.white
+                                        : cubit.liveExamModel!.data!.questions!
+                                        .elementAt(index)
+                                        .status !=
+                                        ''
+                                        ? AppColors.white
+                                        : AppColors.primary,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
-                          )
-                        ],
-                      ),
-                    ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(ImageAssets.appBarImage),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+          body: cubit.liveExamModel!.data!.questions!.length > 0
+              ? Form(
+            key: cubit.formKey,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    LiveExamTimerWidget( examTime: widget.lifeExam.quizMinute!,),
                     Container(
                       width: double.infinity,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 30.0),
+                        padding:
+                        const EdgeInsets.symmetric(vertical: 30.0),
                         child: Text(
-                          cubit.liveExamModel!.liveExamDatum!.question!,
+                          cubit.liveExamModel!.data!.questions![cubit.index]
+                              .question!,
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 15,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 25),
+
+
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount:
-                          cubit.liveExamModel!.liveExamDatum!.answers!.length,
+                      itemCount: cubit.liveExamModel!.data!.questions![cubit.index].answers!.length,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0),
                           child: Container(
                             child: Center(
                               child: Padding(
@@ -151,35 +176,44 @@ class _LiveExamScreenState extends State<LiveExamScreen> {
                                     width: double.maxFinite,
                                     height: 60,
                                     decoration: BoxDecoration(
-                                        color: cubit
-                                                    .liveExamModel!
-                                                    .liveExamDatum!
-                                                    .answers![index]
-                                                    .status ==
-                                                'select'
+                                        color: cubit.liveExamModel!.data!.questions![
+                                        cubit.index]
+                                            .answers![index]
+                                            .status ==
+                                            'select'
                                             ? AppColors.blueColor3
-                                            : AppColors.unselectedTab,
+                                            : AppColors
+                                            .unselectedTab,
                                         shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10))),
+                                        borderRadius:
+                                        BorderRadius.all(
+                                            Radius.circular(
+                                                10))),
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding:
+                                      const EdgeInsets.all(8.0),
                                       child: Align(
-                                        alignment: Alignment.centerRight,
+                                        alignment:
+                                        Alignment.centerRight,
                                         child: Text(
-                                          cubit.liveExamModel!.liveExamDatum!
-                                              .answers![index].answer!,
+                                          cubit.liveExamModel!.data!.questions![
+                                          cubit.index]
+                                              .answers![index]
+                                              .answer!,
                                           style: TextStyle(
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight:
+                                            FontWeight.bold,
                                             fontSize: 14,
-                                            color: cubit
-                                                        .liveExamModel!
-                                                        .liveExamDatum!
-                                                        .answers![index]
-                                                        .status ==
-                                                    'select'
+                                            color: cubit.liveExamModel!.data!.questions![
+                                            cubit
+                                                .index]
+                                                .answers![
+                                            index]
+                                                .status ==
+                                                'select'
                                                 ? AppColors.white
-                                                : AppColors.secondPrimary,
+                                                : AppColors
+                                                .secondPrimary,
                                           ),
                                         ),
                                       ),
@@ -191,38 +225,101 @@ class _LiveExamScreenState extends State<LiveExamScreen> {
                           ),
                         );
                       },
-                    ),
-                    SizedBox(height: 50),
-                    CustomButton(
-                      paddingHorizontal: 70,
-                      text: 'solution_done'.tr(),
-                      color: AppColors.success,
-                      onClick: () {
-                        if (cubit.ansId == 0) {
-                          toastMessage(
-                            'please_choose_answer'.tr(),
-                            context,
-                            color: AppColors.error,
-                          );
-                        } else {
-                          cubit.answerQuestionOfLiveExam(1);
-                          print(cubit.liveExamModel!.liveExamDatum!.answers!
-                              .toString());
-                          print(cubit.quesId);
-                          print(cubit.ansId);
-                        }
-                      },
-                    ),
-                  ],
-                )
-              : cubit.liveExamModel!.code == 201
-                  ? CompletedLiveExamWidget(
-                      degree: cubit.liveExamModel!.degree.toString(),
-                      pre: cubit.liveExamModel!.pre!,
                     )
-                  : Container(color: Colors.yellow);
-        },
-      ),
+                      ,
+
+                    SizedBox(height: 50),
+
+
+
+
+
+                    Container(
+                      height: 70,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: CustomButton(
+                              paddingHorizontal: 10,
+                              text: 'postpone_question'.tr(),
+                              color: AppColors.primary,
+                              onClick: () {
+                                cubit.postponeQuestion(
+                                  cubit.index
+                                );
+                                // cubit.updateSelectAnswer(
+                                //   55,
+                                // );
+                                if (cubit.liveExamModel!.data!.questions!
+                                    .length -
+                                    1 !=
+                                    cubit.index) {
+                                  cubit.updateIndex(cubit.index + 1);
+                                } else {
+                                  toastMessage(
+                                    'lastQuestion'.tr(),
+                                    context,
+                                    color: AppColors.primary,
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: CustomButton(
+                              paddingHorizontal: 10,
+                              text: 'solution_done'.tr(),
+                              color: AppColors.success,
+                              onClick: () {
+                                cubit.answerQuestion(
+                                  cubit.index
+                                );
+                                if (cubit.liveExamModel!.data!.questions!
+                                    .length -
+                                    1 !=
+                                    cubit.index) {
+                                  cubit.updateIndex(cubit.index + 1);
+                                } else {
+                                  toastMessage(
+                                    'last_question'.tr(),
+                                    context,
+                                    color: AppColors.primary,
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      child: CustomButton(
+                        paddingHorizontal: 50,
+                        text: 'end_exam'.tr(),
+                        color: AppColors.secondPrimary,
+                        onClick: () {
+                          // cubit.endExam(
+                          //   widget.examInstruction.quizMinute -
+                          //       int.parse(
+                          //           context.read<LiveLiveExamCubit>().minute),
+                          //   context,
+                          //   widget.examInstruction.exam_type,
+                          // );
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+              : Container(),
+        );
+      },
     );
   }
 }

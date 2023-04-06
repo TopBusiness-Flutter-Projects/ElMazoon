@@ -43,28 +43,7 @@ class _SplashScreenState extends State<SplashScreen>
     UserModel userModel = await Preferences.instance.getUserModel();
     if (prefs.getString('onBoarding') != null) {
 
-      // DateTime now = new DateTime.now();
-      // DateTime timeStart = DateTime.parse(
-      //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeStart}');
-      // DateTime timeEnd = DateTime.parse(
-      //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeEnd}');
-      //
-      // if (now.isAtSameMomentAs(timeStart) ||
-      //     now.isAtSameMomentAs(timeEnd) ||
-      //     now.isAfter(timeStart) ) {
-      //
-      //   print(now.isAtSameMomentAs(timeStart));
-      //   print(now.isAtSameMomentAs(timeEnd));
-      //   // print(now.isBefore(timeEnd));
-      //   print(now.isBefore(timeEnd));
-      //   // print(now.isBefore(timeStart));
-      //   print(now.isAfter(timeStart));
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => LiveExamScreen()
-      //     ),
-      //   );
+
       // } else {
       // }
 
@@ -100,7 +79,30 @@ class _SplashScreenState extends State<SplashScreen>
               childCurrent: SplashScreen(),
             ),
           );
-        } else {
+        }
+        else {
+          DateTime now = new DateTime.now();
+          DateTime timeStart = DateTime.parse(
+              '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeStart}');
+          DateTime timeEnd = DateTime.parse(
+              '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeEnd}');
+
+          if (now.isAtSameMomentAs(timeStart) ||
+              now.isAtSameMomentAs(timeEnd) ||
+              now.isAfter(timeStart) ) {
+
+            print(now.isAtSameMomentAs(timeStart));
+            print(now.isAtSameMomentAs(timeEnd));
+            // print(now.isBefore(timeEnd));
+            print(now.isBefore(timeEnd));
+            // print(now.isBefore(timeStart));
+            print(now.isAfter(timeStart));
+            Navigator.pushNamed(
+                context,
+                Routes.liveExamRoute,
+                arguments:context.read<SplashCubit>().lifeExam
+            );}
+          else{
           if (context.read<SplashCubit>().adsList.isNotEmpty) {
             Navigator.pushReplacement(
               context,
@@ -113,7 +115,8 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
               ),
             );
-          } else {
+          }
+          else {
             Navigator.pushReplacement(
               context,
               PageTransition(
@@ -124,7 +127,7 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             );
           }
-        }
+        }}
       } else {
         Navigator.pushNamedAndRemoveUntil(
           context,
