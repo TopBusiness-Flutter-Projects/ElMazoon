@@ -36,6 +36,7 @@ class EndPoints {
   static const String studentReportUrl = '${baseUrl}reports/student-report';
   static const String addDeviceTokenUrl = '${baseUrl}auth/add-device-token';
   static const String rateVideosUrl = '${baseUrl}user-rate-video/';
+  static const String onBoardingUrl = '${baseUrl}on-boarding';
 
 
 

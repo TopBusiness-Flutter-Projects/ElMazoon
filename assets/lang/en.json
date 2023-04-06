@@ -142,7 +142,9 @@
  "app_exam": "App Exam",
  "paper_exam": "Paper Exam",
  "no_lessons": "Lessons have not yet been uploaded",
- "no_lessons_data": "Data of Lessons have not yet been uploaded"
+ "no_lessons_data": "Data of Lessons have not yet been uploaded",
+ "skip": "Skip",
+ "next": "Next"
 
 
 

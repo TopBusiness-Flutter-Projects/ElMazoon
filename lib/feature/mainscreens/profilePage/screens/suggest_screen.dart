@@ -154,7 +154,7 @@ class SuggestScreen extends StatelessWidget {
                                     title: 'camera'.tr(),
                                     icon: Icons.camera_alt,
                                     onTap: () {
-                                      cubit.pickImage(type: 'camera');
+                                      cubit.pickImage(type: 'camera', screenType: 'suggest');
                                       Navigator.of(context).pop();
                                       Future.delayed(Duration(milliseconds: 500),
                                               () {
@@ -171,7 +171,7 @@ class SuggestScreen extends StatelessWidget {
                                                 contentPadding: EdgeInsets.zero,
                                                 content: RecordWidget(
                                                   type: 'image',
-                                                  sendType: 'type',
+                                                  sendType: 'suggest',
                                                   id: 0,
                                                 ),
                                               ),
@@ -183,7 +183,7 @@ class SuggestScreen extends StatelessWidget {
                                     title: 'photo'.tr(),
                                     icon: Icons.photo,
                                     onTap: () {
-                                      cubit.pickImage(type: 'photo');
+                                      cubit.pickImage(type: 'photo', screenType: 'suggest');
                                       Navigator.of(context).pop();
                                       Future.delayed(Duration(milliseconds: 500),
                                               () {
@@ -200,7 +200,7 @@ class SuggestScreen extends StatelessWidget {
                                                 contentPadding: EdgeInsets.zero,
                                                 content: RecordWidget(
                                                   type: 'image',
-                                                  sendType: 'type',
+                                                  sendType: 'suggest',
                                                   id: 0,
                                                 ),
                                               ),
@@ -228,7 +228,7 @@ class SuggestScreen extends StatelessWidget {
                                                 contentPadding: EdgeInsets.zero,
                                                 content: RecordWidget(
                                                   type: 'voice',
-                                                  sendType: 'type',
+                                                  sendType: 'suggest',
                                                   id: 0,
                                                 ),
                                               ),
@@ -268,7 +268,7 @@ class SuggestScreen extends StatelessWidget {
                     onClick: () {
                       if (formKey.currentState!.validate()) {
                         print('OK');
-                        cubit.sendSuggest();
+                        cubit.sendSuggest('text');
                       }
                     },
                   ),

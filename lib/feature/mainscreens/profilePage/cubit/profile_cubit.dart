@@ -43,9 +43,32 @@ class ProfileCubit extends Cubit<ProfileState> {
   XFile? imageFile;
   String imagePath = '';
 
-  pickImage({required String type}) async {
+  XFile? suggestImageFile;
+  String suggestImagePath = '';
+  String audioPath = '';
+
+
+  pickImage({required String type, String? screenType}) async {
     if (type == 'none') {
       imagePath = '';
+      emit(PickImageSuccess());
+    } else if (screenType != null) {
+      suggestImageFile = await ImagePicker().pickImage(
+        source: type == 'camera' ? ImageSource.camera : ImageSource.gallery,
+      );
+      CroppedFile? croppedFile = await ImageCropper.platform.cropImage(
+        sourcePath: suggestImageFile!.path,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.original,
+          CropAspectRatioPreset.ratio7x5,
+          CropAspectRatioPreset.ratio16x9
+        ],
+        cropStyle: CropStyle.rectangle,
+        compressFormat: ImageCompressFormat.png,
+        compressQuality: 90,
+      );
+      suggestImagePath = croppedFile!.path;
       emit(PickImageSuccess());
     } else {
       imageFile = await ImagePicker().pickImage(
@@ -82,9 +105,14 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  sendSuggest() async {
+  sendSuggest(String type) async {
     emit(ProfileSendSuggestLoading());
-    final response = await api.sendSuggest(suggest: suggest.text);
+    final response = await api.sendSuggest(
+      type: type,
+      suggest: type == 'text' ? suggest.text : null,
+      audio: type == 'audio' ? audioPath : null,
+      image: type == 'file' ? suggestImagePath : null,
+    );
     response.fold(
           (l) => emit(ProfileSendSuggestError()),
           (r) {

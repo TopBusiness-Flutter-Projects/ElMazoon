@@ -25,6 +25,7 @@ import '../models/exam_model.dart';
 import '../models/lessons_details_model.dart';
 import '../models/live_exam_model.dart';
 import '../models/month_plan_model.dart';
+import '../models/on_boarding_model.dart';
 import '../models/one_comment_model.dart';
 import '../models/questiones_data_model.dart';
 import '../models/response_message.dart';
@@ -125,14 +126,28 @@ class ServiceApi {
     }
   }
 
-  Future<Either<Failure, StatusResponse>> sendSuggest(
-      {required String suggest}) async {
+  Future<Either<Failure, StatusResponse>> sendSuggest({
+    required String type,
+    String? suggest,
+    String? image,
+    String? audio,
+  }) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     try {
       final response = await dio.post(
         EndPoints.suggestUrl,
+        formDataIsEnabled: true,
         body: {
-          'suggestion': suggest,
+          'type': type,
+          if (suggest != null) ...{
+            'suggestion': suggest,
+          },
+          if (image != null) ...{
+            'image': await MultipartFile.fromFile(image),
+          },
+          if (audio != null) ...{
+            'audio': await MultipartFile.fromFile(audio),
+          },
         },
         options: Options(
           headers: {
@@ -777,6 +792,23 @@ class ServiceApi {
         ),
       );
       return Right(StatusResponse.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  Future<Either<Failure, OnBoardingModel>> onBoardingData() async {
+    String lan = await Preferences.instance.getSavedLang();
+    try {
+      final response = await dio.get(
+        EndPoints.onBoardingUrl,
+        options: Options(
+          headers: {
+            'Accept-Language': lan
+          },
+        ),
+      );
+      return Right(OnBoardingModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }

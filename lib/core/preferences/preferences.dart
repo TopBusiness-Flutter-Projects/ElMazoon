@@ -16,6 +16,19 @@ class Preferences {
 
   factory Preferences() => instance;
 
+
+  Future<void> setFirstInstall() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('onBoarding', 'Done');
+  }
+
+  Future<String?> getFirstInstall() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jsonData = prefs.getString('onBoarding');
+    return jsonData;
+  }
+
+
   Future<String> getPrimaryColor() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('primaryColor') ?? '#00B3DC';

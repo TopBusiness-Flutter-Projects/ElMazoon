@@ -21,6 +21,7 @@ import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'feature/month_plan/cubit/month_plan_cubit.dart';
 import 'feature/mydegree/cubit/my_degree_cubit.dart';
 import 'feature/navigation_bottom/cubit/navigation_cubit.dart';
+import 'feature/onboarding/cubit/on_boarding_cubit.dart';
 import 'feature/payment/cubit/payment_cubit.dart';
 import 'feature/splash/presentation/cubit/splash_cubit.dart';
 
@@ -83,6 +84,9 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => LiveExamCubit(serviceLocator()),
+  );
+  serviceLocator.registerFactory(
+    () => OnBoardingCubit(serviceLocator()),
   );
   ///////////////////////////////////////////////////////////////////////////////
 

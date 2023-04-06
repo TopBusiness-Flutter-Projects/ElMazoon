@@ -17,7 +17,6 @@ import 'core/utils/app_strings.dart';
 import 'package:elmazoon/injector.dart' as injector;
 import 'dart:developer' as developer;
 import 'package:path/path.dart';
-import 'package:no_screenshot/no_screenshot.dart';
 
 import 'feature/downloads_videos/cubit/downloads_videos_cubit.dart';
 import 'feature/exam/cubit/exam_cubit.dart';
@@ -34,6 +33,7 @@ import 'feature/mainscreens/study_page/cubit/study_page_cubit.dart';
 import 'feature/month_plan/cubit/month_plan_cubit.dart';
 import 'feature/mydegree/cubit/my_degree_cubit.dart';
 import 'feature/navigation_bottom/cubit/navigation_cubit.dart';
+import 'feature/onboarding/cubit/on_boarding_cubit.dart';
 import 'feature/payment/cubit/payment_cubit.dart';
 
 class Elmazoon extends StatefulWidget {
@@ -48,18 +48,9 @@ class _ElmazoonState extends State<Elmazoon> {
 
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-  // late ScreenshotCallback screenshotCallback;
-  // final _noScreenshot = NoScreenshot.instance;
-  // screenshotsOff() async{
-  //   await _noScreenshot.screenshotOff();
-  //
-  //   // print('screenshots Off');
-  // }
-  // String text = "Ready..";
   bool isThemes = false;
   @override
   void initState() {
-    // screenshotsOff();
     super.initState();
 
     Future.delayed(Duration(seconds: 25),(){
@@ -88,29 +79,8 @@ class _ElmazoonState extends State<Elmazoon> {
       }
       _updateConnectionStatus(event);
     });
-    // init();
   }
 
-//   void init() async {
-//     await initScreenshotCallback();
-//   }
-//
-//   //It must be created after permission is granted.
-//   Future<void> initScreenshotCallback() async {
-//     screenshotCallback = ScreenshotCallback();
-// screenshotCallback.initialize();
-//
-// print("D;d;lelekle");
-//     screenshotCallback.addListener(() {
-//       setState(() {
-//         text = "Screenshot callback Fired!";
-//       });
-//     });
-//
-//     screenshotCallback.addListener(() {
-//       print("We can add multiple listeners ");
-//     });
-//   }
 
 
   @override
@@ -199,6 +169,9 @@ class _ElmazoonState extends State<Elmazoon> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<LiveExamCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<OnBoardingCubit>(),
         ),
       ],
       child: MaterialApp(
