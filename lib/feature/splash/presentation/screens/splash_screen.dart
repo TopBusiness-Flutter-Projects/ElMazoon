@@ -42,6 +42,32 @@ class _SplashScreenState extends State<SplashScreen>
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserModel userModel = await Preferences.instance.getUserModel();
     if (prefs.getString('onBoarding') != null) {
+
+      // DateTime now = new DateTime.now();
+      // DateTime timeStart = DateTime.parse(
+      //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeStart}');
+      // DateTime timeEnd = DateTime.parse(
+      //     '${context.read<SplashCubit>().lifeExam.dateExam.toString().split(' ')[0]} ${context.read<SplashCubit>().lifeExam.timeEnd}');
+      //
+      // if (now.isAtSameMomentAs(timeStart) ||
+      //     now.isAtSameMomentAs(timeEnd) ||
+      //     now.isAfter(timeStart) ) {
+      //
+      //   print(now.isAtSameMomentAs(timeStart));
+      //   print(now.isAtSameMomentAs(timeEnd));
+      //   // print(now.isBefore(timeEnd));
+      //   print(now.isBefore(timeEnd));
+      //   // print(now.isBefore(timeStart));
+      //   print(now.isAfter(timeStart));
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => LiveExamScreen()
+      //     ),
+      //   );
+      // } else {
+      // }
+
       if (prefs.getString('user') != null) {
         if (userModel.data!.dateEndCode.isBefore(DateTime.now())) {
           DateTime now = new DateTime.now();
