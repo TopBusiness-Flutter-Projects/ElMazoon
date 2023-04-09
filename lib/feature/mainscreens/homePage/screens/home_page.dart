@@ -42,26 +42,7 @@ class HomePage extends StatelessWidget {
                   ListView(
                     children: [
                       SizedBox(height: 120),
-                      BannerWidget(sliderData: state.model.data.sliders),
-                      SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                AppColors.blueColor1,
-                                AppColors.blueColor2,
-                              ],
-                            ),
-                          ),
-                          child: NotificationDetailsWidget(
-                              notificationModel: state.model.data.notification),
-                        ),
-                      ),
+                      BannerWidget(sliderData: state.model.data!.sliders!),
                       SizedBox(height: 40),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -94,12 +75,14 @@ class HomePage extends StatelessWidget {
                         child: Row(
                           children: [
                             ...List.generate(
-                              5,
+                              cubit.videosBasics.length,
                               (index) => Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Container(
                                   height: 120,
-                                  width: MediaQuery.of(context).size.width * 0.45,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.45,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     color: AppColors.primary,
@@ -107,7 +90,12 @@ class HomePage extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Spacer(),
-                                      Text('عنوان الفديو',style: TextStyle(color: AppColors.white,fontWeight: FontWeight.bold),),
+                                      Text(
+                                        cubit.videosBasics[index].name!,
+                                        style: TextStyle(
+                                            color: AppColors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                       Spacer(),
                                       Row(
                                         children: [
@@ -119,7 +107,13 @@ class HomePage extends StatelessWidget {
                                             size: 16,
                                           ),
                                           Spacer(),
-                                          Text('ساعه',style: TextStyle(color: AppColors.white,fontWeight: FontWeight.bold),),
+                                          Text(
+                                            '${cubit.videosBasics[index].time!}   ساعه ',
+                                            style: TextStyle(
+                                              color: AppColors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
                                           Spacer(),
                                         ],
                                       ),
@@ -164,6 +158,7 @@ class HomePage extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 GridView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
@@ -204,11 +199,7 @@ class HomePage extends StatelessWidget {
                                       },
                                       child: ContainerWithTwoColorWidget(
                                         title: cubit.classes[index].name,
-                                        imagePath: context
-                                            .read<NavigationCubit>()
-                                            .userModel!
-                                            .data!
-                                            .image,
+                                        imagePath: cubit.classes[index].image,
                                         color1: AppColors.blueColor1,
                                         color2: AppColors.blueColor2,
                                         textColor: AppColors.secondPrimary,
@@ -217,6 +208,90 @@ class HomePage extends StatelessWidget {
                                     );
                                   },
                                 ),
+                                SizedBox(height: 40),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  child: SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.50,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'المرجعة النهائية'.tr(),
+                                          style: TextStyle(
+                                            // color: AppColors.secondPrimary,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Container(
+                                          height: 1,
+                                          width: MediaQuery.of(context).size.width * 0.30,
+                                          color: AppColors.primary,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      ...List.generate(
+                                        cubit.videosResources.length,
+                                            (index) => Padding(
+                                          padding:
+                                          const EdgeInsets.symmetric(horizontal: 8.0),
+                                          child: Container(
+                                            height: 120,
+                                            width:
+                                            MediaQuery.of(context).size.width * 0.45,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8),
+                                              color: AppColors.primary,
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                Spacer(),
+                                                Text(
+                                                  cubit.videosResources[index].name!,
+                                                  style: TextStyle(
+                                                      color: AppColors.white,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Spacer(),
+                                                Row(
+                                                  children: [
+                                                    // Spacer(),
+                                                    SizedBox(width: 16),
+                                                    MySvgWidget(
+                                                      path: ImageAssets.clockIcon,
+                                                      imageColor: AppColors.white,
+                                                      size: 16,
+                                                    ),
+                                                    Spacer(),
+                                                    Text(
+                                                      '${cubit.videosResources[index].time!}   ساعه ',
+                                                      style: TextStyle(
+                                                        color: AppColors.white,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Spacer(),
+                                                  ],
+                                                ),
+                                                Spacer(),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 40),
                               ],
                             ),
                           )
@@ -245,10 +320,10 @@ class HomePage extends StatelessWidget {
                         Positioned(
                           right: 20,
                           left: 5,
-                          child: BlocBuilder<NavigationCubit, NavigationState>(
+                          child: BlocBuilder<HomePageCubit, HomePageState>(
                             builder: (context, state) {
-                              NavigationCubit cubit =
-                                  context.read<NavigationCubit>();
+                              HomePageCubit cubit =
+                                  context.read<HomePageCubit>();
                               return SizedBox(
                                 // height: 150,
                                 child: Row(

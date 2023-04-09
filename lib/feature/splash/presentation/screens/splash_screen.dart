@@ -25,7 +25,17 @@ class _SplashScreenState extends State<SplashScreen>
   late Timer _timer;
 
   _goNext() {
-    _getStoreUser();
+    Navigator.pushReplacement(
+      context,
+      PageTransition(
+        type: PageTransitionType.fade,
+        alignment: Alignment.center,
+        duration: const Duration(milliseconds: 1300),
+        child: NavigatorBar(),
+      ),
+    );
+
+    // _getStoreUser();
   }
 
   _startDelay() async {

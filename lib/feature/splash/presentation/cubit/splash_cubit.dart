@@ -8,7 +8,7 @@ part 'splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit(this.api) : super(SplashInitial()) {
-     getAdsOfApp();
+     // getAdsOfApp();
   }
 
   final ServiceApi api;

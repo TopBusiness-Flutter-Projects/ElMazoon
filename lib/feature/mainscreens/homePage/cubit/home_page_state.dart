@@ -5,6 +5,10 @@ abstract class HomePageState {}
 
 class HomePageInitial extends HomePageState {}
 
+class HomeGetUserLoading extends HomePageState {}
+class HomeGetUserData extends HomePageState {}
+
+
 class HomePageLoading extends HomePageState {}
 class HomePageLoaded extends HomePageState {
   final HomePageModel model;
