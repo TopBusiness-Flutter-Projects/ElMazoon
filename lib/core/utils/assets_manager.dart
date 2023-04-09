@@ -50,6 +50,9 @@ class ImageAssets {
   static const String downloadVideoIcon = '$iconsPath/download_video.svg';
   static const String likeIcon = '$iconsPath/like.svg';
   static const String dislikeIcon = '$iconsPath/dislike.svg';
+  static const String notificationsIcon = '$iconsPath/notifications.svg';
+  static const String loveIcon = '$iconsPath/love.svg';
+  static const String clockIcon = '$iconsPath/clock.svg';
 
 
   //Lottie

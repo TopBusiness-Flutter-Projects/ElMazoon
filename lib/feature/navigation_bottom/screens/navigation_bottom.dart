@@ -34,7 +34,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 90,
+        toolbarHeight:_page!=2? 90:0,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
           child: appbar(),
@@ -154,82 +154,83 @@ class _NavigatorBarState extends State<NavigatorBar> {
         ],
       );
     } else if (_page == 2) {
-      return BlocBuilder<NavigationCubit, NavigationState>(
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'hello'.tr(),
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: AppColors.white,
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        context.read<NavigationCubit>().userModel != null
-                            ? context
-                                .read<NavigationCubit>()
-                                .userModel!
-                                .data!
-                                .name
-                            : '',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                    ],
-                  ),
-                  InkWell(
-                    onTap: () {
-                      // setState(() {
-                      //   //15860B
-                      //   //00B3DC
-                      //   Preferences.instance.setPrimaryColor('#00B3DC').then(
-                      //     (value) {
-                      //       return AppColors.getPrimaryColor();
-                      //     },
-                      //   ).then(
-                      //     (value) {
-                      //       _bottomNavigationKey.currentState!.setState(() {
-                      //         _page = 2;
-                      //       });
-                      //     },
-                      //   );
-                      // });
-                    },
-                    child: Text(
-                      monthSeason(),
-                      style: TextStyle(fontSize: 14),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Text(
-                  'home_page'.tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      );
+      return SizedBox();
+      // return BlocBuilder<NavigationCubit, NavigationState>(
+      //   builder: (context, state) {
+      //     return Column(
+      //       crossAxisAlignment: CrossAxisAlignment.center,
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: [
+      //         Row(
+      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //           children: [
+      //             Row(
+      //               children: [
+      //                 Text(
+      //                   'hello'.tr(),
+      //                   style: TextStyle(
+      //                     fontSize: 18,
+      //                     color: AppColors.white,
+      //                   ),
+      //                 ),
+      //                 SizedBox(width: 8),
+      //                 Text(
+      //                   context.read<NavigationCubit>().userModel != null
+      //                       ? context
+      //                           .read<NavigationCubit>()
+      //                           .userModel!
+      //                           .data!
+      //                           .name
+      //                       : '',
+      //                   style: TextStyle(
+      //                     fontSize: 22,
+      //                     fontWeight: FontWeight.bold,
+      //                     color: AppColors.primary,
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //             InkWell(
+      //               onTap: () {
+      //                 // setState(() {
+      //                 //   //15860B
+      //                 //   //00B3DC
+      //                 //   Preferences.instance.setPrimaryColor('#00B3DC').then(
+      //                 //     (value) {
+      //                 //       return AppColors.getPrimaryColor();
+      //                 //     },
+      //                 //   ).then(
+      //                 //     (value) {
+      //                 //       _bottomNavigationKey.currentState!.setState(() {
+      //                 //         _page = 2;
+      //                 //       });
+      //                 //     },
+      //                 //   );
+      //                 // });
+      //               },
+      //               child: Text(
+      //                 monthSeason(),
+      //                 style: TextStyle(fontSize: 14),
+      //               ),
+      //             )
+      //           ],
+      //         ),
+      //         SizedBox(
+      //           width: MediaQuery.of(context).size.width,
+      //           child: Text(
+      //             'home_page'.tr(),
+      //             textAlign: TextAlign.center,
+      //             style: TextStyle(
+      //               color: AppColors.white,
+      //               fontSize: 20,
+      //               fontWeight: FontWeight.bold,
+      //             ),
+      //           ),
+      //         ),
+      //       ],
+      //     );
+      //   },
+      // );
     } else if (_page == 3) {
       return Column(
         children: [

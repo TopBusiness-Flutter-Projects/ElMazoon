@@ -74,7 +74,7 @@ dependencies:
   connectivity_plus: ^3.0.3
   syncfusion_flutter_charts: ^21.1.38
   flutter_credit_card: ^3.0.6
-  screenshot_callback: ^2.0.3
+#  screenshot_callback: ^2.0.3
   pdf: ^3.10.1
   flutter_windowmanager: ^0.2.0
   like_button: ^2.0.5

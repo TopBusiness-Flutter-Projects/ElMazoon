@@ -37,7 +37,7 @@ class _BannerWidgetState extends State<BannerWidget> {
                 enlargeCenterPage: true,
                 enableInfiniteScroll: false,
                 autoPlay: true,
-                height: MediaQuery.of(context).size.height * 0.25,
+                height: MediaQuery.of(context).size.height * 0.18,
                 reverse: false,
                 viewportFraction: 1.0),
             items: widget.sliderData.map((i) {
@@ -50,8 +50,8 @@ class _BannerWidgetState extends State<BannerWidget> {
                     },
                     child: ManageNetworkImage(
                       imageUrl: i.file,
-                      borderRadius: 0,
-                      width: double.infinity,
+                      borderRadius: 10,
+                      width: MediaQuery.of(context).size.width * 0.85,
                     ),
                   );
                 },

@@ -20,7 +20,7 @@ class DotesWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Container(
                       height: 12,
-                      width: 28,
+                      width: 40,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         color: AppColors.secondPrimary,

@@ -26,18 +26,19 @@ class ContainerWithTwoColorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          gradient: isHome!
-              ? null
-              : LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    color1,
-                    color2,
-                  ],
-                ),
-          color: isHome! ? AppColors.transparent : null),
+        borderRadius: BorderRadius.circular(16),
+        gradient: isHome!
+            ? null
+            : LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  color1,
+                  color2,
+                ],
+              ),
+        color: isHome! ? AppColors.transparent : null,
+      ),
       child: Column(
         children: [
           const Spacer(),
@@ -45,21 +46,18 @@ class ContainerWithTwoColorWidget extends StatelessWidget {
               ? Image.asset(ImageAssets.logoImage)
               : ManageNetworkImage(
                   imageUrl: imagePath,
-                  borderRadius: 120,
-                  width: 100,
-                  height: 100,
+                  borderRadius: 90,
+                  width: 60,
+                  height: 60,
                 ),
           const Spacer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                // color: textColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              // color: textColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
             ),
           ),
           const Spacer(),

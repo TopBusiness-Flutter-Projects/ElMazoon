@@ -42,6 +42,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 imageUrl: cubit.userModel!.data!.image,
                 width: 50,
                 height: 50,
+                borderRadius: 80,
               ),
               SizedBox(width: 15),
               Expanded(
