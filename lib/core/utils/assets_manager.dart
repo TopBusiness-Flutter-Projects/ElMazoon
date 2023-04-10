@@ -23,7 +23,7 @@ class ImageAssets {
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';
-  static const String homeIcon = '$iconsPath/home.svg';
+  // static const String homeIcon = '$iconsPath/home.svg';
   static const String openBookIcon = '$iconsPath/open_book.svg';
   static const String booksIcon = '$iconsPath/books.svg';
   static const String notificationIcon = '$iconsPath/notification.svg';
@@ -53,6 +53,10 @@ class ImageAssets {
   static const String notificationsIcon = '$iconsPath/notifications.svg';
   static const String loveIcon = '$iconsPath/love.svg';
   static const String clockIcon = '$iconsPath/clock.svg';
+  static const String homeIcon = '$iconsPath/home_icon.svg';
+  static const String videoIcon = '$iconsPath/video_icon.svg';
+  static const String noteIcon = '$iconsPath/note_icon.svg';
+  static const String studyIcon = '$iconsPath/study_icon.svg';
 
 
   //Lottie

@@ -24,6 +24,7 @@ class AppColors {
   static Color paymentContainer = HexColor('#F0D3AB');
   static Color textFormFieldColor = HexColor('#EDEDED');
   static Color descriptionBoardingColor = HexColor('#777777');
+  static Color bottomNavigatorColor = HexColor('#F3F4F9');
 
   static Color blueLikeColor = HexColor('#2e7dea');
   static Color redDislikeColor = HexColor('#ff2c2c');

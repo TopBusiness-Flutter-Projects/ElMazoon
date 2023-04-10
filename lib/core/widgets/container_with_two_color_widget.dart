@@ -25,6 +25,7 @@ class ContainerWithTwoColorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: isHome!
@@ -41,26 +42,35 @@ class ContainerWithTwoColorWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Spacer(),
+          // const Spacer(),
           imagePath.isEmpty
               ? Image.asset(ImageAssets.logoImage)
-              : ManageNetworkImage(
-                  imageUrl: imagePath,
-                  borderRadius: 90,
-                  width: 60,
-                  height: 60,
-                ),
-          const Spacer(),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              // color: textColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
+              : Expanded(
+            flex: 6,
+                child: ManageNetworkImage(
+                    imageUrl: imagePath,
+                    borderRadius: 90,
+                    width: 110,
+                    height: 110,
+                  ),
+              ),
+          // const Spacer(),
+          SizedBox(height: 4),
+          Expanded(
+            flex: 2,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+              style: TextStyle(
+                // color: textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
             ),
           ),
-          const Spacer(),
+          // const Spacer(),
         ],
       ),
     );

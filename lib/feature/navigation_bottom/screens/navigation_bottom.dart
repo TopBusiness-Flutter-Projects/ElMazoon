@@ -33,7 +33,10 @@ class _NavigatorBarState extends State<NavigatorBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar:_page==2?AppBar(
+        backgroundColor: AppColors.secondPrimary,
+        toolbarHeight: 0,
+      ) :AppBar(
         toolbarHeight:_page!=2? 90:0,
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
@@ -55,36 +58,36 @@ class _NavigatorBarState extends State<NavigatorBar> {
         height: 60.0,
         items: [
           MySvgWidget(
-            path: ImageAssets.openBookIcon,
+            path: ImageAssets.videoIcon,
             size: _page != 0 ? 25 : 40,
-            imageColor: _page != 0 ? AppColors.white : AppColors.primary,
+            imageColor: _page != 0 ? AppColors.secondPrimary : AppColors.white,
           ),
           MySvgWidget(
-            path: ImageAssets.booksIcon,
+            path: ImageAssets.studyIcon,
             size: _page != 1 ? 25 : 40,
-            imageColor: _page != 1 ? AppColors.white : AppColors.primary,
+            imageColor: _page != 1 ? AppColors.secondPrimary : AppColors.white,
           ),
           MySvgWidget(
             path: ImageAssets.homeIcon,
             size: _page != 2 ? 25 : 40,
-            imageColor: _page != 2 ? AppColors.white : AppColors.primary,
+            imageColor: _page != 2 ? AppColors.secondPrimary : AppColors.white,
           ),
           MySvgWidget(
-            path: ImageAssets.notificationIcon,
+            path: ImageAssets.noteIcon,
             size: _page != 3 ? 25 : 40,
-            imageColor: _page != 3 ? AppColors.white : AppColors.primary,
+            imageColor: _page != 3 ? AppColors.secondPrimary : AppColors.white,
           ),
           MySvgWidget(
             path: ImageAssets.moreIcon,
             size: _page != 4 ? 25 : 40,
-            imageColor: _page != 4 ? AppColors.white : AppColors.primary,
+            imageColor: _page != 4 ? AppColors.secondPrimary : AppColors.white,
           ),
         ],
-        color: AppColors.secondPrimary,
+        color: AppColors.bottomNavigatorColor,
         buttonBackgroundColor: AppColors.secondPrimary,
         backgroundColor: AppColors.transparent,
         animationCurve: Curves.linear,
-        animationDuration: const Duration(milliseconds: 100),
+        animationDuration: const Duration(milliseconds: 500),
         onTap: (index) {
           setState(() {
             _page = index;
