@@ -17,34 +17,36 @@ class CustomAppBar extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                          color: AppColors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Visibility(
-                        visible: subtitle.isNotEmpty,
-                        child:
-                    const SizedBox(
-                      height: 5,
-                    )),
-                    Visibility(
-                      visible: subtitle.isNotEmpty,
-                      child: Text(
-                       subtitle,
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
                         style: TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 13,
-                            fontWeight: FontWeight.normal),
+                            color: AppColors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
                       ),
-                    ),
-                  ],
+                      Visibility(
+                          visible: subtitle.isNotEmpty,
+                          child:
+                      const SizedBox(
+                        height: 5,
+                      )),
+                      Visibility(
+                        visible: subtitle.isNotEmpty,
+                        child: Text(
+                         subtitle,
+                          style: TextStyle(
+                              color: AppColors.primary,
+                              fontSize: 13,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

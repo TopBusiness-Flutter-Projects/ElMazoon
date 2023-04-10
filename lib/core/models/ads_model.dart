@@ -103,6 +103,7 @@ class LifeExam {
     this.createdAt,
     this.updatedAt,
     this.questions,
+
   });
 
   int? id;

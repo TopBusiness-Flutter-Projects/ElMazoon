@@ -10,7 +10,7 @@ class LiveQuestionsDataModel {
   LiveQuestionsDataModel({this.data, this.message, this.code});
 
   LiveQuestionsDataModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new LifeExam.fromJson(json['data']) : null;
+    data = json['data'] != null ? new LifeExam.fromJson(json['data']) : LifeExam();
     message = json['message'];
     code = json['code'];
   }

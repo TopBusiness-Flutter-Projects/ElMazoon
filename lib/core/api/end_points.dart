@@ -24,6 +24,7 @@ class EndPoints {
   static const String updateProfileUrl = '${baseUrl}auth/update-profile';
   static const String updateAccessTimeUrl = '${baseUrl}access-end-time/exam/';
   static const String answerExamUrl = '${baseUrl}onlineExam/exam/';
+  static const String answerLiveExamUrl = '${baseUrl}live-exam/add-live-exam/';
   static const String homePageUrl = '${baseUrl}auth/home-page';
   static const String myDegreeUrl = '${baseUrl}degrees/all-exams-degrees';
   static const String guideUrl = '${baseUrl}guide/all';

@@ -47,6 +47,8 @@ class _LiveExamScreenState extends State<LiveExamScreen> {
 
     return BlocBuilder<LiveExamCubit, LiveExamState>(
       builder: (context, state) {
+        // print("dddd");
+        // print(cubit.liveExamModel.data!.questions!.length);
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: 160,
@@ -63,7 +65,7 @@ class _LiveExamScreenState extends State<LiveExamScreen> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: cubit.liveExamModel!.data!.questions!.length,
+                    itemCount: cubit.liveExamModel.data!=null?cubit.liveExamModel.data!.questions!.length:0,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -71,12 +73,12 @@ class _LiveExamScreenState extends State<LiveExamScreen> {
                           width: 40,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: cubit.liveExamModel!.data!.questions!
+                            color: cubit.liveExamModel.data!.questions!
                                 .elementAt(index)
                                 .status ==
                                 'pending'
                                 ? AppColors.error
-                                : cubit.liveExamModel!.data!.questions!
+                                : cubit.liveExamModel.data!.questions!
                                 .elementAt(index)
                                 .status ==
                                 'answered'
@@ -126,7 +128,7 @@ class _LiveExamScreenState extends State<LiveExamScreen> {
               ),
             ),
           ),
-          body: cubit.liveExamModel!.data!.questions!.length > 0
+          body: cubit.liveExamModel.data!=null&&cubit.liveExamModel!.data!.questions!.length > 0
               ? Form(
             key: cubit.formKey,
             child: SingleChildScrollView(
@@ -230,7 +232,69 @@ class _LiveExamScreenState extends State<LiveExamScreen> {
 
                     SizedBox(height: 50),
 
-
+                    Visibility(
+                      visible: cubit.pendingList.isNotEmpty,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: double.maxFinite,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  AppColors.blueLiteColor1,
+                                  AppColors.blueLiteColor2,
+                                ],
+                              ),
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(10))),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                ...List.generate(
+                                    cubit.pendingListNumber.length,
+                                        (index) => Padding(
+                                      padding:
+                                      const EdgeInsets.all(8.0),
+                                      child: Align(
+                                        alignment:
+                                        Alignment.centerRight,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: AppColors.primary,
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets.all(
+                                              14.0,
+                                            ),
+                                            child: Text(
+                                              cubit.pendingListNumber[
+                                              index]
+                                                  .toString(),
+                                              style: TextStyle(
+                                                fontWeight:
+                                                FontWeight.bold,
+                                                fontSize: 14,
+                                                color:
+                                                AppColors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 12),
 
 
 
@@ -252,7 +316,7 @@ class _LiveExamScreenState extends State<LiveExamScreen> {
                                 // cubit.updateSelectAnswer(
                                 //   55,
                                 // );
-                                if (cubit.liveExamModel!.data!.questions!
+                                if (cubit.liveExamModel.data!.questions!
                                     .length -
                                     1 !=
                                     cubit.index) {
@@ -302,13 +366,12 @@ class _LiveExamScreenState extends State<LiveExamScreen> {
                         text: 'end_exam'.tr(),
                         color: AppColors.secondPrimary,
                         onClick: () {
-                          // cubit.endExam(
-                          //   widget.examInstruction.quizMinute -
-                          //       int.parse(
-                          //           context.read<LiveLiveExamCubit>().minute),
-                          //   context,
-                          //   widget.examInstruction.exam_type,
-                          // );
+                          cubit.endExam(
+
+                                int.parse(
+                                    context.read<LiveExamCubit>().minute),
+                            context
+                          );
                         },
                       ),
                     )

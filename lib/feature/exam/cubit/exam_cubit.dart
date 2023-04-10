@@ -303,7 +303,8 @@ class ExamCubit extends Cubit<ExamState> {
                     );
                   },
                 );
-            } else {
+            }
+            else {
               changeInstructionOfExam(
                 r,
                 context.read<StudyPageCubit>(),

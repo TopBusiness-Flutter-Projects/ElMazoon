@@ -550,9 +550,9 @@ class ServiceApi {
       required String type}) async {
     UserModel loginModel = await Preferences.instance.getUserModel();
     Map<String, dynamic> fields = {"exam_type": type, "timer": time};
-    for (int i = 0; i < questionData.questions.length; i++) {
+    for (int i = 0; i < questionData.questions!.length; i++) {
       fields.addAll(
-          {"details[$i][question]": questionData.questions[i].id.toString()});
+          {"details[$i][question]": questionData.questions![i].id.toString()});
       if (answerExamModel.audio[i].isNotEmpty) {
         fields.addAll({
           "details[$i][audio]":
@@ -582,6 +582,36 @@ class ServiceApi {
       );
 
       return Right(ExamAnswerModel.fromJson(response));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+ Future<Either<Failure, LiveExamModel>> answerLiveExam(
+      {required LifeExam questionData,
+      required AnswerExamModel answerExamModel,
+      required int time}) async {
+    UserModel loginModel = await Preferences.instance.getUserModel();
+    Map<String, dynamic> fields = {"timer": time};
+    for (int i = 0; i < questionData.questions!.length; i++) {
+      fields.addAll(
+          {"details[$i][question]": questionData.questions![i].id.toString()});
+
+      if (answerExamModel.answer[i].isNotEmpty) {
+        fields.addAll({"details[$i][answer]": answerExamModel.answer[i]});
+      } else {
+        fields.addAll({"details[$i][answer]": ''});
+      }
+    }
+
+    try {
+      final response = await dio.post(
+        EndPoints.answerLiveExamUrl + questionData.id.toString(),
+        formDataIsEnabled: true,
+        options: Options(headers: {'Authorization': loginModel.data!.token}),
+        body: fields,
+      );
+
+      return Right(LiveExamModel.fromJson(response));
     } on ServerException {
       return Left(ServerFailure());
     }
@@ -718,8 +748,11 @@ class ServiceApi {
               'Accept-Language': lan
             },
           ));
+      print("slksksjsjjd");
+      print(response);
       return Right(LiveQuestionsDataModel.fromJson(response));
     } on ServerException {
+      print("slsllsl");
       return Left(ServerFailure());
     }
   }

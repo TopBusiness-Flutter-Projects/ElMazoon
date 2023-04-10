@@ -1,11 +1,16 @@
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:elmazoon/core/remote/service.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+import '../../../config/routes/app_routes.dart';
 import '../../../core/models/answer_model.dart';
 import '../../../core/models/live_exam_model.dart';
 import '../../../core/models/live_questiones_data_model.dart';
+import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/show_dialog.dart';
+import '../../../core/utils/toast_message_method.dart';
 import '../../exam/models/answer_exam_model.dart';
 
 part 'live_exam_state.dart';
@@ -24,7 +29,7 @@ class LiveExamCubit extends Cubit<LiveExamState> {
   var second = "0";
   int index = 0;
   AnswerExamModel? answerExamModel;
-  LiveQuestionsDataModel? liveExamModel;
+  LiveQuestionsDataModel liveExamModel=LiveQuestionsDataModel();
   int pendingNumberIndex = 0;
   List<int> pendingList = [];
   List<int> pendingListNumber = [];
@@ -38,12 +43,19 @@ class LiveExamCubit extends Cubit<LiveExamState> {
 
 
   accessQuestionOfLiveExam(int examId) async {
+   print("dlldldldl");
+   print(examId);
     emit(LiveExamQuestionLoading());
     final response = await api.getLiveExamQuestion(examId);
     response.fold(
       (l) => emit(LiveExamQuestionError()),
       (r) {
+        print(r);
         liveExamModel = r;
+        for (int i = 0; i < liveExamModel.data!.questions!.length; i++) {
+          answerExamModel!.answer.add("");
+
+        }
         emit(LiveExamQuestionLoaded());
       },
     );
@@ -66,8 +78,8 @@ class LiveExamCubit extends Cubit<LiveExamState> {
   //   );
   // }
   void updateIndex(int index) {
-    if (pendingList.contains(liveExamModel!.data!.questions![this.index].id!)) {
-      liveExamModel!.data!.questions![index].status = 'pending';
+    if (pendingList.contains(liveExamModel.data!.questions![index].id!)) {
+      liveExamModel.data!.questions![index].status = 'pending';
     
     }
     this.index = index;
@@ -87,17 +99,17 @@ class LiveExamCubit extends Cubit<LiveExamState> {
   }
 
   void postponeQuestion(int index) {
-    liveExamModel!.data!.questions![index].status = 'pending';
+    liveExamModel.data!.questions![index].status = 'pending';
 
-    if (!pendingList.contains(liveExamModel!.data!.questions![index].id!)) {
-      pendingList.add(liveExamModel!.data!.questions![index].id!);
+    if (!pendingList.contains(liveExamModel.data!.questions![index].id!)) {
+      pendingList.add(liveExamModel.data!.questions![index].id!);
       pendingNumberIndex = index;
       pendingNumberIndex = pendingNumberIndex + 1;
       pendingListNumber.add(pendingNumberIndex);
     }
 
 
-      List<Answers>? answers = liveExamModel!.data!.questions![index].answers;
+      List<Answers>? answers = liveExamModel.data!.questions![index].answers;
       for (int i = 0; i < answers!.length; i++) {
         if (answers[i].status == 'select') {
           answerExamModel!.answer[index]='';
@@ -118,7 +130,7 @@ class LiveExamCubit extends Cubit<LiveExamState> {
       pendingListNumber.remove(pendingNumberIndex);
     }
 
-      List<Answers>? answers = liveExamModel!.data!.questions![index].answers;
+      List<Answers>? answers = liveExamModel.data!.questions![index].answers;
       for (int i = 0; i < answers!.length; i++) {
         if (answers[i].status == 'select') {
 
@@ -127,6 +139,45 @@ class LiveExamCubit extends Cubit<LiveExamState> {
 
     }
     emit(LiveExamQuestionLoaded());
+  }
+  Future<void> endExam(int time, BuildContext context) async {
+    print(answerExamModel!.answer);
+    print(answerExamModel!.audio);
+    print(answerExamModel!.image);
+    print(time);
+    createProgressDialog(context, 'wait'.tr());
+    var response = await api.answerLiveExam(
+      answerExamModel: answerExamModel!,
+      questionData: liveExamModel.data!,
+      time: time,
+    );
+    response.fold(
+          (l) => Navigator.of(context).pop(),
+          (r) {
+        Navigator.of(context).pop();
+        if (r.code == 201) {
+
+          pendingList = [];
+          answerExamModel = AnswerExamModel(answer: [], audio: [], image: []);
+
+
+          Navigator.pushReplacementNamed(
+            context,
+            Routes.examdegreeDetialsRoute,
+            arguments: r,
+          );
+
+
+          }
+         else {
+          toastMessage(
+            r.message,
+            context,
+            color: AppColors.error,
+          );
+        }
+      },
+    );
   }
 
 }
