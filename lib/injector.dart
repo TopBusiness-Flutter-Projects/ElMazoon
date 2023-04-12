@@ -24,6 +24,7 @@ import 'feature/navigation_bottom/cubit/navigation_cubit.dart';
 import 'feature/onboarding/cubit/on_boarding_cubit.dart';
 import 'feature/payment/cubit/payment_cubit.dart';
 import 'feature/splash/presentation/cubit/splash_cubit.dart';
+import 'feature/start_trip/cubit/start_trip_cubit.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -87,6 +88,11 @@ Future<void> setup() async {
   );
   serviceLocator.registerFactory(
     () => OnBoardingCubit(serviceLocator()),
+  );
+  serviceLocator.registerFactory(
+    () => StartTripCubit(
+        // serviceLocator()
+    ),
   );
   ///////////////////////////////////////////////////////////////////////////////
 

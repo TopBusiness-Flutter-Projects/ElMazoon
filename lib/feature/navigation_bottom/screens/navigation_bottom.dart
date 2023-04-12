@@ -15,6 +15,7 @@ import '../../mainscreens/homePage/screens/home_page.dart';
 import '../../mainscreens/notificationpage/presentation/screens/notification_page.dart';
 import '../../mainscreens/profilePage/widgets/customAppbar.dart';
 import '../../mainscreens/study_page/screens/study_page.dart';
+import '../../start_trip/screens/main_start_trip_screen.dart';
 
 class NavigatorBar extends StatefulWidget {
   const NavigatorBar({Key? key}) : super(key: key);
@@ -103,7 +104,7 @@ class _NavigatorBarState extends State<NavigatorBar> {
 
   Widget pages() {
     if (_page == 0) {
-      return const StudyPage();
+      return StartTripScreen();
     } else if (_page == 1) {
       return GuidePage();
     } else if (_page == 2) {

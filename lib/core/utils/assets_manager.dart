@@ -20,6 +20,11 @@ class ImageAssets {
   static const String secondImage = '$imagePath/second.png';
   static const String thirdImage = '$imagePath/third.png';
   static const String masterCardImage = '$imagePath/master_card.png';
+  static const String chooseClassMessageImage = '$imagePath/choose_class_message.png';
+  static const String Image1 = '$imagePath/1.png';
+  static const String Image2 = '$imagePath/2.png';
+  static const String Image3 = '$imagePath/3.png';
+  static const String Image4 = '$imagePath/4.png';
 
   // icons
   static const String phoneIcon = '$iconsPath/phone.svg';
@@ -57,6 +62,7 @@ class ImageAssets {
   static const String videoIcon = '$iconsPath/video_icon.svg';
   static const String noteIcon = '$iconsPath/note_icon.svg';
   static const String studyIcon = '$iconsPath/study_icon.svg';
+  static const String lockIcon = '$iconsPath/lock.svg';
 
 
   //Lottie

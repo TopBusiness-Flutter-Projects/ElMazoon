@@ -36,6 +36,7 @@ import 'feature/mydegree/cubit/my_degree_cubit.dart';
 import 'feature/navigation_bottom/cubit/navigation_cubit.dart';
 import 'feature/onboarding/cubit/on_boarding_cubit.dart';
 import 'feature/payment/cubit/payment_cubit.dart';
+import 'feature/start_trip/cubit/start_trip_cubit.dart';
 
 class Elmazoon extends StatefulWidget {
   const Elmazoon({Key? key}) : super(key: key);
@@ -201,6 +202,9 @@ class _ElmazoonState extends State<Elmazoon> {
         ),
         BlocProvider(
           create: (_) => injector.serviceLocator<OnBoardingCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => injector.serviceLocator<StartTripCubit>(),
         ),
       ],
       child: MaterialApp(

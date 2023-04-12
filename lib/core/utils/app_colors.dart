@@ -6,6 +6,7 @@ import 'hex_color.dart';
 class AppColors {
   static Color primary = HexColor('#00B3DC');
   static Color secondPrimary = HexColor('#4455D7');
+  static Color orangeThirdPrimary = HexColor('#FF9201');
   static final AppColors instance = AppColors._internal();
 
   AppColors._internal();
@@ -25,6 +26,9 @@ class AppColors {
   static Color textFormFieldColor = HexColor('#EDEDED');
   static Color descriptionBoardingColor = HexColor('#777777');
   static Color bottomNavigatorColor = HexColor('#F3F4F9');
+
+  //from home
+  static Color unselectedTabColor = HexColor('#EEEEEE');
 
   static Color blueLikeColor = HexColor('#2e7dea');
   static Color redDislikeColor = HexColor('#ff2c2c');
@@ -48,10 +52,27 @@ class AppColors {
   static Color opacityWhite = Colors.white.withOpacity(0.5);
   static Color transparent = Colors.transparent;
 
-  static  getPrimaryColor()  {
-   Preferences.instance.getPrimaryColor().then((value) => {
-     primary=HexColor(value)
-   });
-
+  static getPrimaryColor() {
+    Preferences.instance
+        .getPrimaryColor()
+        .then((value) => {primary = HexColor(value)});
   }
+}
+
+Color darken(Color color, [double amount = .1]) {
+  assert(amount >= 0 && amount <= 1);
+
+  final hsl = HSLColor.fromColor(color);
+  final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+
+  return hslDark.toColor();
+}
+
+Color lighten(Color color, [double amount = .1]) {
+  assert(amount >= 0 && amount <= 1);
+
+  final hsl = HSLColor.fromColor(color);
+  final hslLight = hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
+
+  return hslLight.toColor();
 }
